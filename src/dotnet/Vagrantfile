@@ -1,0 +1,40 @@
+Vagrant.configure('2') do |config|
+  config.vm.define 'w16-vs15', autostart: true do |w16|
+    w16.vm.box = 'gusztavvargadr/w16s-sql14d-vs15c'
+
+    w16.vm.provider 'virtualbox' do |vb|
+      vb.gui = false
+      vb.memory = 8192
+      vb.cpus = 4
+    end
+
+    w16.vm.provision 'file', source: '~/.gitconfig', destination: '/User/vagrant/.gitconfig'
+
+    eval(File.read('chef/attributes.rb'))
+
+    w16.vm.provision 'chef_solo' do |chef|
+      chef.install = false
+      chef.cookbooks_path = ''
+      chef.add_recipe 'gusztavvargadr_workstations_dotnet_w16_vs15::os'
+      chef.json = chef_attributes['w16_vs15']['os']
+    end
+
+    w16.vm.provision :reload
+
+    w16.vm.provision 'chef_solo' do |chef|
+      chef.install = false
+      chef.cookbooks_path = ''
+      chef.add_recipe 'gusztavvargadr_workstations_dotnet_w16_vs15::tools'
+      chef.json = chef_attributes['w16_vs15']['tools']
+    end
+
+    w16.vm.provision :reload
+
+    w16.vm.provision 'chef_solo' do |chef|
+      chef.install = false
+      chef.cookbooks_path = ''
+      chef.add_recipe 'gusztavvargadr_workstations_dotnet_w16_vs15::settings'
+      chef.json = chef_attributes['w16_vs15']['settings']
+    end
+  end
+end
