@@ -7,4 +7,3 @@ long_description 'Installs/Configures .NET w16-vs15 workstation'
 version '0.0.0'
 
 depends 'gusztavvargadr_workstations_w'
-depends 'gusztavvargadr_windows'

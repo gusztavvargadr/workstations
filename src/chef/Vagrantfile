@@ -2,5 +2,5 @@ require_relative '../../lib/vagrant/configure'
 directory = File.expand_path('../', __FILE__)
 
 Vagrant.configure('2') do |config|
-  vagrant_config_vm_define directory, config, 'w16-vs15', 'gusztavvargadr/w16s-sql14d-vs15c'
+  vagrant_config_vm_define directory, config, 'w16', 'gusztavvargadr/w16s'
 end
