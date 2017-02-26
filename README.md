@@ -13,9 +13,4 @@ TODO: taskbar shortcuts
 TODO: explorer options
 TOOD: settings stage better name
 todo: poshgit
-TODO: java
-              jdk8:
-              maven:
-              eclipse:
-              intellijidea-community:
 -->
