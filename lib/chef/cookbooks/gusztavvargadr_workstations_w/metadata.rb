@@ -1,0 +1,11 @@
+name 'gusztavvargadr_workstations_w'
+maintainer 'Gusztav Varga'
+maintainer_email 'me@gusztavvargadr.me'
+license 'MIT'
+description 'Installs/Configures Windows workstation'
+long_description 'Installs/Configures Windows workstation'
+version '0.0.0'
+
+depends 'gusztavvargadr_windows'
+depends 'gusztavvargadr_git'
+depends 'gusztavvargadr_nuget'

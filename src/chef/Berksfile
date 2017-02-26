@@ -1,0 +1,7 @@
+instance_eval(File.read(File.expand_path(File.join(File.dirname(__FILE__), '../../lib/chef/Berksfile.common.rb'))))
+
+src_cookbook 'chef_w16'
+lib_cookbook 'w'
+gusztavvargadr_cookbook 'windows'
+gusztavvargadr_cookbook 'git'
+gusztavvargadr_cookbook 'nuget'
