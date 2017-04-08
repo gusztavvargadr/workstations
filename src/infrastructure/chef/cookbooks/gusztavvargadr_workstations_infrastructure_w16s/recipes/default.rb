@@ -1,0 +1,3 @@
+include_recipe 'gusztavvargadr_workstations_infrastructure_w16s::requirements'
+include_recipe 'gusztavvargadr_workstations_infrastructure_w16s::tools'
+include_recipe 'gusztavvargadr_workstations_infrastructure_w16s::profiles'

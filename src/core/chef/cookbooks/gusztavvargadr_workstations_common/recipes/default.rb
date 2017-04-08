@@ -1,0 +1,3 @@
+include_recipe 'gusztavvargadr_workstations_common::requirements'
+include_recipe 'gusztavvargadr_workstations_common::tools'
+include_recipe 'gusztavvargadr_workstations_common::profiles'

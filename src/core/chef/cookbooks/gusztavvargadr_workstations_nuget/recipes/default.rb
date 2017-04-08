@@ -1,0 +1,3 @@
+include_recipe 'gusztavvargadr_workstations_nuget::requirements'
+include_recipe 'gusztavvargadr_workstations_nuget::tools'
+include_recipe 'gusztavvargadr_workstations_nuget::profiles'

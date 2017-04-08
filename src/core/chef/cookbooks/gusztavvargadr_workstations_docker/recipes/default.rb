@@ -1,0 +1,3 @@
+include_recipe 'gusztavvargadr_workstations_docker::requirements'
+include_recipe 'gusztavvargadr_workstations_docker::tools'
+include_recipe 'gusztavvargadr_workstations_docker::profiles'

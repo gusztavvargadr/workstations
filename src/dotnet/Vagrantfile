@@ -1,6 +1,8 @@
-require_relative '../../lib/vagrant/configure'
-directory = File.expand_path('../', __FILE__)
+local_directory = File.expand_path('../', __FILE__)
+core_directory = "#{local_directory}/../core"
+
+require "#{core_directory}/Vagrantfile.common"
 
 Vagrant.configure('2') do |config|
-  vagrant_config_vm_define directory, config, 'w16-vs15', 'gusztavvargadr/w16s-sql14d-vs15c'
+  vagrant_config_vm_define config, local_directory, 'w16s-sql14d-vs15c', 'gusztavvargadr/w16s-sql14d-vs15c', memory: 8192, cpus: 4
 end

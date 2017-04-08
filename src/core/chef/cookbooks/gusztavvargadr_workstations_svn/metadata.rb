@@ -1,0 +1,7 @@
+name 'gusztavvargadr_workstations_svn'
+maintainer 'Gusztav Varga'
+maintainer_email 'me@gusztavvargadr.me'
+license 'MIT'
+description 'Installs/Configures SVN for workstations of gusztavvargadr'
+long_description 'Installs/Configures SVN for workstations of gusztavvargadr'
+version '0.0.0'

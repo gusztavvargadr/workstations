@@ -1,0 +1,3 @@
+include_recipe 'gusztavvargadr_workstations_dotnet_w16s_sql14d_vs15c::requirements'
+include_recipe 'gusztavvargadr_workstations_dotnet_w16s_sql14d_vs15c::tools'
+include_recipe 'gusztavvargadr_workstations_dotnet_w16s_sql14d_vs15c::profiles'

@@ -1,7 +1,15 @@
-instance_eval(File.read(File.expand_path(File.join(File.dirname(__FILE__), '../../lib/chef/Berksfile.common.rb'))))
+local_directory = File.expand_path('../chef/', __FILE__)
+core_directory = "#{local_directory}/../../core/chef/"
 
-src_cookbook 'dotnet_w16_vs15'
-lib_cookbook 'w'
+instance_eval(File.read("#{core_directory}/Berksfile.common.rb"))
+
+gusztavvargadr_workstations_cookbook 'dotnet_w16s_sql14d_vs15c', local_directory
+
+gusztavvargadr_workstations_cookbook 'common', core_directory
+gusztavvargadr_workstations_cookbook 'os', core_directory
+gusztavvargadr_workstations_cookbook 'docker', core_directory
+gusztavvargadr_workstations_cookbook 'git', core_directory
+gusztavvargadr_workstations_cookbook 'svn', core_directory
+gusztavvargadr_workstations_cookbook 'nuget', core_directory
+
 gusztavvargadr_cookbook 'windows'
-gusztavvargadr_cookbook 'git'
-gusztavvargadr_cookbook 'nuget'

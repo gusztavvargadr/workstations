@@ -1,0 +1,34 @@
+---
+driver:
+  name: vagrant
+  customize:
+    memory: 4096
+    cpus: 2
+
+provisioner:
+  name: chef_solo
+
+verifier:
+  name: inspec
+
+platforms:
+  - name: w16s
+    transport:
+      name: winrm
+    driver:
+      box: gusztavvargadr/w16s
+
+suites:
+  - name: default
+    run_list:
+      - recipe[gusztavvargadr_workstations_nuget::default]
+    attributes:
+      gusztavvargadr_workstations_nuget:
+        profiles:
+          default:
+            sources:
+              aspnetcore-dev:
+                address: https://dotnet.myget.org/F/aspnetcore-dev/api/v3/index.json
+    verifier:
+      inspec_tests:
+        - test/smoke/default
