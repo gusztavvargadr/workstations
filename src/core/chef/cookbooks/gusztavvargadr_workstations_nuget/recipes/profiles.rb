@@ -1,7 +1,3 @@
-gusztavvargadr_workstations_nuget_configuration '' do
-  action :create
-end
-
 profiles = node['gusztavvargadr_workstations_nuget'].nil? ? nil : node['gusztavvargadr_workstations_nuget']['profiles']
 return if profiles.nil?
 

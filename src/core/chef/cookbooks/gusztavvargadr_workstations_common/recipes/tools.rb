@@ -10,3 +10,9 @@ chocolatey_packages.each do |chocolatey_package_name|
     action :install
   end
 end
+
+cookbook_file "#{ENV['APPDATA']}/ConEmu.xml" do
+  source 'ConEmu.xml'
+  cookbook 'gusztavvargadr_workstations_common'
+  action :create
+end

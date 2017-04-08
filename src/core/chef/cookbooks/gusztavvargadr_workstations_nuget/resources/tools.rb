@@ -7,4 +7,10 @@ action :install do
       action :install
     end
   end
+
+  cookbook_file "#{ENV['APPDATA']}/NuGet/NuGet.config" do
+    source 'NuGet.config'
+    cookbook 'gusztavvargadr_workstations_nuget'
+    action :create
+  end
 end

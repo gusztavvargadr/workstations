@@ -12,6 +12,5 @@ TODO: vagrant common customize callback / return value
 TODO: kitchen with docker
 TODO: common java, infra, dotnet etc cookbooks
 TODO: .net / sql
-TODO: poshgit
 TODO: workstations per project?
 -->

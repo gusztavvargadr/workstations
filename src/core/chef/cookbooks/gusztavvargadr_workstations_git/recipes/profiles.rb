@@ -1,7 +1,3 @@
-gusztavvargadr_workstations_git_configuration '' do
-  action :create
-end
-
 profiles = node['gusztavvargadr_workstations_git'].nil? ? nil : node['gusztavvargadr_workstations_git']['profiles']
 return if profiles.nil?
 
