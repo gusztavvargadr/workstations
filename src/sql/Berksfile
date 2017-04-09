@@ -3,7 +3,7 @@ core_directory = "#{local_directory}/../../core/chef/"
 
 instance_eval(File.read("#{core_directory}/Berksfile.common.rb"))
 
-gusztavvargadr_workstations_cookbook 'java', core_directory
+gusztavvargadr_workstations_cookbook 'sql', core_directory
 
 gusztavvargadr_workstations_cookbook 'common', core_directory
 gusztavvargadr_workstations_cookbook 'os', core_directory

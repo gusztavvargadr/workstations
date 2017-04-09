@@ -25,12 +25,11 @@ suites:
     attributes:
       gusztavvargadr_workstations_git:
         profiles:
-          default:
+          public:
             address: https://github.com/github
             directory: '/Users/vagrant/Repos/github'
             repositories:
               gitignore:
-                directory: gitignore
     verifier:
       inspec_tests:
         - test/smoke/default

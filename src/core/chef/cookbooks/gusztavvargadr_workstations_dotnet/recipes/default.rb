@@ -1,0 +1,3 @@
+include_recipe 'gusztavvargadr_workstations_dotnet::requirements'
+include_recipe 'gusztavvargadr_workstations_dotnet::tools'
+include_recipe 'gusztavvargadr_workstations_dotnet::profiles'

@@ -29,6 +29,8 @@ suites:
           uilocale: en-GB
           userlocale: en-GB
           timezone: GMT Standard Time
+          variables:
+            KITCHEN_VARIABLE_NAME: KITCHEN_VARIABLE_VALUE
     verifier:
       inspec_tests:
         - test/smoke/default

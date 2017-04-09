@@ -25,7 +25,7 @@ suites:
     attributes:
       gusztavvargadr_workstations_docker:
         profiles:
-          default:
+          public:
             images:
               microsoft/nanoserver:
     verifier:

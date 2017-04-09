@@ -25,12 +25,11 @@ suites:
     attributes:
       gusztavvargadr_workstations_svn:
         profiles:
-          default:
+          public:
             address: http://svn.apache.org/repos
             directory: '/Users/vagrant/Repos/apache'
             repositories:
               asf/logging/log4net/trunk:
-                directory: log4net
     verifier:
       inspec_tests:
         - test/smoke/default

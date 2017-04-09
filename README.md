@@ -6,17 +6,17 @@ This repository contains (virtual) workstations using [Vagrant] and [VirtualBox]
 [VirtualBox]: https://www.virtualbox.org/
 
 <!--
-TODO: idempotence / guards
-TODO: enable / disable windows updates only if needed (guard)
-TODO: vagrant common customize callback / return value
-TODO: kitchen with docker
-TODO: common java, infra, dotnet, sql cookbooks
-TODO: .net / sql
-TODO: workstations per project?
 TODO: branch with customizations
 TODO: resharper fix
-TODO: settings for all common and custom apps
-TODO: vagrant, virtualbox
-TODO: riby lint
-TODO: ruby options for long params
+
+TODO: infrastructure repo with "services"
+TODO: idempotence / guards for every action
+TODO: kitchen with docker
+TODO: workstations / configurations per project?
+TODO: vagrant, virtualbox profiles
+TODO: ruby lint
+TODO: string to_s vs nil
+TODO: profile options: hash or "default" property (name, address, directory)
+TODO: profile subresources independent of profile (no base props)
+TODO: naming common vs core
 -->

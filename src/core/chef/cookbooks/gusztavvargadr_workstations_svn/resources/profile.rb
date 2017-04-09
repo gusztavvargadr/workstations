@@ -1,15 +1,15 @@
 property :profile_name, String, name_property: true
 property :profile_options, Hash
 
-default_action :create
+default_action :install
 
-action :create do
+action :install do
   return if profile_options.nil?
 
   profile_address = profile_options['address']
-  profile_username = profile_options['username']
-  profile_password = profile_options['password']
   profile_directory = profile_options['directory']
+  profile_username = profile_options['username'].to_s.empty? ? ENV["SVN_#{profile_name}_USERNAME"] : profile_options['username']
+  profile_password = profile_options['password'].to_s.empty? ? ENV["SVN_#{profile_name}_PASSWORD"] : profile_options['password']
 
   profile_repositories = profile_options['repositories']
   unless profile_repositories.nil?

@@ -4,5 +4,6 @@ core_directory = "#{local_directory}/../core"
 require "#{core_directory}/Vagrantfile.common"
 
 Vagrant.configure('2') do |config|
-  vagrant_config_vm_define config, local_directory, 'w16s', 'gusztavvargadr/w16s'
+  vagrant_config_vm_define config, local_directory, 'w16s' do |w16s|
+  end
 end

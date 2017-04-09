@@ -25,10 +25,11 @@ suites:
     attributes:
       gusztavvargadr_workstations_nuget:
         profiles:
-          default:
+          public:
+            address: https://dotnet.myget.org/F
             sources:
               aspnetcore-dev:
-                address: https://dotnet.myget.org/F/aspnetcore-dev/api/v3/index.json
+                address: aspnetcore-dev/api/v3/index.json
     verifier:
       inspec_tests:
         - test/smoke/default

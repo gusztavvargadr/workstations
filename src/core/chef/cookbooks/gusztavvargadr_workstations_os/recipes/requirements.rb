@@ -2,9 +2,6 @@ requirements = node['gusztavvargadr_workstations_os'].nil? ? nil : node['gusztav
 return if requirements.nil?
 
 gusztavvargadr_workstations_os_requirements '' do
-  requirements_systemlocale requirements['systemlocale']
-  requirements_uilocale requirements['uilocale']
-  requirements_userlocale requirements['userlocale']
-  requirements_timezone requirements['timezone']
+  requirements_options requirements
   action :install
 end

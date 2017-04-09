@@ -1,38 +1,69 @@
-def vagrant_config_vm_define(config, directory, name, box, autostart = true, memory = 4096, cpus = 2)
+def vagrant_config_vm_define(config, directory, name, options = {})
   environment = File.basename(directory)
-  environment_ruby = environment.tr('-', '_')
 
-  name_ruby = name.tr('-', '_')
+  options = {
+    autostart: true,
+    box: "gusztavvargadr/#{name}",
+    gui: false,
+    memory: 4096,
+    cpus: 2,
+    chef_install: false,
+    chef_cookbooks: ["gusztavvargadr_workstations_#{environment}"],
+    chef_json: {
+      'requirements' => {
+        'gusztavvargadr_workstations_os' => {
+          'requirements' => {
+            'systemlocale' => powershell_out('(Get-WinSystemLocale).Name'),
+            'uilocale' => powershell_out('(Get-WinUserLanguageList)[0].LanguageTag'),
+            'userlocale' => powershell_out('(Get-Culture).Name'),
+            'timezone' => powershell_out('(Get-TimeZone).Id'),
+            'variables' => {
+              'GIT_GUSZTAVVARGADR_USERNAME' => ENV['GIT_GUSZTAVVARGADR_USERNAME'],
+              'GIT_GUSZTAVVARGADR_PASSWORD' => ENV['GIT_GUSZTAVVARGADR_PASSWORD'],
+            },
+          },
+        },
+      },
+    },
+  }.deep_merge(options)
 
-  config.vm.define name, autostart: autostart do |config_vm|
-    config_vm.vm.box = box
+  config.vm.define name, autostart: options[:autostart] do |config_vm|
+    config_vm.vm.box = options[:box]
 
     config_vm.vm.provider 'virtualbox' do |vb|
-      vb.gui = false
-      vb.memory = memory
-      vb.cpus = cpus
+      vb.gui = options[:gui]
+      vb.memory = options[:memory]
+      vb.cpus = options[:cpus]
     end
 
-    config_vm.vm.provision 'chef_solo' do |chef|
-      chef.install = false
-      chef.cookbooks_path = ''
-      chef.add_recipe "gusztavvargadr_workstations_#{environment_ruby}_#{name_ruby}::requirements"
-    end
-
+    vagrant_config_vm_provision_chef config_vm, 'requirements', options
     config_vm.vm.provision :reload
 
-    config_vm.vm.provision 'chef_solo' do |chef|
-      chef.install = false
-      chef.cookbooks_path = ''
-      chef.add_recipe "gusztavvargadr_workstations_#{environment_ruby}_#{name_ruby}::tools"
-    end
-
+    vagrant_config_vm_provision_chef config_vm, 'tools', options
     config_vm.vm.provision :reload
 
-    config_vm.vm.provision 'chef_solo' do |chef|
-      chef.install = false
-      chef.cookbooks_path = ''
-      chef.add_recipe "gusztavvargadr_workstations_#{environment_ruby}_#{name_ruby}::profiles"
+    vagrant_config_vm_provision_chef config_vm, 'profiles', options
+  end
+end
+
+class ::Hash
+  def deep_merge(other)
+    merger = proc { |key, v1, v2| Hash === v1 && Hash === v2 ? v1.merge(v2, &merger) : Array === v1 && Array === v2 ? v1 | v2 : [:undefined, nil, :nil].include?(v2) ? v1 : v2 }
+    self.merge(other.to_h, &merger)
+  end
+end
+
+def powershell_out(command)
+  `powershell.exe "#{command}"`.strip
+end
+
+def vagrant_config_vm_provision_chef(config_vm, stage, options)
+  config_vm.vm.provision 'chef_solo' do |chef|
+    chef.install = options[:chef_install]
+    chef.cookbooks_path = ''
+    options[:chef_cookbooks].each do |chef_cookbook|
+      chef.add_recipe "#{chef_cookbook}::#{stage}"
     end
+    chef.json = options[:chef_json][stage].nil? ? {} : options[:chef_json][stage]
   end
 end

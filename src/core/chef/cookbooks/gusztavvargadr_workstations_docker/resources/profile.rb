@@ -1,9 +1,9 @@
 property :profile_name, String, name_property: true
 property :profile_options, Hash
 
-default_action :create
+default_action :install
 
-action :create do
+action :install do
   return if profile_options.nil?
 
   profile_images = profile_options['images']
