@@ -1,0 +1,1 @@
+include_recipe 'gusztavvargadr_workstations_common::tools'
