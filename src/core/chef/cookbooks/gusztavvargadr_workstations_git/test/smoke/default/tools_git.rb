@@ -1,11 +1,14 @@
-script = <<-EOH
+version_query_script = <<-EOH
   git --version
 EOH
+version_value = 'git version'
 
-describe powershell(script) do
-  its('stdout') { should include 'git version' }
+describe powershell(version_query_script) do
+  its('stdout') { should include version_value }
 end
 
-describe file('/Users/vagrant/.gitconfig') do
+configuration_file = '/Users/vagrant/.gitconfig'
+
+describe file(configuration_file) do
   it { should exist }
 end

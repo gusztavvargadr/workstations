@@ -22,3 +22,13 @@ suites:
   - name: default
     run_list:
       - recipe[gusztavvargadr_workstations_os::default]
+    attributes:
+      gusztavvargadr_workstations_os:
+        requirements:
+          systemlocale: en-GB
+          uilocale: en-GB
+          userlocale: en-GB
+          timezone: GMT Standard Time
+    verifier:
+      inspec_tests:
+        - test/smoke/default

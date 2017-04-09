@@ -1,11 +1,14 @@
-script = <<-EOH
+version_query_script = <<-EOH
   NuGet
 EOH
+version_value = 'NuGet Version:'
 
-describe powershell(script) do
-  its('stdout') { should include 'NuGet Version:' }
+describe powershell(version_query_script) do
+  its('stdout') { should include version_value }
 end
 
-describe file('/Users/vagrant/AppData/Roaming/NuGet/NuGet.config') do
+configuration_file = '/Users/vagrant/AppData/Roaming/NuGet/NuGet.config'
+
+describe file(configuration_file) do
   it { should exist }
 end
