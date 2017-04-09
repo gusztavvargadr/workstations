@@ -6,9 +6,6 @@ This repository contains (virtual) workstations using [Vagrant] and [VirtualBox]
 [VirtualBox]: https://www.virtualbox.org/
 
 <!--
-TODO: branch with customizations
-TODO: resharper fix
-
 TODO: infrastructure repo with "services"
 TODO: idempotence / guards for every action
 TODO: kitchen with docker
