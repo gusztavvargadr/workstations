@@ -17,10 +17,6 @@ def vagrant_config_vm_define(config, directory, name, options = {})
             'uilocale' => powershell_out('(Get-WinUserLanguageList)[0].LanguageTag'),
             'userlocale' => powershell_out('(Get-Culture).Name'),
             'timezone' => powershell_out('(Get-TimeZone).Id'),
-            'variables' => {
-              'GIT_GUSZTAVVARGADR_USERNAME' => ENV['GIT_GUSZTAVVARGADR_USERNAME'],
-              'GIT_GUSZTAVVARGADR_PASSWORD' => ENV['GIT_GUSZTAVVARGADR_PASSWORD'],
-            },
           },
         },
       },
