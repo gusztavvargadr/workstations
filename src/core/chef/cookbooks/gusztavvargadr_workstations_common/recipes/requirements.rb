@@ -1,5 +1,0 @@
-include_recipe 'gusztavvargadr_workstations_os::requirements'
-include_recipe 'gusztavvargadr_workstations_docker::requirements'
-include_recipe 'gusztavvargadr_workstations_git::requirements'
-include_recipe 'gusztavvargadr_workstations_svn::requirements'
-include_recipe 'gusztavvargadr_workstations_nuget::requirements'

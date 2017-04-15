@@ -1,0 +1,3 @@
+name 'gusztavvargadr_workstations_infrastructure_profiles'
+description 'Infrastructure workstation profiles'
+run_list 'role[gusztavvargadr_workstations_core_profiles]'

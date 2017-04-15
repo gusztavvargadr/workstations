@@ -21,15 +21,18 @@ platforms:
 suites:
   - name: default
     run_list:
-      - recipe[gusztavvargadr_workstations_svn::default]
+      - recipe[gusztavvargadr_workstations_svn::requirements]
+      - recipe[gusztavvargadr_workstations_svn::tools]
+      - recipe[gusztavvargadr_workstations_svn::profiles]
     attributes:
       gusztavvargadr_workstations_svn:
         profiles:
-          public:
-            address: http://svn.apache.org/repos
-            directory: '/Users/vagrant/Repos/apache'
-            repositories:
-              asf/logging/log4net/trunk:
+          workspaces:
+            apache:
+              address: http://svn.apache.org/repos
+              directory: '/Users/vagrant/Repos/apache'
+              repositories:
+                asf/logging/log4net/trunk:
     verifier:
       inspec_tests:
         - test/smoke/default

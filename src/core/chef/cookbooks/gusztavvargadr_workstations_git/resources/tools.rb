@@ -1,15 +1,12 @@
+property :tools_options, Hash
+
 default_action :install
 
 action :install do
-  chocolatey_package 'git' do
-    version '2.11.1'
-    options '-params \'"/GitAndUnixToolsOnPath"\''
-    action :install
-  end
+  return if tools_options.nil?
 
-  cookbook_file "#{ENV['HOME']}/.gitconfig" do
-    source 'gitconfig'
-    cookbook 'gusztavvargadr_workstations_git'
-    action :create
+  gusztavvargadr_workstations_os_tools '' do
+    tools_options new_resource.tools_options
+    action :install
   end
 end

@@ -1,9 +1,11 @@
 property :timezone_name, String, name_property: true
 
-default_action :set
+default_action :update
 
-action :set do
-  powershell_script "Set time zone to #{timezone_name}" do
+action :update do
+  return if timezone_name.to_s.empty?
+
+  powershell_script "Update time zone to #{timezone_name}" do
     code <<-EOH
       Set-TimeZone -Id "#{timezone_name}"
     EOH

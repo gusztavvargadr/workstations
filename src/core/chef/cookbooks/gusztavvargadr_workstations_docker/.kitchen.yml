@@ -21,13 +21,14 @@ platforms:
 suites:
   - name: default
     run_list:
-      - recipe[gusztavvargadr_workstations_docker::default]
+      - recipe[gusztavvargadr_workstations_docker::requirements]
+      - recipe[gusztavvargadr_workstations_docker::tools]
+      - recipe[gusztavvargadr_workstations_docker::profiles]
     attributes:
       gusztavvargadr_workstations_docker:
         profiles:
-          public:
-            images:
-              microsoft/nanoserver:
+          images:
+            microsoft/nanoserver:
     verifier:
       inspec_tests:
         - test/smoke/default

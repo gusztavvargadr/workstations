@@ -1,9 +1,4 @@
-profiles = node['gusztavvargadr_workstations_git'].nil? ? nil : node['gusztavvargadr_workstations_git']['profiles']
-return if profiles.nil?
-
-profiles.each do |profile_name, profile_options|
-  gusztavvargadr_workstations_git_profile profile_name do
-    profile_options profile_options
-    action :install
-  end
+gusztavvargadr_workstations_git_profiles '' do
+  profiles_options node['gusztavvargadr_workstations_git']['profiles']
+  action :create
 end

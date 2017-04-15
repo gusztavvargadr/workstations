@@ -1,3 +1,0 @@
-include_recipe 'gusztavvargadr_workstations_java::requirements'
-include_recipe 'gusztavvargadr_workstations_java::tools'
-include_recipe 'gusztavvargadr_workstations_java::profiles'

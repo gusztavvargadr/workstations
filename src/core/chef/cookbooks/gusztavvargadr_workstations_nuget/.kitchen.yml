@@ -21,15 +21,18 @@ platforms:
 suites:
   - name: default
     run_list:
-      - recipe[gusztavvargadr_workstations_nuget::default]
+      - recipe[gusztavvargadr_workstations_nuget::requirements]
+      - recipe[gusztavvargadr_workstations_nuget::tools]
+      - recipe[gusztavvargadr_workstations_nuget::profiles]
     attributes:
       gusztavvargadr_workstations_nuget:
         profiles:
-          public:
-            address: https://dotnet.myget.org/F
-            sources:
-              aspnetcore-dev:
-                address: aspnetcore-dev/api/v3/index.json
+          workspaces:
+            dotnet:
+              address: https://dotnet.myget.org/F
+              sources:
+                aspnetcore-dev:
+                  address: aspnetcore-dev/api/v3/index.json
     verifier:
       inspec_tests:
         - test/smoke/default
