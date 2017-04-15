@@ -10,6 +10,12 @@ action :create do
     action :create
   end
 
+  cookbook_file "#{ENV['USERPROFILE']}/.gitconfig" do
+    source 'gitconfig'
+    cookbook 'gusztavvargadr_workstations_git'
+    action :create
+  end
+
   gusztavvargadr_workstations_git_profiles_workspaces '' do
     profiles_workspaces_options profiles_options['workspaces']
     action :create

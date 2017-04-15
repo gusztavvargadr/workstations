@@ -9,10 +9,4 @@ action :install do
     tools_options new_resource.tools_options
     action :install
   end
-
-  cookbook_file "#{ENV['APPDATA']}/NuGet/NuGet.Config" do
-    source 'NuGet.Config2'
-    cookbook 'gusztavvargadr_workstations_nuget'
-    action :create
-  end
 end

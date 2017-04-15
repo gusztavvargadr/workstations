@@ -10,6 +10,12 @@ action :create do
     action :create
   end
 
+  cookbook_file "#{ENV['APPDATA']}/NuGet/NuGet.Config" do
+    source 'NuGet.Config'
+    cookbook 'gusztavvargadr_workstations_nuget'
+    action :create
+  end
+
   gusztavvargadr_workstations_nuget_profiles_workspaces '' do
     profiles_workspaces_options profiles_options['workspaces']
     action :create
