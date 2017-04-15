@@ -21,16 +21,30 @@ platforms:
 suites:
   - name: default
     run_list:
-      - recipe[gusztavvargadr_workstations_os::default]
+      - recipe[gusztavvargadr_workstations_os::requirements]
+      - recipe[gusztavvargadr_workstations_os::tools]
+      - recipe[gusztavvargadr_workstations_os::profiles]
     attributes:
       gusztavvargadr_workstations_os:
         requirements:
-          systemlocale: en-GB
-          uilocale: en-GB
-          userlocale: en-GB
-          timezone: GMT Standard Time
-          variables:
-            KITCHEN_VARIABLE_NAME: KITCHEN_VARIABLE_VALUE
+          locales:
+            system: en-GB
+            ui: en-GB
+            user: en-GB
+          datetime:
+            timezone: GMT Standard Time
+          environment:
+            VARIABLE_NAME: VARIABLE_VALUE
+          features:
+            TelnetClient:
+        tools:
+          chocolatey:
+            nuget.commandline:
+          windows:
+            .NET Core SDK:
+              source: https://download.microsoft.com/download/8/F/9/8F9659B9-E628-4D1A-B6BF-C3004C8C954B/dotnet-dev-win-x64.1.0.1.exe
+              install: /install /quiet /norestart
+              directory: /Program Files/dotnet
     verifier:
       inspec_tests:
         - test/smoke/default

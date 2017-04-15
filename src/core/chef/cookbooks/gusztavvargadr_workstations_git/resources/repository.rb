@@ -1,26 +1,28 @@
 property :repository_name, String, name_property: true
-property :base_address, String, required: true
-property :base_directory, String, required: true
+property :repository_base_address, String, required: true
+property :repository_base_directory, String, required: true
 property :repository_options, Hash
 
 default_action :clone
 
 action :clone do
-  clone_address = "#{base_address}/#{repository_name}"
+  git_directory = repository_options.nil? ? nil : repository_options['directory']
+  git_directory = repository_name if git_directory.nil?
+  git_directory = "#{repository_base_directory}/#{git_directory}"
 
-  repository_directory = repository_options.nil? ? nil : repository_options['directory']
-  repository_directory = repository_name if repository_directory.nil?
-  clone_directory = "#{base_directory}/#{repository_directory}"
-
-  directory clone_directory do
+  directory git_directory do
     recursive true
     action :create
   end
 
-  git clone_directory do
-    repository clone_address
-    checkout_branch 'master'
-    enable_checkout false
+  git_repository = "#{repository_base_address}/#{repository_name}"
+  git_checkout_branch = 'master'
+  git_enable_checkout = false
+
+  git git_directory do
+    repository git_repository
+    checkout_branch git_checkout_branch
+    enable_checkout git_enable_checkout
     action :checkout
   end
 end

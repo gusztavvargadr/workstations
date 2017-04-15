@@ -1,3 +1,4 @@
 gusztavvargadr_workstations_svn_requirements '' do
-  action :install
+  requirements_options node['gusztavvargadr_workstations_svn']['requirements']
+  action :ensure
 end

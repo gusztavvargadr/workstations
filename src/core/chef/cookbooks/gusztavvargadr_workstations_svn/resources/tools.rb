@@ -1,10 +1,12 @@
+property :tools_options, Hash
+
 default_action :install
 
 action :install do
-  chocolatey_packages = %w(svn)
-  chocolatey_packages.each do |chocolatey_package_name|
-    chocolatey_package chocolatey_package_name do
-      action :install
-    end
+  return if tools_options.nil?
+
+  gusztavvargadr_workstations_os_tools '' do
+    tools_options new_resource.tools_options
+    action :install
   end
 end

@@ -1,3 +1,4 @@
 gusztavvargadr_workstations_nuget_requirements '' do
-  action :install
+  requirements_options node['gusztavvargadr_workstations_nuget']['requirements']
+  action :ensure
 end

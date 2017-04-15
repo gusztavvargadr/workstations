@@ -21,15 +21,18 @@ platforms:
 suites:
   - name: default
     run_list:
-      - recipe[gusztavvargadr_workstations_git::default]
+      - recipe[gusztavvargadr_workstations_git::requirements]
+      - recipe[gusztavvargadr_workstations_git::tools]
+      - recipe[gusztavvargadr_workstations_git::profiles]
     attributes:
       gusztavvargadr_workstations_git:
         profiles:
-          public:
-            address: https://github.com/github
-            directory: '/Users/vagrant/Repos/github'
-            repositories:
-              gitignore:
+          workspaces:
+            github:
+              address: https://github.com/github
+              directory: '/Users/vagrant/Repos/github'
+              repositories:
+                gitignore:
     verifier:
       inspec_tests:
         - test/smoke/default

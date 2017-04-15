@@ -1,11 +1,20 @@
+property :tools_options, Hash
+
 default_action :install
 
 action :install do
+  return if tools_options.nil?
+
+  gusztavvargadr_workstations_os_tools '' do
+    tools_options new_resource.tools_options
+    action :install
+  end
+
   gusztavvargadr_windows_windows_updates '' do
     action [:enable, :start]
   end
 
-  gusztavvargadr_windows_powershell_script_elevated 'Install Docker Package' do
+  gusztavvargadr_windows_powershell_script_elevated 'Install Docker package' do
     code <<-EOH
       Install-Package -Name docker -ProviderName DockerMsftProvider -Force
     EOH
