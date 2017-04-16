@@ -10,6 +10,11 @@ action :create do
     action :create
   end
 
+  directory "#{ENV['APPDATA']}/NuGet" do
+    recursive true
+    action :create
+  end
+
   cookbook_file "#{ENV['APPDATA']}/NuGet/NuGet.Config" do
     source 'NuGet.Config'
     cookbook 'gusztavvargadr_workstations_nuget'

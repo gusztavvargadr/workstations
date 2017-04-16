@@ -6,6 +6,9 @@ default_attributes(
     'tools' => {
       'chocolatey' => {
         'chefdk' => {},
+        'packer' => {},
+        'terraform' => {},
+        'awscli' => {},
       },
     },
   }

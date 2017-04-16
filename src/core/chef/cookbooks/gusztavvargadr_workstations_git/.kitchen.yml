@@ -30,7 +30,7 @@ suites:
           workspaces:
             github:
               address: https://github.com/github
-              directory: '/Users/vagrant/Repos/github'
+              directory: /Users/vagrant/Repos/github
               repositories:
                 gitignore:
     verifier:

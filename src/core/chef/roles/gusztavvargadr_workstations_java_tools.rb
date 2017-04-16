@@ -7,6 +7,7 @@ default_attributes(
       'chocolatey' => {
         'jdk8' => {},
         'maven' => {},
+        'intellijidea-community' => {},
       },
     },
   }
