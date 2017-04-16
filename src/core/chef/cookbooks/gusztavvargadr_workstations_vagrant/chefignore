@@ -68,7 +68,7 @@ Rakefile
 */.git
 .gitignore
 .gitmodules
-# .gitconfig
+.gitconfig
 .gitattributes
 .svn
 */.bzr/*

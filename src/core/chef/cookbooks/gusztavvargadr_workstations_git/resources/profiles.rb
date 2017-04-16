@@ -10,8 +10,13 @@ action :create do
     action :create
   end
 
+  directory ENV['USERPROFILE'] do
+    recursive true
+    action :create
+  end
+
   cookbook_file "#{ENV['USERPROFILE']}/.gitconfig" do
-    source 'gitconfig'
+    source '.gitconfig'
     cookbook 'gusztavvargadr_workstations_git'
     action :create
   end

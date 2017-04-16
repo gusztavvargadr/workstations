@@ -30,7 +30,7 @@ suites:
           workspaces:
             apache:
               address: http://svn.apache.org/repos
-              directory: '/Users/vagrant/Repos/apache'
+              directory: /Users/vagrant/Repos/apache
               repositories:
                 asf/logging/log4net/trunk:
     verifier:
