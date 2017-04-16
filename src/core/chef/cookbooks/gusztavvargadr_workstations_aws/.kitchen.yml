@@ -1,0 +1,37 @@
+---
+driver:
+  name: vagrant
+  customize:
+    memory: 4096
+    cpus: 2
+
+provisioner:
+  name: chef_solo
+
+verifier:
+  name: inspec
+
+platforms:
+  - name: w16s
+    transport:
+      name: winrm
+    driver:
+      box: gusztavvargadr/w16s
+
+suites:
+  - name: default
+    run_list:
+      - recipe[gusztavvargadr_workstations_aws::requirements]
+      - recipe[gusztavvargadr_workstations_aws::tools]
+      - recipe[gusztavvargadr_workstations_aws::profiles]
+    attributes:
+      gusztavvargadr_workstations_aws:
+        profiles:
+          workspaces:
+            default:
+              access_key_id: access_key_id
+              secret_access_key: secret_access_key
+              region: us-east-1
+    verifier:
+      inspec_tests:
+        - test/smoke/default
