@@ -4,7 +4,5 @@ default['gusztavvargadr_workstations_git']['tools'] = {
       'version' => '2.11.1',
       'install' => '-params \'"/GitAndUnixToolsOnPath /NoShellIntegration"\'',
     },
-    'poshgit' => {},
-    'gitkraken' => {},
   },
 }

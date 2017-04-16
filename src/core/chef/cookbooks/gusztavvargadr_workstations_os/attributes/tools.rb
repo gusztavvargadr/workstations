@@ -1,6 +1,1 @@
-default['gusztavvargadr_workstations_os']['tools'] = {
-  'chocolatey' => {
-    'visualstudiocode' => {},
-    'googlechrome' => {},
-  },
-}
+default['gusztavvargadr_workstations_os']['tools'] = {}
