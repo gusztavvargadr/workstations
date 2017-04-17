@@ -54,8 +54,11 @@ Besides the above, you can of course add any of your own customizations using th
 ## Getting started
 
 **Note** This section assumes you are familiar with the basics of Vagrant. If that's not the case, it's recommended that you take a quick look at the [getting started guide][VagrantGettingStarted].  
+
 **Note** The virtual environments have been tested on Windows hosts only, but they are supposed to run on any other platforms as well. [Let me know][Contributing] if you encounter any issues and I'm glad to help.  
+
 **Note** Booting a workstation for the first time can take a significant amount of time. If you have a slow internet connection, downloading the base boxes (usually several GBs) might require some patience and retries and provisioning (e.g. installing the custom tools not included in the base box) also happens during the initial boot. However, starting the workstations again later and / or creating another one from the already downloaded base box will be significantly faster.  
+
 **Note** All the components of the workstations (including the core operating system) are installed from their publicly available free or evaluation versions. You might need to provide your own licenses to continue using them after a given period of time. The evaluation periods usually start when booting a workstation for the first time, and remember that you can recreate them anytime.  
 
 [Getting started]: #getting-started
