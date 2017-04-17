@@ -200,6 +200,8 @@ See below the complete list of provisioning customization options supported out 
   * Installing Chocolatey and native packages.
 -->
 
+[OS]: #os
+
 #### Git
 
 <!--
@@ -207,6 +209,8 @@ See below the complete list of provisioning customization options supported out 
   * Configuring Git settings.
   * Cloning public and private repositories.
 -->
+
+[Git]: #git
 
 #### SVN
 
@@ -216,6 +220,8 @@ See below the complete list of provisioning customization options supported out 
   * Checking out public and private repositories.
 -->
 
+[SVN]: #svn
+
 #### NuGet
 
 <!--
@@ -223,6 +229,8 @@ See below the complete list of provisioning customization options supported out 
   * Installing the core NuGet tools.
   * Adding public and private package sources.
 -->
+
+[NuGet]: #nuget
 
 #### Vagrant
 
@@ -232,6 +240,8 @@ See below the complete list of provisioning customization options supported out 
   * Adding base boxes.
 -->
 
+[Vagrant]: #vagrant
+
 #### Docker
 
 <!--
@@ -240,6 +250,8 @@ See below the complete list of provisioning customization options supported out 
   * Pulling images.
 -->
 
+[Docker]: #docker
+
 #### AWS
 
 <!--
@@ -247,6 +259,8 @@ See below the complete list of provisioning customization options supported out 
   * Installing the core AWS tools.
   * Setting up AWS CLI profiles.
 -->
+
+[AWS]: #aws
 
 ### Customizing Vagrant
 
