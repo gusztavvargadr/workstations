@@ -1,5 +1,11 @@
 # Workstations
 
+<!--
+TODO: getting started - home var
+TODO: customization - reprovision note
+TODO: contributing - extending: new workstations, custom provisioning
+-->
+
 **Contents** [Overview] | [Getting started] | [Usage] | [Next steps] | [Contributing] | [Resources]  
 
 This repository contains Windows workstations for .NET, SQL Server, infrastructure and Java development using Vagrant and VirtualBox.
@@ -13,11 +19,11 @@ This repository contains Windows-based workstations for the following purposes:
 * [Infrastructure development] with Chef, Packer, Terraform and AWS.
 * [Java development] with IntelliJ IDEA.
 
-All of them support an easy, source-controlled way of installing and configuring the most common development tools for the related stacks and the management of the sources of your projects, based on [Vagrant] and [VirtualBox]. This way you can easily recreate the same workstations anytime, anywhere, and instead of writing extensive documentation, you can simply share ready to use environments with your teammates and contributors.
+All of them support an easy, source-controlled way of installing and configuring the most common development tools for the related stacks and the management of the sources of your projects, based on [VagrantHome] and [VirtualBoxHome]. This way you can easily recreate the same workstations anytime, anywhere, and instead of writing extensive documentation, you can simply share ready to use environments with your teammates and contributors.
 
-The most common configuration options are also supported "out of the box":
+The most common configuration options are also supported out of the box:
 
-* Managing the [OS] settings, installing features and additional packages.
+* Managing the core [OS] settings, installing features and additional packages.
 * Working with [Git] and [SVN] repositories.
 * Managing [NuGet] sources.
 * Downloading [Vagrant] base boxes and pulling [Docker] images.
@@ -27,12 +33,9 @@ Of course, you can extend these freely with your own configuration options and p
 
 [Overview]: #overview
 
-[Vagrant]: https://www.vagrantup.com/
-[VirtualBox]: https://www.virtualbox.org/
-
 ## Getting started
 
-**Note** This section assumes you are familiar with the basics of Vagrant. If that's not the case, it's recommended that you take a quick look at its [getting started guide][VagrantGettingStarted].  
+**Note** This section assumes you are familiar with the basics of [Vagrant][VagrantHome]. If that's not the case, it's recommended that you take a quick look at its [getting started guide][VagrantGettingStarted].  
 
 **Note** The virtual environments have been tested on Windows hosts only, but they are supposed to run on any other platform as well. [Let me know][Contributing] if you encounter any issues and I'm glad to help.  
 
@@ -140,12 +143,15 @@ The workstation is created by default with the following tools installed and con
 * [Windows Server 2016 Standard][InfrastructureDevelopmentBox]
 * [Docker]
 * [Git]
-* [Chef DK], [Packer], [Terraform]
+* [ChefDK], [Packer], [Terraform]
 * [Vagrant]
 * [AWS]
 
 [Infrastructure development]: #infrastructure-development
 [InfrastructureDevelopmentBox]: https://atlas.hashicorp.com/gusztavvargadr/boxes/w16s
+[ChefDK]: https://chocolatey.org/packages/chefdk
+[Packer]: https://chocolatey.org/packages/packer
+[Terraform]: https://chocolatey.org/packages/terraform
 
 #### Java development
 
@@ -172,40 +178,86 @@ The workstation is created by default with the following tools installed and con
 
 [Java development]: #java-development
 [JavaDevelopmentBox]: https://atlas.hashicorp.com/gusztavvargadr/boxes/w16s
+[JDK]: https://chocolatey.org/packages/jdk8
+[Maven]: https://chocolatey.org/packages/maven
+[IntelliJ IDEA]: https://chocolatey.org/packages/intellijidea-community
 
 ## Usage
 
+**Note** This section assumes you are familiar with the basics of [Chef][ChefHome]. If that's not the case, it's recommended that you take a quick look at its [getting started guide][ChefGettingStarted].  
+
+[ChefGettingStarted]: https://learn.chef.io/tutorials/
+
+### Customizing provisioning
+
+See below the complete list of provisioning customization options supported out of the box. 
+
+#### OS
+
 <!--
-
-Below is a complete list of customizations supported out of the box. All of these are applied when booting your workstations for the first time, so they are actually ready to use when they are up:
-
-* Windows
   * Configuring locales, time zone and environment variables.
   * Installing OS features.
   * Installing Chocolatey and native packages.
-* Git
+-->
+
+#### Git
+
+<!--
   * Installing the core Git tools.
   * Configuring Git settings.
   * Cloning public and private repositories.
+-->
+
+#### SVN
+
+<!--
 * SVN
   * Installing the core SVN tools.
   * Checking out public and private repositories.
+-->
+
+#### NuGet
+
+<!--
 * NuGet
   * Installing the core NuGet tools.
   * Adding public and private package sources.
+-->
+
+#### Vagrant
+
+<!--
 * Vagrant
   * Installing Vagrant itself and its plugins.
   * Adding base boxes.
+-->
+
+#### Docker
+
+<!--
 * Docker
   * Installing the core Docker tools.
   * Pulling images.
+-->
+
+#### AWS
+
+<!--
 * AWS
   * Installing the core AWS tools.
   * Setting up AWS CLI profiles.
+-->
+
+### Customizing Vagrant
+
+<!--
+multi machine
+options
 
 Besides the above, you can of course add any of your own customizations using the tools [Vagrant supports][VagrantProvisioning].
 
 [VagrantProvisioning]: https://www.vagrantup.com/docs/provisioning/
+
 -->
 
 [Usage]: #usage
@@ -224,9 +276,11 @@ Any feedback, [issues] and / or [pull requests] are welcome and greatly apprecia
 
 ## Resources
 
-[Resources]: #resources
+* [Vagrant][VagrantHome]
+* [VirtualBox][VirtualBoxHome]
+* [Chef][ChefHome]
 
-<!--
-TODO: home var
-TODO: reference packer boxes
--->
+[Resources]: #resources
+[VagrantHome]: https://www.vagrantup.com/
+[VirtualBoxHome]: https://www.virtualbox.org/
+[ChefHome]: https://www.chef.io/chef/
