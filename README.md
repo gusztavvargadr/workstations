@@ -19,7 +19,7 @@ This repository contains Windows-based workstations for the following purposes:
 * [Infrastructure development] with Chef, Packer, Terraform and AWS.
 * [Java development] with IntelliJ IDEA.
 
-All of them support an easy, source-controlled way of installing and configuring the most common development tools for the related stacks and the management of the sources of your projects, based on [VagrantHome] and [VirtualBoxHome]. This way you can easily recreate the same workstations anytime, anywhere, and instead of writing extensive documentation, you can simply share ready to use environments with your teammates and contributors.
+All of them support an easy, source-controlled way of installing and configuring the most common development tools for the related stacks and the management of the sources of your projects, based on [Vagrant][VagrantHome] and [VirtualBox][VirtualBoxHome]. This way you can easily recreate the same workstations anytime, anywhere, and instead of writing extensive documentation, you can simply share ready to use environments with your teammates and contributors.
 
 The most common configuration options are also supported out of the box:
 
