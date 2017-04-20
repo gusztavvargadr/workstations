@@ -1,4 +1,7 @@
+options = node['gusztavvargadr_workstations_vagrant']
+return if options.nil?
+
 gusztavvargadr_workstations_vagrant_requirements '' do
-  requirements_options node['gusztavvargadr_workstations_vagrant']['requirements']
+  requirements_options options['requirements']
   action :ensure
 end

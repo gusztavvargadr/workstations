@@ -4,6 +4,6 @@ core_directory = local_directory
 instance_eval(File.read("#{core_directory}/Berksfile.core.rb"))
 
 gusztavvargadr_workstations_cookbook 'nuget', local_directory
-gusztavvargadr_workstations_cookbook 'os', local_directory
+gusztavvargadr_workstations_cookbook 'core', local_directory
 
 gusztavvargadr_cookbook 'windows'

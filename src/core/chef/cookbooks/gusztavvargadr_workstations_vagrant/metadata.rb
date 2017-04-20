@@ -6,6 +6,6 @@ description 'Installs/Configures Vagrant workstations'
 long_description 'Installs/Configures Vagrant workstations'
 version '0.0.0'
 
-depends 'gusztavvargadr_workstations_os'
+depends 'gusztavvargadr_workstations_core'
 
 depends 'gusztavvargadr_windows'

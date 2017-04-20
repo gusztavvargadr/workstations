@@ -21,9 +21,7 @@ platforms:
 suites:
   - name: default
     run_list:
-      - recipe[gusztavvargadr_workstations_aws::requirements]
-      - recipe[gusztavvargadr_workstations_aws::tools]
-      - recipe[gusztavvargadr_workstations_aws::profiles]
+      - recipe[gusztavvargadr_workstations_aws::default]
     attributes:
       gusztavvargadr_workstations_aws:
         profiles:

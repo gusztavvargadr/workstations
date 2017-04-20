@@ -1,4 +1,7 @@
+options = node['gusztavvargadr_workstations_svn']
+return if options.nil?
+
 gusztavvargadr_workstations_svn_tools '' do
-  tools_options node['gusztavvargadr_workstations_svn']['tools']
+  tools_options options['tools']
   action :install
 end

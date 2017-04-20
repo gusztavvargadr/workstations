@@ -21,9 +21,7 @@ platforms:
 suites:
   - name: default
     run_list:
-      - recipe[gusztavvargadr_workstations_vagrant::requirements]
-      - recipe[gusztavvargadr_workstations_vagrant::tools]
-      - recipe[gusztavvargadr_workstations_vagrant::profiles]
+      - recipe[gusztavvargadr_workstations_vagrant::default]
     attributes:
       gusztavvargadr_workstations_vagrant:
         profiles:
