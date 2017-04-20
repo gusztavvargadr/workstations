@@ -21,9 +21,7 @@ platforms:
 suites:
   - name: default
     run_list:
-      - recipe[gusztavvargadr_workstations_docker::requirements]
-      - recipe[gusztavvargadr_workstations_docker::tools]
-      - recipe[gusztavvargadr_workstations_docker::profiles]
+      - recipe[gusztavvargadr_workstations_docker::default]
     attributes:
       gusztavvargadr_workstations_docker:
         profiles:

@@ -21,9 +21,7 @@ platforms:
 suites:
   - name: default
     run_list:
-      - recipe[gusztavvargadr_workstations_git::requirements]
-      - recipe[gusztavvargadr_workstations_git::tools]
-      - recipe[gusztavvargadr_workstations_git::profiles]
+      - recipe[gusztavvargadr_workstations_git::default]
     attributes:
       gusztavvargadr_workstations_git:
         profiles:

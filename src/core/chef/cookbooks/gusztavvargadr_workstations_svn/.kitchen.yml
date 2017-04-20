@@ -21,9 +21,7 @@ platforms:
 suites:
   - name: default
     run_list:
-      - recipe[gusztavvargadr_workstations_svn::requirements]
-      - recipe[gusztavvargadr_workstations_svn::tools]
-      - recipe[gusztavvargadr_workstations_svn::profiles]
+      - recipe[gusztavvargadr_workstations_svn::default]
     attributes:
       gusztavvargadr_workstations_svn:
         profiles:
