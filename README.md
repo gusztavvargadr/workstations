@@ -12,16 +12,14 @@ This repository contains Windows workstations for .NET, SQL Server, infrastructu
 
 ## Overview
 
-This repository contains Windows-based workstations for the following purposes:
+This repository contains Windows-based workstations for the following scenarios:
 
 * [.NET development] with Visual Studio.
 * [SQL Server development] with SQL Server Management Studio.
 * [Infrastructure development] with Chef, Packer, Terraform and AWS.
 * [Java development] with IntelliJ IDEA.
 
-All of them support an easy, source-controlled way of installing and configuring the most common development tools for the related stacks and the management of the sources of your projects, based on [Vagrant][VagrantHome] and [VirtualBox][VirtualBoxHome]. This way you can easily recreate the same workstations anytime, anywhere, and instead of writing extensive documentation, you can simply share ready to use environments with your teammates and contributors.
-
-The most common configuration options are also supported out of the box:
+All of them support an easy, source-controlled way of installing and configuring the most common development tools for the related stacks, and the management of the sources of your projects, based on [Vagrant][VagrantHome] and [VirtualBox][VirtualBoxHome]:
 
 * Managing the core [OS] settings, installing features and additional packages.
 * Working with [Git] and [SVN] repositories.
@@ -29,7 +27,7 @@ The most common configuration options are also supported out of the box:
 * Downloading [Vagrant] base boxes and pulling [Docker] images.
 * Setting up [AWS] profiles.
 
-Of course, you can extend these freely with your own configuration options and provisioning steps.
+This way you can easily recreate the same workstations anytime, anywhere, and instead of writing extensive documentation, you can simply share ready to use environments with your teammates and contributors. Of course, you can further extend these freely with any of your own configuration options and provisioning steps.
 
 [Overview]: #overview
 
@@ -39,7 +37,7 @@ Of course, you can extend these freely with your own configuration options and p
 
 **Note** The virtual environments have been tested on Windows hosts only, but they are supposed to run on any other platform as well. [Let me know][Contributing] if you encounter any issues and I'm glad to help.  
 
-**Note** Booting a workstation for the first time can take a significant amount of time. If you have a slow connection, downloading the [base boxes][AtlasBoxes] (usually several GBs) might require some patience and retries. Also, provisioning (e.g. installing the custom tools not included in the base box) by default happens during the initial boot as well. However, starting the workstations again later, or creating another one from the already downloaded base box will be significantly faster.  
+**Note** Booting a workstation for the first time can take a significant amount of time. If you have a slow connection, downloading the [base boxes][AtlasBoxes] (usually several GBs) might require some patience and retries. Also, configuring the core OS after Sysprep (to support actually unique virtual machines) and provisioning (e.g. installing the custom tools not included in the base box) by default happens during the initial boot as well. However, starting the workstations again later, or creating another one from the already downloaded base box will not need these steps so the process will be significantly faster.  
 
 **Note** All the components of the workstations (including the core operating system) are installed from their publicly available [free or evaluation versions][PackerNotes].  
 
@@ -80,19 +78,21 @@ $ cd src/dotnet
 $ vagrant up
 ```
 
-Connect to it via RDP or use the shell:
+The workstation is created by default with the following tools installed and configured:
+
+* [Windows Server 2016 Standard, Visual Studio 2015 Community, SQL Server 2014 Developer][.NETDevelopmentBox]
+* [OS]
+* [Git]
+* [Vagrant]
+* [Docker]
+* [NuGet]
+
+Connect to the workstation via RDP or use the shell:
 
 ```
 $ vagrant rdp
 $ vagrant powershell
 ```
-
-The workstation is created by default with the following tools installed and configured:
-
-* [Windows Server 2016 Standard, Visual Studio 2015 Community, SQL Server 2014 Developer][.NETDevelopmentBox]
-* [Docker]
-* [Git]
-* [NuGet]
 
 [.NET development]: #net-development
 [.NETDevelopmentBox]: https://atlas.hashicorp.com/gusztavvargadr/boxes/w16s-sql14d-vs15c
@@ -106,18 +106,20 @@ $ cd src/sql
 $ vagrant up
 ```
 
-Connect to it via RDP or use the shell:
+The workstation is created by default with the following tools installed and configured:
+
+* [Windows Server 2016 Standard, SQL Server 2014 Developer][SQLServerDevelopmentBox]
+* [OS]
+* [Git]
+* [Vagrant]
+* [Docker]
+
+Connect to the workstation via RDP or use the shell:
 
 ```
 $ vagrant rdp
 $ vagrant powershell
 ```
-
-The workstation is created by default with the following tools installed and configured:
-
-* [Windows Server 2016 Standard, SQL Server 2014 Developer][SQLServerDevelopmentBox]
-* [Docker]
-* [Git]
 
 [SQL Server development]: #sql-server-development
 [SQLServerDevelopmentBox]: https://atlas.hashicorp.com/gusztavvargadr/boxes/w16s-sql14d
@@ -131,25 +133,25 @@ $ cd src/infrastructure
 $ vagrant up
 ```
 
-Connect to it via RDP or use the shell:
+The workstation is created by default with the following tools installed and configured:
+
+* [Windows Server 2016 Standard][InfrastructureDevelopmentBox]
+* [OS]
+* [Git]
+* [Vagrant]
+* [Docker]
+* [AWS]
+* [Packer], [Terraform]
+
+Connect to the workstation via RDP or use the shell:
 
 ```
 $ vagrant rdp
 $ vagrant powershell
 ```
 
-The workstation is created by default with the following tools installed and configured:
-
-* [Windows Server 2016 Standard][InfrastructureDevelopmentBox]
-* [Docker]
-* [Git]
-* [ChefDK], [Packer], [Terraform]
-* [Vagrant]
-* [AWS]
-
 [Infrastructure development]: #infrastructure-development
 [InfrastructureDevelopmentBox]: https://atlas.hashicorp.com/gusztavvargadr/boxes/w16s
-[ChefDK]: https://chocolatey.org/packages/chefdk
 [Packer]: https://chocolatey.org/packages/packer
 [Terraform]: https://chocolatey.org/packages/terraform
 
@@ -162,19 +164,21 @@ $ cd src/java
 $ vagrant up
 ```
 
-Connect to it via RDP or use the shell:
+The workstation is created by default with the following tools installed and configured:
+
+* [Windows Server 2016 Standard][JavaDevelopmentBox]
+* [OS]
+* [Git]
+* [Vagrant]
+* [Docker]
+* [JDK], [Maven], [IntelliJ IDEA]
+
+Connect to the workstation via RDP or use the shell:
 
 ```
 $ vagrant rdp
 $ vagrant powershell
 ```
-
-The workstation is created by default with the following tools installed and configured:
-
-* [Windows Server 2016 Standard][JavaDevelopmentBox]
-* [Docker]
-* [Git]
-* [JDK], [Maven], [IntelliJ IDEA]
 
 [Java development]: #java-development
 [JavaDevelopmentBox]: https://atlas.hashicorp.com/gusztavvargadr/boxes/w16s
