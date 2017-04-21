@@ -15,6 +15,9 @@ def vagrant_config_vm_define(config, directory, name, options = {})
     chef_json: {
       'gusztavvargadr_workstations_os' => {
         'requirements' => {
+          'environment' => {
+            'GUSZTAVVARGADR_WORKSTATIONS_FILES' => '/vagrant-core/files',
+          },
           'locales' => {
             'system' => powershell_out('(Get-WinSystemLocale).Name'),
             'ui' => powershell_out('(Get-WinUserLanguageList)[0].LanguageTag'),
@@ -36,6 +39,8 @@ def vagrant_config_vm_define(config, directory, name, options = {})
       vb.memory = options[:memory]
       vb.cpus = options[:cpus]
     end
+
+    config.vm.synced_folder File.expand_path('../', __FILE__), '/vagrant-core'
 
     vagrant_config_vm_provision_chef config_vm, 'requirements', options
     config_vm.vm.provision :reload
@@ -62,14 +67,22 @@ def vagrant_config_vm_provision_chef(config_vm, stage, options)
 
     chef.cookbooks_path = options[:chef_cookbooks_path]
     options[:chef_cookbooks].each do |chef_cookbook|
-      chef.add_cookbook "#{chef_cookbook}::#{stage}"
+      chef.add_recipe "#{chef_cookbook}::default"
     end
 
     chef.roles_path = options[:chef_roles_path]
     options[:chef_roles].each do |chef_role|
-      chef.add_role "#{chef_role}_#{stage}"
+      chef.add_role chef_role
     end
 
-    chef.json = options[:chef_json]
+    chef.json = {
+      'gusztavvargadr_workstations_core' => {
+        'default' => {
+          'requirements' => stage == 'requirements',
+          'tools' => stage == 'tools',
+          'profiles' => stage == 'profiles',
+        },
+      },
+    }.deep_merge(options[:chef_json])
   end
 end

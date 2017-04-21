@@ -1,4 +1,7 @@
+options = node['gusztavvargadr_workstations_os']
+return if options.nil?
+
 gusztavvargadr_workstations_os_profiles '' do
-  profiles_options node['gusztavvargadr_workstations_os']['profiles']
+  profiles_options options['profiles']
   action :create
 end

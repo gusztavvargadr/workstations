@@ -6,4 +6,4 @@ description 'Installs/Configures OS workstations'
 long_description 'Installs/Configures OS workstations'
 version '0.0.0'
 
-depends 'gusztavvargadr_windows'
+depends 'gusztavvargadr_workstations_core'
