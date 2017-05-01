@@ -8,7 +8,7 @@ TODO: contributing - extending: new workstations, custom provisioning
 
 **Contents** [Overview] | [Getting started] | [Usage] | [Next steps] | [Contributing] | [Resources]  
 
-This repository contains Windows workstations for .NET, SQL Server, infrastructure and Java development using Vagrant and VirtualBox.
+This repository contains Windows-based [workstations][Overview] for [.NET][.NET development], [SQL Server][SQL Server development], [infrastructure][Infrastructure development] and [Java development] using [Vagrant][VagrantHome], [VirtualBox][VirtualBoxHome] and [Chef][ChefHome].
 
 ## Overview
 
@@ -19,15 +19,15 @@ This repository contains Windows-based workstations for the following scenarios:
 * [Infrastructure development] with Chef, Packer, Terraform and AWS.
 * [Java development] with IntelliJ IDEA.
 
-All of them support an easy, source-controlled way of installing and configuring the most common development tools for the related stacks, and the management of the sources of your projects, based on [Vagrant][VagrantHome] and [VirtualBox][VirtualBoxHome]:
+All of them support an easy, source-controlled way of installing and configuring the most common development tools for the related stacks, and the management of the source code of your projects, based on [Vagrant][VagrantHome], [VirtualBox][VirtualBoxHome] and [Chef][ChefHome]:
 
-* Managing the core [OS] settings, installing features and additional packages.
+* Managing the core [OS] settings, installing features and custom packages.
 * Working with [Git] and [SVN] repositories.
 * Managing [NuGet] sources.
-* Downloading [Vagrant] base boxes and pulling [Docker] images.
+* Downloading [Vagrant] boxes and pulling [Docker] images.
 * Setting up [AWS] profiles.
 
-This way you can easily recreate the same workstations anytime, anywhere, and instead of writing extensive documentation, you can simply share ready to use environments with your teammates and contributors. Of course, you can further extend these freely with any of your own configuration options and provisioning steps.
+This way you can easily create the same workstations anytime, anywhere, and instead of writing extensive documentation, you can simply share the ready to use environments with your teammates and contributors. Of course, you can extend these options freely with any of your own configuration and provisioning steps.
 
 [Overview]: #overview
 
@@ -37,14 +37,14 @@ This way you can easily recreate the same workstations anytime, anywhere, and in
 
 **Note** The virtual environments have been tested on Windows hosts only, but they are supposed to run on any other platform as well. [Let me know][Contributing] if you encounter any issues and I'm glad to help.  
 
-**Note** Booting a workstation for the first time can take a significant amount of time. If you have a slow connection, downloading the [base boxes][AtlasBoxes] (usually several GBs) might require some patience and retries. Also, configuring the core OS after Sysprep (to support actually unique virtual machines) and provisioning (e.g. installing the custom tools not included in the base box) by default happens during the initial boot as well. However, starting the workstations again later, or creating another one from the already downloaded base box will not need these steps so the process will be significantly faster.  
+**Note** Booting a workstation for the first time can take a significant amount of time. If you have a slow connection, downloading the [boxes][AtlasBoxes] (usually several GBs) might require some patience and retries. Also, configuring the core OS after Sysprep (to support actually unique virtual machines) and provisioning (e.g. installing the custom tools not included in the boxes) by default happens during the initial boot as well. However, starting the workstations again later, or creating another one from the already downloaded boxes will not need these steps, so the process will be significantly faster.  
 
-**Note** All the components of the workstations (including the core operating system) are installed from their publicly available [free or evaluation versions][PackerNotes].  
+**Note** All the components of the workstations (including the core OS) are installed based on their publicly available [free or evaluation versions][PackerOverview].  
 
 [Getting started]: #getting-started
 [VagrantGettingStarted]: https://www.vagrantup.com/intro/getting-started/index.html
 [AtlasBoxes]: https://atlas.hashicorp.com/gusztavvargadr
-[PackerNotes]: https://github.com/gusztavvargadr/packer#notes
+[PackerOverview]: https://github.com/gusztavvargadr/packer#overview
 
 ### Prerequisites
 
@@ -67,7 +67,7 @@ Follow the steps below to install the required tools:
 
 ### Creating the workstations
 
-Clone this repo and navigate to the root directory of the clone from your shell. Then follow the steps below to create any of the specific workstations.
+Clone this repo and navigate to the root directory of the clone using your shell. Then follow the steps below to create any of the specific workstations.
 
 #### .NET development
 
@@ -241,7 +241,7 @@ See below the complete list of provisioning customization options supported out 
 <!--
 * Vagrant
   * Installing Vagrant itself and its plugins.
-  * Adding base boxes.
+  * Adding boxes.
 -->
 
 [Vagrant]: #vagrant
