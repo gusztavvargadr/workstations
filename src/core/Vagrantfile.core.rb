@@ -2,7 +2,7 @@ def vagrant_config_vm_define(config, directory, name, options = {})
   environment = File.basename(directory)
 
   options = {
-    autostart: true,
+    autostart: false,
     box: "gusztavvargadr/#{name}",
     gui: false,
     memory: 4096,
