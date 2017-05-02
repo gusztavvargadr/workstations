@@ -4,9 +4,26 @@ core_directory = "#{local_directory}/../core"
 require "#{core_directory}/Vagrantfile.core"
 
 Vagrant.configure('2') do |config|
-  vagrant_config_vm_define config, local_directory, 'w16s-sql14d-vs15c',
-    memory: 8192,
-    cpus: 4,
-    chef_roles: ['gusztavvargadr_workstations_sql'] do |w16s_sql14d_vs15c|
+  vagrant_config_vm_define config, local_directory, 'w16s-vs10p' do |w16s_vs10p|
+  end
+end
+
+Vagrant.configure('2') do |config|
+  vagrant_config_vm_define config, local_directory, 'w16s-vs15c' do |w16s_vs15c|
+  end
+end
+
+Vagrant.configure('2') do |config|
+  vagrant_config_vm_define config, local_directory, 'w16s-vs15p' do |w16s_vs15p|
+  end
+end
+
+Vagrant.configure('2') do |config|
+  vagrant_config_vm_define config, local_directory, 'w16s-vs17c' do |w16s_vs17c|
+  end
+end
+
+Vagrant.configure('2') do |config|
+  vagrant_config_vm_define config, local_directory, 'w16s-vs17p' do |w16s_vs17p|
   end
 end
