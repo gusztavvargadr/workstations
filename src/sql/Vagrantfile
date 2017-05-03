@@ -6,4 +6,22 @@ require "#{core_directory}/Vagrantfile.core"
 Vagrant.configure('2') do |config|
   vagrant_config_vm_define config, local_directory, 'w16s-sql14d' do |w16s_sql14d|
   end
+
+  vagrant_config_vm_define config, local_directory, 'w16s-ssms17',
+    box: 'gusztavvargadr/w16s',
+    chef_json:
+    {
+      'gusztavvargadr_workstations_os' => {
+        'tools' => {
+          'windows' => {
+            'SQL Server Management Studio 17.0' => {
+              'source' => 'https://download.microsoft.com/download/C/8/A/C8AE3D51-5AAD-4DCF-809C-667D691629E4/SSMS-Setup-ENU.exe',
+              'install' => '/install /quiet /norestart',
+              'directory' => '/Program Files/SSMS',
+            },
+          },
+        },
+      },
+    } do |w16s_ssms17|
+  end
 end
