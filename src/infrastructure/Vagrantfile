@@ -4,6 +4,12 @@ core_directory = "#{local_directory}/../core/vagrant"
 require "#{core_directory}/Vagrantfile.core"
 
 Vagrant.configure('2') do |config|
+  vagrant_config_vm_define(config, local_directory, 'docker', box: 'w16s') do |aws|
+  end
+
+  vagrant_config_vm_define(config, local_directory, 'virtualbox', box: 'w16s') do |aws|
+  end
+
   vagrant_config_vm_define(config, local_directory, 'aws', box: 'w16s') do |aws|
   end
 end

@@ -11,15 +11,5 @@ default_attributes(
     'requirements' => {},
     'tools' => {},
     'profiles' => {},
-  },
-  'gusztavvargadr_workstations_vagrant' => {
-    'requirements' => {},
-    'tools' => {},
-    'profiles' => {},
-  },
-  'gusztavvargadr_workstations_docker' => {
-    'requirements' => {},
-    'tools' => {},
-    'profiles' => {},
   }
 )

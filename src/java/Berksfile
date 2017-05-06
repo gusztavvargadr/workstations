@@ -6,7 +6,5 @@ instance_eval(File.read("#{core_directory}/Berksfile.core.rb"))
 gusztavvargadr_workstations_cookbook 'core', core_directory
 gusztavvargadr_workstations_cookbook 'os', core_directory
 gusztavvargadr_workstations_cookbook 'git', core_directory
-gusztavvargadr_workstations_cookbook 'vagrant', core_directory
-gusztavvargadr_workstations_cookbook 'docker', core_directory
 
 gusztavvargadr_cookbook 'windows'

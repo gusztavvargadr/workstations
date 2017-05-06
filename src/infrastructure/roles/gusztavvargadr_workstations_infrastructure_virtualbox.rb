@@ -1,7 +1,6 @@
-name 'gusztavvargadr_workstations_infrastructure'
-description 'Infrastructure workstations'
-run_list 'role[gusztavvargadr_workstations_core]',
-  'recipe[gusztavvargadr_workstations_vagrant::default]'
+name 'gusztavvargadr_workstations_infrastructure_virtualbox'
+description 'Infrastructure VirtualBox workstations'
+run_list 'role[gusztavvargadr_workstations_infrastructure]'
 default_attributes(
   'gusztavvargadr_workstations_os' => {
     'requirements' => {},
@@ -17,15 +16,9 @@ default_attributes(
     'requirements' => {},
     'tools' => {
       'chocolatey' => {
-        'chefdk' => {},
-        'packer' => {},
+        'virtualbox' => {},
       },
     },
-    'profiles' => {
-      'plugins' => {
-        'vagrant-reload' => {},
-        'vagrant-berkshelf' => {},
-      },
-    },
+    'profiles' => {},
   }
 )

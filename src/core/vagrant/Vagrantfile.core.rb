@@ -71,7 +71,7 @@ def vagrant_config_vm_define(config, directory, machine, options = {})
 
   config.vm.define machine, autostart: options[:autostart] do |config_vm|
     config_vm.vm.box = box
-    config_vm.vm.box_url = "file:///#{box_url}" if File.exist?(box_url)
+    config_vm.vm.box_url = "file://#{box_url}" if File.exist?(box_url)
 
     config_vm.vm.provider 'virtualbox' do |vb|
       vb.gui = options[:virtualbox]['gui']
@@ -98,8 +98,17 @@ def vagrant_config_vm_provision_chef(config_vm, directory, environment, machine,
     roles_path = options['roles_path']
     roles_path = [File.expand_path('../../chef/roles', __FILE__), "#{directory}/roles"] if roles_path.empty?
     chef.roles_path = roles_path
+
     roles = options['roles']
-    roles = ["gusztavvargadr_workstations_#{environment}"] if roles.empty?
+    if roles.empty?
+      if File.exist?("#{directory}/roles/gusztavvargadr_workstations_#{environment}_#{machine}.rb")
+        roles = ["gusztavvargadr_workstations_#{environment}_#{machine}"]
+      elsif File.exist?("#{directory}/roles/gusztavvargadr_workstations_#{environment}.rb")
+        roles = ["gusztavvargadr_workstations_#{environment}"]
+      else
+        roles = ['gusztavvargadr_workstations_core']
+      end
+    end
     roles.each do |role|
       chef.add_role role
     end

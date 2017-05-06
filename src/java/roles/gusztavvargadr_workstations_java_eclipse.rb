@@ -1,13 +1,12 @@
-name 'gusztavvargadr_workstations_java'
-description 'Java workstations'
-run_list 'role[gusztavvargadr_workstations_core]'
+name 'gusztavvargadr_workstations_java_eclipse'
+description 'Java Eclipse workstations'
+run_list 'role[gusztavvargadr_workstations_java]'
 default_attributes(
   'gusztavvargadr_workstations_os' => {
     'requirements' => {},
     'tools' => {
       'chocolatey' => {
-        'jdk8' => {},
-        'maven' => {},
+        'eclipse' => {},
       },
     },
     'profiles' => {},
