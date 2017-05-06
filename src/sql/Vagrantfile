@@ -1,14 +1,14 @@
 local_directory = File.expand_path('../', __FILE__)
-core_directory = "#{local_directory}/../core"
+core_directory = "#{local_directory}/../core/vagrant"
 
 require "#{core_directory}/Vagrantfile.core"
 
 Vagrant.configure('2') do |config|
-  vagrant_config_vm_define config, local_directory, 'w16s-sql14d' do |w16s_sql14d|
+  vagrant_config_vm_define(config, local_directory, 'sql14d', box: 'w16s-sql14d') do |sql14d|
   end
 
-  vagrant_config_vm_define config, local_directory, 'w16s-ssms17',
-    box: 'gusztavvargadr/w16s',
+  vagrant_config_vm_define(config, local_directory, 'ssms17',
+    box: 'w16s',
     chef_json:
     {
       'gusztavvargadr_workstations_os' => {
@@ -22,6 +22,6 @@ Vagrant.configure('2') do |config|
           },
         },
       },
-    } do |w16s_ssms17|
+    }) do |ssms17|
   end
 end

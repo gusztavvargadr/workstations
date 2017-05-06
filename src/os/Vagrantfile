@@ -1,12 +1,12 @@
 local_directory = File.expand_path('../', __FILE__)
-core_directory = "#{local_directory}/../core"
+core_directory = "#{local_directory}/../core/vagrant"
 
 require "#{core_directory}/Vagrantfile.core"
 
 Vagrant.configure('2') do |config|
-  vagrant_config_vm_define config, local_directory, 'w10e' do |w10e|
+  vagrant_config_vm_define(config, local_directory, 'w10e') do |w10e|
   end
 
-  vagrant_config_vm_define config, local_directory, 'w16s' do |w16s|
+  vagrant_config_vm_define(config, local_directory, 'w16s') do |w16s|
   end
 end
