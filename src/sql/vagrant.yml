@@ -2,6 +2,5 @@ sql14d:
   box: w16s-sql14d
 
 ssms17:
-  primary: true
-  autostart: true
+  default: true
   box: w16s

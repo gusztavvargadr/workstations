@@ -2,9 +2,4 @@ default:
   box: w16s
 
 docker:
-  primary: true
-  autostart: true
-
-virtualbox:
-
-aws:
+  default: true

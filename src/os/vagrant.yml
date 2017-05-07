@@ -1,5 +1,2 @@
-w10e:
-
 w16s:
-  primary: true
-  autostart: true
+  default: true
