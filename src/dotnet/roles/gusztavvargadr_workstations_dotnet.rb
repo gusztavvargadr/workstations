@@ -6,7 +6,7 @@ default_attributes(
   'gusztavvargadr_workstations_nuget' => {
     'tools' => {
       'files' => {
-        "#{ENV['GUSZTAVVARGADR_WORKSTATIONS_CORE_PATH']}/NuGet.Config" => "#{ENV['APPDATA']}/NuGet/NuGet.Config",
+        "#{ENV['GUSZTAVVARGADR_WORKSTATIONS_CORE_PATH']}/files/NuGet.Config" => "#{ENV['APPDATA']}/NuGet/NuGet.Config",
       },
     },
   }
