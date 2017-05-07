@@ -1,16 +1,11 @@
 name 'gusztavvargadr_workstations_infrastructure'
 description 'Infrastructure workstations'
 run_list 'role[gusztavvargadr_workstations_core]',
-  'recipe[gusztavvargadr_workstations_aws::default]'
+  'recipe[gusztavvargadr_workstations_vagrant::default]'
 default_attributes(
   'gusztavvargadr_workstations_os' => {
     'requirements' => {},
-    'tools' => {
-      'chocolatey' => {
-        'packer' => {},
-        'terraform' => {},
-      },
-    },
+    'tools' => {},
     'profiles' => {},
   },
   'gusztavvargadr_workstations_git' => {
@@ -20,21 +15,18 @@ default_attributes(
   },
   'gusztavvargadr_workstations_vagrant' => {
     'requirements' => {},
-    'tools' => {},
-    'profiles' => {
-      'plugins' => {
-        'vagrant-aws' => {},
+    'tools' => {
+      'chocolatey' => {
+        'chefdk' => {},
+        'packer' => {},
       },
     },
-  },
-  'gusztavvargadr_workstations_docker' => {
-    'requirements' => {},
-    'tools' => {},
-    'profiles' => {},
-  },
-  'gusztavvargadr_workstations_aws' => {
-    'requirements' => {},
-    'tools' => {},
-    'profiles' => {},
+    'profiles' => {
+      'plugins' => {
+        'nugrant' => {},
+        'vagrant-reload' => {},
+        'vagrant-berkshelf' => {},
+      },
+    },
   }
 )

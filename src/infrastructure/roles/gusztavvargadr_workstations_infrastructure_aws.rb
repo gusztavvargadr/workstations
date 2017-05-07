@@ -1,6 +1,7 @@
-name 'gusztavvargadr_workstations_os'
-description 'OS workstations'
-run_list 'role[gusztavvargadr_workstations_core]'
+name 'gusztavvargadr_workstations_infrastructure_aws'
+description 'Infrastructure AWS workstations'
+run_list 'role[gusztavvargadr_workstations_infrastructure]',
+  'recipe[gusztavvargadr_workstations_aws::default]'
 default_attributes(
   'gusztavvargadr_workstations_os' => {
     'requirements' => {},
@@ -15,9 +16,13 @@ default_attributes(
   'gusztavvargadr_workstations_vagrant' => {
     'requirements' => {},
     'tools' => {},
-    'profiles' => {},
+    'profiles' => {
+      'plugins' => {
+        'vagrant-aws' => {},
+      },
+    },
   },
-  'gusztavvargadr_workstations_docker' => {
+  'gusztavvargadr_workstations_aws' => {
     'requirements' => {},
     'tools' => {},
     'profiles' => {},

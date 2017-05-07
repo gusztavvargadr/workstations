@@ -1,0 +1,22 @@
+default:
+  primary: false
+  autostart: false
+  box:
+  virtualbox:
+    gui: false
+    memory: 4096
+    cpus: 2
+  synced_folder_core_destination: /vagrant-gusztavvargadr-workstations-core
+  chef:
+    install: false
+    json:
+      gusztavvargadr_workstations_os:
+        requirements:
+          environment:
+            GUSZTAVVARGADR_WORKSTATIONS_CORE_PATH: /vagrant-gusztavvargadr-workstations-core
+          locales:
+            system: en-US
+            ui: en-US
+            user: en-US
+          datetime:
+            timezone: UTC

@@ -8,22 +8,11 @@ default_attributes(
       'chocolatey' => {
         'jdk8' => {},
         'maven' => {},
-        'intellijidea-community' => {},
       },
     },
     'profiles' => {},
   },
   'gusztavvargadr_workstations_git' => {
-    'requirements' => {},
-    'tools' => {},
-    'profiles' => {},
-  },
-  'gusztavvargadr_workstations_vagrant' => {
-    'requirements' => {},
-    'tools' => {},
-    'profiles' => {},
-  },
-  'gusztavvargadr_workstations_docker' => {
     'requirements' => {},
     'tools' => {},
     'profiles' => {},

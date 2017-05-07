@@ -1,27 +1,12 @@
-local_directory = File.expand_path('../', __FILE__)
-core_directory = "#{local_directory}/../core"
-
-require "#{core_directory}/Vagrantfile.core"
+directory = File.expand_path('..', __FILE__)
+require "#{directory}/../core/vagrant/Vagrantfile.core"
 
 Vagrant.configure('2') do |config|
-  vagrant_config_vm_define config, local_directory, 'w16s-sql14d' do |w16s_sql14d|
+  gusztavvargadr_workstations_core config
+
+  gusztavvargadr_workstations_vm config, directory, 'sql14d' do |sql14d|
   end
 
-  vagrant_config_vm_define config, local_directory, 'w16s-ssms17',
-    box: 'gusztavvargadr/w16s',
-    chef_json:
-    {
-      'gusztavvargadr_workstations_os' => {
-        'tools' => {
-          'windows' => {
-            'SQL Server Management Studio 17.0' => {
-              'source' => 'https://download.microsoft.com/download/C/8/A/C8AE3D51-5AAD-4DCF-809C-667D691629E4/SSMS-Setup-ENU.exe',
-              'install' => '/install /quiet /norestart',
-              'directory' => '/Program Files/SSMS',
-            },
-          },
-        },
-      },
-    } do |w16s_ssms17|
+  gusztavvargadr_workstations_vm config, directory, 'ssms17' do |ssms17|
   end
 end
