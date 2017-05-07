@@ -3,18 +3,11 @@ description 'Java workstations'
 run_list 'role[gusztavvargadr_workstations_core]'
 default_attributes(
   'gusztavvargadr_workstations_os' => {
-    'requirements' => {},
     'tools' => {
       'chocolatey' => {
         'jdk8' => {},
         'maven' => {},
       },
     },
-    'profiles' => {},
-  },
-  'gusztavvargadr_workstations_git' => {
-    'requirements' => {},
-    'tools' => {},
-    'profiles' => {},
   }
 )

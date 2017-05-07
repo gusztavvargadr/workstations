@@ -1,6 +1,5 @@
 default:
-  primary: false
-  autostart: false
+  default: false
   box:
   virtualbox:
     gui: false

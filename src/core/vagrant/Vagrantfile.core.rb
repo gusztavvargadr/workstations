@@ -13,7 +13,7 @@ def gusztavvargadr_workstations_vm(config, directory, vm)
 
   environment = File.basename(directory)
 
-  config.vm.define vm, primary: options['primary'], autostart: options['autostart'] do |config_vm|
+  config.vm.define vm, primary: options['default'], autostart: options['default'] do |config_vm|
     box = options['box']
     box = vm if box.to_s.empty?
     box = "gusztavvargadr/#{box}" unless box.include?('/')

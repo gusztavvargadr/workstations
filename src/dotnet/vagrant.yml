@@ -8,8 +8,7 @@ vs15p:
   box: w16s-vs15p
 
 vs17c:
-  primary: true
-  autostart: true
+  default: true
   box: w16s-vs17c
 
 vs17p:
