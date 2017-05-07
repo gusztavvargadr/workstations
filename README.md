@@ -1,12 +1,11 @@
 # Workstations
 
 <!--
-TODO: getting started - home var
-TODO: customization - reprovision note
-TODO: contributing - extending: new workstations, custom provisioning
+TODO: os machines
+TODO: no links in first paragraph
 -->
 
-**Contents** [Overview] | [Getting started] | [Usage] | [Next steps] | [Contributing] | [Resources]  
+**Quick links** [Overview] | [Getting started] | [Usage] | [Contributing] | [Resources]  
 
 This repository contains Windows-based [workstations][Overview] for [.NET][.NET development], [SQL Server][SQL Server development], [infrastructure][Infrastructure development] and [Java development] using [Vagrant][VagrantHome], [VirtualBox][VirtualBoxHome] and [Chef][ChefHome].
 
@@ -14,10 +13,10 @@ This repository contains Windows-based [workstations][Overview] for [.NET][.NET 
 
 This repository contains Windows-based workstations for the following scenarios:
 
-* [.NET development] with Visual Studio.
-* [SQL Server development] with SQL Server Management Studio.
-* [Infrastructure development] with Chef, Packer, Terraform and AWS.
-* [Java development] with IntelliJ IDEA.
+* [.NET development] with Visual Studio 2010, 2015 and 2017.
+* [SQL Server development] with SQL Server 2014 and SQL Server Management Studio 2017.
+* [Infrastructure development] with Chef, Packer and Terraform with Docker, VirtualBox and AWS.
+* [Java development] with IntelliJ IDEA and Eclipse.
 
 All of them support an easy, source-controlled way of installing and configuring the most common development tools for the related stacks, and the management of the source code of your projects, based on [Vagrant][VagrantHome], [VirtualBox][VirtualBoxHome] and [Chef][ChefHome]:
 
@@ -39,7 +38,7 @@ This way you can easily create the same workstations anytime, anywhere, and inst
 
 **Note** Booting a workstation for the first time can take a significant amount of time. If you have a slow connection, downloading the [boxes][AtlasBoxes] (usually several GBs) might require some patience and retries. Also, configuring the core OS after Sysprep (to support actually unique virtual machines) and provisioning (e.g. installing the custom tools not included in the boxes) by default happens during the initial boot as well. However, starting the workstations again later, or creating another one from the already downloaded boxes will not need these steps, so the process will be significantly faster.  
 
-**Note** All the components of the workstations (including the core OS) are installed based on their publicly available [free or evaluation versions][PackerOverview].  
+**Note** Make sure to use boxes only from [trusted sources][PackerOverview].  
 
 [Getting started]: #getting-started
 [VagrantGettingStarted]: https://www.vagrantup.com/intro/getting-started/index.html
@@ -75,27 +74,28 @@ Boot the workstation:
 
 ```
 $ cd src/dotnet
-$ vagrant up
+$ vagrant up (vs10p|vs15c|vs15p|vs17c|vs17p)
 ```
 
 The workstation is created by default with the following tools installed and configured:
 
-* [Windows Server 2016 Standard, Visual Studio 2015 Community, SQL Server 2014 Developer][.NETDevelopmentBox]
+* [Windows Server 2016 Standard][w16s]
+  * vs10p - [Visual Studio 2010 Professional][w16s-vs10p]
+  * vs15c - [Visual Studio 2015 Community][w16s-vs15c]
+  * vs15p - [Visual Studio 2015 Professional][w16s-vs15p]
+  * vs17c - [Visual Studio 2017 Community][w16s-vs17c]
+  * vs17p - [Visual Studio 2017 Professional][w16s-vs17p]
 * [OS]
 * [Git]
-* [Vagrant]
-* [Docker]
 * [NuGet]
 
-Connect to the workstation via RDP or use the shell:
-
-```
-$ vagrant rdp
-$ vagrant powershell
-```
-
 [.NET development]: #net-development
-[.NETDevelopmentBox]: https://atlas.hashicorp.com/gusztavvargadr/boxes/w16s-sql14d-vs15c
+[w16s]: https://atlas.hashicorp.com/gusztavvargadr/boxes/w16s
+[w16s-vs10p]: https://atlas.hashicorp.com/gusztavvargadr/boxes/w16s-vs10p
+[w16s-vs15c]: https://atlas.hashicorp.com/gusztavvargadr/boxes/w16s-vs15c
+[w16s-vs15p]: https://atlas.hashicorp.com/gusztavvargadr/boxes/w16s-vs15p
+[w16s-vs17c]: https://atlas.hashicorp.com/gusztavvargadr/boxes/w16s-vs17c
+[w16s-vs17p]: https://atlas.hashicorp.com/gusztavvargadr/boxes/w16s-vs17p
 
 #### SQL Server development
 
@@ -103,26 +103,19 @@ Boot the workstation:
 
 ```
 $ cd src/sql
-$ vagrant up
+$ vagrant up (sql14d|ssms17)
 ```
 
 The workstation is created by default with the following tools installed and configured:
 
-* [Windows Server 2016 Standard, SQL Server 2014 Developer][SQLServerDevelopmentBox]
+* [Windows Server 2016 Standard][w16s]
+  * sql14d - [SQL Server 2014 Developer][w16s-sql14d], SQL Server Management Studio 2017
+  * ssms17 - SQL Server Management Studio 2017
 * [OS]
 * [Git]
-* [Vagrant]
-* [Docker]
-
-Connect to the workstation via RDP or use the shell:
-
-```
-$ vagrant rdp
-$ vagrant powershell
-```
 
 [SQL Server development]: #sql-server-development
-[SQLServerDevelopmentBox]: https://atlas.hashicorp.com/gusztavvargadr/boxes/w16s-sql14d
+[w16s-sql14d]: https://atlas.hashicorp.com/gusztavvargadr/boxes/w16s-sql14d
 
 #### Infrastructure development
 
@@ -130,28 +123,21 @@ Boot the workstation:
 
 ```
 $ cd src/infrastructure
-$ vagrant up
+$ vagrant up (docker|virtualbox|aws)
 ```
 
 The workstation is created by default with the following tools installed and configured:
 
-* [Windows Server 2016 Standard][InfrastructureDevelopmentBox]
+* [Windows Server 2016 Standard][w16s]
+  * docker - Windows Containers
+  * virtualbox - VirtualBox
+  * aws - [AWS] command line tools
 * [OS]
 * [Git]
+* [Chef][ChefHome], [Packer], [Terraform]
 * [Vagrant]
-* [Docker]
-* [AWS]
-* [Packer], [Terraform]
-
-Connect to the workstation via RDP or use the shell:
-
-```
-$ vagrant rdp
-$ vagrant powershell
-```
 
 [Infrastructure development]: #infrastructure-development
-[InfrastructureDevelopmentBox]: https://atlas.hashicorp.com/gusztavvargadr/boxes/w16s
 [Packer]: https://chocolatey.org/packages/packer
 [Terraform]: https://chocolatey.org/packages/terraform
 
@@ -161,30 +147,24 @@ Boot the workstation:
 
 ```
 $ cd src/java
-$ vagrant up
+$ vagrant up (intellij|eclipse)
 ```
 
 The workstation is created by default with the following tools installed and configured:
 
-* [Windows Server 2016 Standard][JavaDevelopmentBox]
+* [Windows Server 2016 Standard][w16s]
+  * intellij - [IntelliJ IDEA]
+  * eclipse - [Eclipse]
 * [OS]
 * [Git]
-* [Vagrant]
-* [Docker]
-* [JDK], [Maven], [IntelliJ IDEA]
-
-Connect to the workstation via RDP or use the shell:
-
-```
-$ vagrant rdp
-$ vagrant powershell
-```
+* [JDK], [Maven]
 
 [Java development]: #java-development
 [JavaDevelopmentBox]: https://atlas.hashicorp.com/gusztavvargadr/boxes/w16s
 [JDK]: https://chocolatey.org/packages/jdk8
 [Maven]: https://chocolatey.org/packages/maven
 [IntelliJ IDEA]: https://chocolatey.org/packages/intellijidea-community
+[Eclipse]: https://chocolatey.org/packages/eclipse
 
 ## Usage
 
@@ -204,6 +184,8 @@ See below the complete list of provisioning customization options supported out 
   * Installing Chocolatey and native packages.
 -->
 
+[Sample](https://github.com/gusztavvargadr/workstations/compare/feature/gusztavvargadr#diff-7e49f6a25a93914e472962e1a5f0010e)
+
 [OS]: #os
 
 #### Git
@@ -213,6 +195,8 @@ See below the complete list of provisioning customization options supported out 
   * Configuring Git settings.
   * Cloning public and private repositories.
 -->
+
+[Sample](https://github.com/gusztavvargadr/workstations/compare/feature/gusztavvargadr#diff-7e49f6a25a93914e472962e1a5f0010e)
 
 [Git]: #git
 
@@ -234,6 +218,8 @@ See below the complete list of provisioning customization options supported out 
   * Adding public and private package sources.
 -->
 
+[Sample](https://github.com/gusztavvargadr/workstations/compare/feature/gusztavvargadr#diff-51ab84789bf0abb34b3507eceac10b5f)
+
 [NuGet]: #nuget
 
 #### Vagrant
@@ -243,6 +229,8 @@ See below the complete list of provisioning customization options supported out 
   * Installing Vagrant itself and its plugins.
   * Adding boxes.
 -->
+
+[Sample](https://github.com/gusztavvargadr/workstations/compare/feature/gusztavvargadr#diff-d8bb6927fd2f78a36cec508a69192d38)
 
 [Vagrant]: #vagrant
 
@@ -264,6 +252,8 @@ See below the complete list of provisioning customization options supported out 
   * Setting up AWS CLI profiles.
 -->
 
+[Sample](https://github.com/gusztavvargadr/workstations/compare/feature/gusztavvargadr#diff-0c9ca0899b76bf8e98ba5b36b38113d6)
+
 [AWS]: #aws
 
 ### Customizing Vagrant
@@ -275,14 +265,9 @@ options
 Besides the above, you can of course add any of your own customizations using the tools [Vagrant supports][VagrantProvisioning].
 
 [VagrantProvisioning]: https://www.vagrantup.com/docs/provisioning/
-
 -->
 
 [Usage]: #usage
-
-## Next steps
-
-[Next steps]: #next-steps
 
 ## Contributing
 
