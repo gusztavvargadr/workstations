@@ -22,27 +22,25 @@ def gusztavvargadr_workstations_vm(config, directory, vm)
     box_url = File.expand_path("../boxes/#{box}.json", __FILE__)
     config_vm.vm.box_url = "file://#{box_url}" if File.exist?(box_url)
 
-    options_virtualbox = options['virtualbox']
     config_vm.vm.provider 'virtualbox' do |vb|
-      vb.gui = options_virtualbox['gui']
-      vb.memory = options_virtualbox['memory']
-      vb.cpus = options_virtualbox['cpus']
+      vb.gui = options['virtualbox']['gui']
+      vb.memory = options['virtualbox']['memory']
+      vb.cpus = options['virtualbox']['cpus']
     end
 
     config_vm.vm.synced_folder File.expand_path('../../', __FILE__), options['synced_folder_core_destination']
 
-    options_chef = options['chef']
-    gusztavvargadr_workstations_vm_chef config_vm, directory, environment, vm, options_chef, 'requirements'
+    gusztavvargadr_workstations_vm_chef config_vm, directory, environment, vm, options, 'requirements'
     config_vm.vm.provision :reload
-    gusztavvargadr_workstations_vm_chef config_vm, directory, environment, vm, options_chef, 'tools'
+    gusztavvargadr_workstations_vm_chef config_vm, directory, environment, vm, options, 'tools'
     config_vm.vm.provision :reload
-    gusztavvargadr_workstations_vm_chef config_vm, directory, environment, vm, options_chef, 'profiles'
+    gusztavvargadr_workstations_vm_chef config_vm, directory, environment, vm, options, 'profiles'
   end
 end
 
 def gusztavvargadr_workstations_vm_chef(config_vm, directory, environment, vm, options, stage)
   config_vm.vm.provision 'chef_solo' do |chef|
-    chef.install = options['install']
+    chef.install = options['chef']['install']
 
     chef.cookbooks_path = ['']
 
@@ -70,7 +68,7 @@ def gusztavvargadr_workstations_vm_chef(config_vm, directory, environment, vm, o
           'profiles' => stage == 'profiles',
         },
       },
-    }.deep_merge(options['json'])
+    }.deep_merge(options['chef']['json'])
   end
 end
 
