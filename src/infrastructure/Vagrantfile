@@ -1,15 +1,15 @@
-local_directory = File.expand_path('../', __FILE__)
-core_directory = "#{local_directory}/../core/vagrant"
-
-require "#{core_directory}/Vagrantfile.core"
+directory = File.expand_path('..', __FILE__)
+require "#{directory}/../core/vagrant/Vagrantfile.core"
 
 Vagrant.configure('2') do |config|
-  vagrant_config_vm_define(config, local_directory, 'docker', box: 'w16s') do |aws|
+  gusztavvargadr_workstations_core config
+
+  gusztavvargadr_workstations_vm config, directory, 'docker' do |docker|
   end
 
-  vagrant_config_vm_define(config, local_directory, 'virtualbox', box: 'w16s') do |aws|
+  gusztavvargadr_workstations_vm config, directory, 'virtualbox' do |virtualbox|
   end
 
-  vagrant_config_vm_define(config, local_directory, 'aws', box: 'w16s') do |aws|
+  gusztavvargadr_workstations_vm config, directory, 'aws' do |aws|
   end
 end

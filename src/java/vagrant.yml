@@ -1,0 +1,8 @@
+default:
+  box: w16s
+
+intellij:
+  primary: true
+  autostart: true
+
+eclipse:

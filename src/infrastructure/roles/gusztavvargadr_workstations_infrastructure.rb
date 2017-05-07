@@ -23,6 +23,7 @@ default_attributes(
     },
     'profiles' => {
       'plugins' => {
+        'nugrant' => {},
         'vagrant-reload' => {},
         'vagrant-berkshelf' => {},
       },

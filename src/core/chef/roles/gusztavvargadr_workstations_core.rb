@@ -12,7 +12,7 @@ default_attributes(
     'requirements' => {},
     'tools' => {
       'files' => {
-        "#{ENV['GUSZTAVVARGADR_WORKSTATIONS_FILES']}/.gitconfig" => "#{ENV['USERPROFILE']}/.gitconfig",
+        "#{ENV['GUSZTAVVARGADR_WORKSTATIONS_CORE_PATH']}/files/.gitconfig" => "#{ENV['USERPROFILE']}/.gitconfig",
       },
     },
     'profiles' => {},

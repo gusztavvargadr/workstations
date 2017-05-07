@@ -1,117 +1,66 @@
-def system_locale(default)
-  Gem.win_platform? ? powershell_out('(Get-WinSystemLocale).Name') : default
+require 'yaml'
+require 'erb'
+
+@options = {}
+
+def gusztavvargadr_workstations_core(config)
+  @options = gusztavvargadr_workstations_yml(File.expand_path('..', __FILE__))
 end
 
-def ui_locale(default)
-  Gem.win_platform? ? powershell_out('(Get-WinUserLanguageList)[0].LanguageTag') : default
-end
+def gusztavvargadr_workstations_vm(config, directory, vm)
+  options = @options.deep_merge(gusztavvargadr_workstations_yml(directory))
+  options = options['default'].deep_merge(options[vm])
 
-def user_locale(default)
-  Gem.win_platform? ? powershell_out('(Get-Culture).Name') : default
-end
-
-def timezone(default)
-  Gem.win_platform? ? powershell_out('([System.TimeZone]::CurrentTimeZone).StandardName') : default
-end
-
-def powershell_out(command)
-  `powershell.exe -ExecutionPolicy Bypass -NoProfile -Command "#{command}"`.strip
-end
-
-class ::Hash
-  def deep_merge(other)
-    merger = proc { |key, v1, v2| Hash === v1 && Hash === v2 ? v1.merge(v2, &merger) : Array === v1 && Array === v2 ? v1 | v2 : [:undefined, nil, :nil].include?(v2) ? v1 : v2 }
-    self.merge(other.to_h, &merger)
-  end
-end
-
-@vagrant_config_vm_options_synced_folder_core = '/vagrant-core'
-
-@vagrant_config_vm_options_default = {
-  autostart: false,
-  box: '',
-  virtualbox: {
-    'gui' => false,
-    'memory' => 4096,
-    'cpus' => 2,
-  },
-  chef: {
-    'install' => false,
-    'roles_path' => [],
-    'roles' => [],
-    'json' => {
-      'gusztavvargadr_workstations_os' => {
-        'requirements' => {
-          'environment' => {
-            'GUSZTAVVARGADR_WORKSTATIONS_FILES' => "#{@vagrant_config_vm_options_synced_folder_core}/files",
-          },
-          'locales' => {
-            'system' => system_locale('en-US'),
-            'ui' => ui_locale('en-US'),
-            'user' => user_locale('en-US'),
-          },
-          'datetime' => {
-            'timezone' => timezone('UTC'),
-          },
-        },
-      },
-    },
-  },
-}
-
-def vagrant_config_vm_define(config, directory, machine, options = {})
-  options = @vagrant_config_vm_options_default.deep_merge(options)
   environment = File.basename(directory)
 
-  box = options[:box]
-  box = box.to_s.empty? ? machine : box
-  box = !box.include?('/') ? "gusztavvargadr/#{box}" : box
-
-  box_url = File.expand_path("../boxes/#{box}.json", __FILE__)
-
-  config.vm.define machine, autostart: options[:autostart] do |config_vm|
+  config.vm.define vm, primary: options['primary'], autostart: options['autostart'] do |config_vm|
+    box = options['box']
+    box = vm if box.to_s.empty?
+    box = "gusztavvargadr/#{box}" unless box.include?('/')
     config_vm.vm.box = box
+
+    box_url = File.expand_path("../boxes/#{box}.json", __FILE__)
     config_vm.vm.box_url = "file://#{box_url}" if File.exist?(box_url)
 
+    options_virtualbox = options['virtualbox']
     config_vm.vm.provider 'virtualbox' do |vb|
-      vb.gui = options[:virtualbox]['gui']
-      vb.memory = options[:virtualbox]['memory']
-      vb.cpus = options[:virtualbox]['cpus']
+      vb.gui = options_virtualbox['gui']
+      vb.memory = options_virtualbox['memory']
+      vb.cpus = options_virtualbox['cpus']
     end
 
-    config.vm.synced_folder File.expand_path('../../', __FILE__), @vagrant_config_vm_options_synced_folder_core
+    config_vm.vm.synced_folder File.expand_path('../../', __FILE__), options['synced_folder_core_destination']
 
-    vagrant_config_vm_provision_chef config_vm, directory, environment, machine, options[:chef], 'requirements'
+    options_chef = options['chef']
+    gusztavvargadr_workstations_vm_chef config_vm, directory, environment, vm, options_chef, 'requirements'
     config_vm.vm.provision :reload
-    vagrant_config_vm_provision_chef config_vm, directory, environment, machine, options[:chef], 'tools'
+    gusztavvargadr_workstations_vm_chef config_vm, directory, environment, vm, options_chef, 'tools'
     config_vm.vm.provision :reload
-    vagrant_config_vm_provision_chef config_vm, directory, environment, machine, options[:chef], 'profiles'
+    gusztavvargadr_workstations_vm_chef config_vm, directory, environment, vm, options_chef, 'profiles'
   end
 end
 
-def vagrant_config_vm_provision_chef(config_vm, directory, environment, machine, options, stage)
+def gusztavvargadr_workstations_vm_chef(config_vm, directory, environment, vm, options, stage)
   config_vm.vm.provision 'chef_solo' do |chef|
     chef.install = options['install']
 
     chef.cookbooks_path = ['']
 
-    roles_path = options['roles_path']
-    roles_path = [File.expand_path('../../chef/roles', __FILE__), "#{directory}/roles"] if roles_path.empty?
-    chef.roles_path = roles_path
-
-    roles = options['roles']
-    if roles.empty?
-      if File.exist?("#{directory}/roles/gusztavvargadr_workstations_#{environment}_#{machine}.rb")
-        roles = ["gusztavvargadr_workstations_#{environment}_#{machine}"]
-      elsif File.exist?("#{directory}/roles/gusztavvargadr_workstations_#{environment}.rb")
-        roles = ["gusztavvargadr_workstations_#{environment}"]
-      else
-        roles = ['gusztavvargadr_workstations_core']
+    roles_path = [File.expand_path('../../chef/roles', __FILE__)]
+    role = 'gusztavvargadr_workstations_core'
+    environment_roles_path = "#{directory}/roles"
+    if Dir.exist?(environment_roles_path)
+      roles_path.push environment_roles_path
+      environment_role = "gusztavvargadr_workstations_#{environment}"
+      vm_role = "gusztavvargadr_workstations_#{environment}_#{vm}"
+      if File.exist?("#{environment_roles_path}/#{vm_role}.rb")
+        role = vm_role
+      elsif File.exist?("#{environment_roles_path}/#{environment_role}.rb")
+        role = environment_role
       end
     end
-    roles.each do |role|
-      chef.add_role role
-    end
+    chef.roles_path = roles_path
+    chef.add_role role
 
     chef.json = {
       'gusztavvargadr_workstations_core' => {
@@ -122,5 +71,18 @@ def vagrant_config_vm_provision_chef(config_vm, directory, environment, machine,
         },
       },
     }.deep_merge(options['json'])
+  end
+end
+
+def gusztavvargadr_workstations_yml(directory)
+  yml_path = "#{directory}/vagrant.yml"
+  return {} unless File.exist?(yml_path)
+  YAML.load(ERB.new(File.read(yml_path)).result)
+end
+
+class ::Hash
+  def deep_merge(other)
+    merger = proc { |key, v1, v2| Hash === v1 && Hash === v2 ? v1.merge(v2, &merger) : Array === v1 && Array === v2 ? v1 | v2 : [:undefined, nil, :nil].include?(v2) ? v1 : v2 }
+    self.merge(other.to_h, &merger)
   end
 end

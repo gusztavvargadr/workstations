@@ -1,21 +1,21 @@
-local_directory = File.expand_path('../', __FILE__)
-core_directory = "#{local_directory}/../core/vagrant"
-
-require "#{core_directory}/Vagrantfile.core"
+directory = File.expand_path('..', __FILE__)
+require "#{directory}/../core/vagrant/Vagrantfile.core"
 
 Vagrant.configure('2') do |config|
-  vagrant_config_vm_define(config, local_directory, 'vs10p', box: 'w16s-vs10p') do |vs10p|
+  gusztavvargadr_workstations_core config
+
+  gusztavvargadr_workstations_vm config, directory, 'vs10p' do |vs10p|
   end
 
-  vagrant_config_vm_define(config, local_directory, 'vs15c', box: 'w16s-vs15c') do |vs15c|
+  gusztavvargadr_workstations_vm config, directory, 'vs15c' do |vs15c|
   end
 
-  vagrant_config_vm_define(config, local_directory, 'vs15p', box: 'w16s-vs15p') do |vs15p|
+  gusztavvargadr_workstations_vm config, directory, 'vs15p' do |vs15p|
   end
 
-  vagrant_config_vm_define(config, local_directory, 'vs17c', box: 'w16s-vs17c') do |vs17c|
+  gusztavvargadr_workstations_vm config, directory, 'vs17c' do |vs17c|
   end
 
-  vagrant_config_vm_define(config, local_directory, 'vs17p', box: 'w16s-vs17p') do |vs17p|
+  gusztavvargadr_workstations_vm config, directory, 'vs17p' do |vs17p|
   end
 end

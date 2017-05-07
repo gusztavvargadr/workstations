@@ -17,7 +17,7 @@ default_attributes(
     'requirements' => {},
     'tools' => {
       'files' => {
-        "#{ENV['GUSZTAVVARGADR_WORKSTATIONS_FILES']}/NuGet.Config" => "#{ENV['APPDATA']}/NuGet/NuGet.Config",
+        "#{ENV['GUSZTAVVARGADR_WORKSTATIONS_CORE_PATH']}/NuGet.Config" => "#{ENV['APPDATA']}/NuGet/NuGet.Config",
       },
     },
     'profiles' => {},
