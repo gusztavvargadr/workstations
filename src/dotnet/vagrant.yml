@@ -1,0 +1,16 @@
+vs10p:
+  box: w16s-vs10p
+
+vs15c:
+  box: w16s-vs15c
+
+vs15p:
+  box: w16s-vs15p
+
+vs17c:
+  primary: true
+  autostart: true
+  box: w16s-vs17c
+
+vs17p:
+  box: w16s-vs17p
