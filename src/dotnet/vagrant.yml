@@ -1,3 +1,13 @@
+default:
+  chef:
+    cookbooks:
+      - gusztavvargadr_workstations_nuget
+    json:
+      gusztavvargadr_workstations_nuget:
+        tools:
+          files:
+            NuGet.Config: /Users/vagrant/AppData/Roaming/NuGet.Config
+
 vs10p:
   box: w16s-vs10p
 

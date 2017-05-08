@@ -14,7 +14,7 @@ action :create do
     end
 
     remote_file target_file do
-      source "file://#{source_file}"
+      source "file://#{ENV['GUSZTAVVARGADR_WORKSTATIONS_CORE_PATH']}/files/#{source_file}"
       action :create
     end
   end
