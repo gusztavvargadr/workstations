@@ -6,7 +6,7 @@ default:
       gusztavvargadr_workstations_nuget:
         tools:
           files:
-            NuGet.Config: /Users/vagrant/AppData/Roaming/NuGet.Config
+            NuGet.Config: /Users/vagrant/AppData/Roaming/NuGet/NuGet.Config
 
 vs10p:
   box: w16s-vs10p
