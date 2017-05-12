@@ -19,5 +19,7 @@ action :create do
   powershell_script "Create NuGet source #{source_name}" do
     code source_script
     action :run
+    guard_interpreter :powershell_script
+    not_if "((NuGet sources List -Format Short) | Out-String).Contains(\"#{source_address}\")"
   end
 end
