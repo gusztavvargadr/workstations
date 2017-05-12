@@ -103,14 +103,14 @@ Boot the workstation:
 
 ```
 $ cd src/sql
-$ vagrant up (sql14d|ssms17)
+$ vagrant up (sql14d|ssms16)
 ```
 
 The workstation is created by default with the following tools installed and configured:
 
 * [Windows Server 2016 Standard][w16s]
-  * sql14d - [SQL Server 2014 Developer][w16s-sql14d], SQL Server Management Studio 2017
-  * ssms17 - SQL Server Management Studio 2017
+  * sql14d - [SQL Server 2014 Developer][w16s-sql14d]
+  * ssms16 - SQL Server Management Studio 16
 * [OS]
 * [Git]
 
