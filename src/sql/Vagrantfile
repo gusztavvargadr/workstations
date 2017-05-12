@@ -7,6 +7,6 @@ Vagrant.configure('2') do |config|
   gusztavvargadr_workstations_vm config, directory, 'sql14d' do |sql14d|
   end
 
-  gusztavvargadr_workstations_vm config, directory, 'ssms17' do |ssms17|
+  gusztavvargadr_workstations_vm config, directory, 'ssms16' do |ssms16|
   end
 end

@@ -1,0 +1,3 @@
+include_recipe 'gusztavvargadr_workstations_ssms::requirements'
+include_recipe 'gusztavvargadr_workstations_ssms::tools'
+include_recipe 'gusztavvargadr_workstations_ssms::profiles'
