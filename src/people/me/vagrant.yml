@@ -1,19 +1,50 @@
+core:
+  includes:
+    - stacks/core/core
+    - projects/github/git
+  chef:
+    json:
+      gusztavvargadr_workstations_os:
+        requirements:
+          locales:
+            system: en-US
+            ui: en-US
+            user: en-US
+          datetime:
+            timezone: UTC
+      gusztavvargadr_workstations_git:
+        tools:
+          files:
+            people/me/.gitconfig: /Users/vagrant/.gitconfig
+
 dotnet:
   includes:
     - stacks/dotnet/vs17c
+    - people/me/core
+  chef:
+    json:
+      gusztavvargadr_workstations_nuget:
+        tools:
+          files:
+            people/me/NuGet.Config: /Users/vagrant/AppData/Roaming/NuGet/NuGet.Config
 
 sql:
   includes:
     - stacks/sql/ssms16
+    - people/me/core
 
 infrastructure:
   includes:
     - stacks/infrastructure/docker
+    - stacks/infrastructure/virtualbox
+    - people/me/core
 
 java:
   includes:
     - stacks/java/intellij
+    - people/me/core
 
 os:
   includes:
     - stacks/os/w16
+    - people/me/core
