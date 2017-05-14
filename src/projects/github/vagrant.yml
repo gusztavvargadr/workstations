@@ -1,0 +1,23 @@
+core:
+  includes:
+    - components/git/core
+  chef:
+    json:
+      gusztavvargadr_workstations_git:
+        profiles:
+          workspaces:
+            github:
+              address: https://github.com/github
+              directory: /Users/vagrant/Repos/github
+
+git:
+  includes:
+    - projects/github/core
+  chef:
+    json:
+      gusztavvargadr_workstations_git:
+        profiles:
+          workspaces:
+            github:
+              repositories:
+                gitignore:
