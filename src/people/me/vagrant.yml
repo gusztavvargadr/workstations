@@ -19,8 +19,8 @@ core:
 
 dotnet:
   includes:
-    - stacks/dotnet/vs17c
     - people/me/core
+    - stacks/dotnet/vs17c
   chef:
     json:
       gusztavvargadr_workstations_nuget:
@@ -30,21 +30,16 @@ dotnet:
 
 sql:
   includes:
-    - stacks/sql/ssms16
     - people/me/core
+    - stacks/sql/ssms16
 
 infrastructure:
   includes:
+    - people/me/core
     - stacks/infrastructure/docker
     - stacks/infrastructure/virtualbox
-    - people/me/core
-
-java:
-  includes:
-    - stacks/java/intellij
-    - people/me/core
 
 os:
   includes:
-    - stacks/os/w16
     - people/me/core
+    - stacks/os/w16

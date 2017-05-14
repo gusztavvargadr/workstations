@@ -5,11 +5,6 @@ default_action :install
 action :install do
   return if tools_options.nil?
 
-  gusztavvargadr_workstations_core_tools '' do
-    tools_options new_resource.tools_options
-    action :install
-  end
-
   tools_custom_options = tools_options['custom']
   return if tools_custom_options.nil?
 
@@ -40,5 +35,10 @@ action :install do
       EOH
       action :run
     end
+  end
+
+  gusztavvargadr_workstations_core_tools '' do
+    tools_options new_resource.tools_options
+    action :install
   end
 end

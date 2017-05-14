@@ -7,7 +7,7 @@ TODO: no links in first paragraph
 
 **Quick links** [Overview] | [Getting started] | [Usage] | [Contributing] | [Resources]  
 
-This repository contains Windows-based [workstations][Overview] for [.NET][.NET development], [SQL Server][SQL Server development], [infrastructure][Infrastructure development] and [Java development] using [Vagrant][VagrantHome], [VirtualBox][VirtualBoxHome] and [Chef][ChefHome].
+This repository contains Windows-based [workstations][Overview] for [.NET][.NET development], [SQL Server][SQL Server development] and [infrastructure][Infrastructure development] development using [Vagrant][VagrantHome], [VirtualBox][VirtualBoxHome] and [Chef][ChefHome].
 
 ## Overview
 
@@ -16,7 +16,6 @@ This repository contains Windows-based workstations for the following scenarios:
 * [.NET development] with Visual Studio 2010, 2015 and 2017.
 * [SQL Server development] with SQL Server 2014 and SQL Server Management Studio 2017.
 * [Infrastructure development] with Chef, Packer and Terraform with Docker, VirtualBox and AWS.
-* [Java development] with IntelliJ IDEA and Eclipse.
 
 All of them support an easy, source-controlled way of installing and configuring the most common development tools for the related stacks, and the management of the source code of your projects, based on [Vagrant][VagrantHome], [VirtualBox][VirtualBoxHome] and [Chef][ChefHome]:
 
@@ -140,31 +139,6 @@ The workstation is created by default with the following tools installed and con
 [Infrastructure development]: #infrastructure-development
 [Packer]: https://chocolatey.org/packages/packer
 [Terraform]: https://chocolatey.org/packages/terraform
-
-#### Java development
-
-Boot the workstation:
-
-```
-$ cd src/stacks/java
-$ vagrant up (eclipse|intellij)
-```
-
-The workstation is created by default with the following tools installed and configured:
-
-* [Windows Server 2016 Standard][w16s]
-  * eclipse - [Eclipse]
-  * intellij - [IntelliJ IDEA Community]
-* [OS]
-* [Git]
-* [JDK], [Maven]
-
-[Java development]: #java-development
-[JavaDevelopmentBox]: https://atlas.hashicorp.com/gusztavvargadr/boxes/w16s
-[JDK]: https://chocolatey.org/packages/jdk8
-[Maven]: https://chocolatey.org/packages/maven
-[Eclipse]: https://chocolatey.org/packages/eclipse
-[IntelliJ IDEA Community]: https://chocolatey.org/packages/intellijidea-community
 
 ## Usage
 
