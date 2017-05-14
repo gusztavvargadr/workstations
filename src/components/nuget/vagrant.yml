@@ -1,0 +1,9 @@
+core:
+  chef:
+    cookbooks:
+      - gusztavvargadr_workstations_nuget
+    json:
+      gusztavvargadr_workstations_nuget:
+        tools:
+          files:
+            components/nuget/NuGet.Config: /Users/vagrant/AppData/Roaming/NuGet/NuGet.Config

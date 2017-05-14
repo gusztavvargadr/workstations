@@ -1,0 +1,10 @@
+src_directory = File.expand_path('../../..', __FILE__)
+require "#{src_directory}/components/core/Vagrantfile.core"
+
+Vagrant.configure('2') do |config|
+  gusztavvargadr_workstations_vm config, src_directory, ['people/me/dotnet'], 'dotnet'
+  gusztavvargadr_workstations_vm config, src_directory, ['people/me/sql'], 'sql'
+  gusztavvargadr_workstations_vm config, src_directory, ['people/me/infrastructure'], 'infrastructure'
+  gusztavvargadr_workstations_vm config, src_directory, ['people/me/java'], 'java'
+  gusztavvargadr_workstations_vm config, src_directory, ['people/me/os'], 'os'
+end

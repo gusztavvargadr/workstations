@@ -1,0 +1,8 @@
+src_directory = File.expand_path('../../..', __FILE__)
+require "#{src_directory}/components/core/Vagrantfile.core"
+
+Vagrant.configure('2') do |config|
+  gusztavvargadr_workstations_vm config, src_directory, ['stacks/infrastructure/aws'], 'aws'
+  gusztavvargadr_workstations_vm config, src_directory, ['stacks/infrastructure/docker'], 'docker'
+  gusztavvargadr_workstations_vm config, src_directory, ['stacks/infrastructure/virtualbox'], 'virtualbox'
+end

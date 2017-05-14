@@ -1,0 +1,7 @@
+src_directory = File.expand_path('../../../../..', __FILE__)
+instance_eval(File.read("#{src_directory}/components/core/Berksfile.core.rb"))
+
+gusztavvargadr_workstations_cookbook src_directory, 'components', 'nuget'
+gusztavvargadr_workstations_cookbook src_directory, 'components', 'core'
+
+gusztavvargadr_cookbook 'windows'

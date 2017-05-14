@@ -1,0 +1,5 @@
+core:
+  includes:
+    - components/core/core
+    - components/os/core
+    - components/git/core

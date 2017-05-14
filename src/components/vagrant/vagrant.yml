@@ -1,0 +1,4 @@
+core:
+  chef:
+    cookbooks:
+      - gusztavvargadr_workstations_vagrant

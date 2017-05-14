@@ -73,7 +73,7 @@ Clone this repo and navigate to the root directory of the clone using your shell
 Boot the workstation:
 
 ```
-$ cd src/dotnet
+$ cd src/stacks/dotnet
 $ vagrant up (vs10p|vs15c|vs15p|vs17c|vs17p)
 ```
 
@@ -102,14 +102,14 @@ The workstation is created by default with the following tools installed and con
 Boot the workstation:
 
 ```
-$ cd src/sql
-$ vagrant up (sql14d|ssms16)
+$ cd src/stacks/sql
+$ vagrant up (sql14|ssms16)
 ```
 
 The workstation is created by default with the following tools installed and configured:
 
 * [Windows Server 2016 Standard][w16s]
-  * sql14d - [SQL Server 2014 Developer][w16s-sql14d]
+  * sql14 - [SQL Server 2014 Developer][w16s-sql14d]
   * ssms16 - SQL Server Management Studio 16
 * [OS]
 * [Git]
@@ -122,16 +122,16 @@ The workstation is created by default with the following tools installed and con
 Boot the workstation:
 
 ```
-$ cd src/infrastructure
-$ vagrant up (docker|virtualbox|aws)
+$ cd src/stacks/infrastructure
+$ vagrant up (aws|docker|virtualbox)
 ```
 
 The workstation is created by default with the following tools installed and configured:
 
 * [Windows Server 2016 Standard][w16s]
+  * aws - [AWS] command line tools
   * docker - Windows Containers
   * virtualbox - VirtualBox
-  * aws - [AWS] command line tools
 * [OS]
 * [Git]
 * [Chef][ChefHome], [Packer], [Terraform]
@@ -146,15 +146,15 @@ The workstation is created by default with the following tools installed and con
 Boot the workstation:
 
 ```
-$ cd src/java
-$ vagrant up (intellij|eclipse)
+$ cd src/stacks/java
+$ vagrant up (eclipse|intellij)
 ```
 
 The workstation is created by default with the following tools installed and configured:
 
 * [Windows Server 2016 Standard][w16s]
-  * intellij - [IntelliJ IDEA]
   * eclipse - [Eclipse]
+  * intellij - [IntelliJ IDEA Community]
 * [OS]
 * [Git]
 * [JDK], [Maven]
@@ -163,8 +163,8 @@ The workstation is created by default with the following tools installed and con
 [JavaDevelopmentBox]: https://atlas.hashicorp.com/gusztavvargadr/boxes/w16s
 [JDK]: https://chocolatey.org/packages/jdk8
 [Maven]: https://chocolatey.org/packages/maven
-[IntelliJ IDEA]: https://chocolatey.org/packages/intellijidea-community
 [Eclipse]: https://chocolatey.org/packages/eclipse
+[IntelliJ IDEA Community]: https://chocolatey.org/packages/intellijidea-community
 
 ## Usage
 

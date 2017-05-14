@@ -1,0 +1,43 @@
+core:
+  includes:
+    - stacks/core/core
+    - components/vagrant/core
+  chef:
+    json:
+      gusztavvargadr_workstations_os:
+        tools:
+          chocolatey:
+            chefdk:
+            terraform:
+            packer:
+      gusztavvargadr_workstations_vagrant:
+        profiles:
+          plugins:
+            vagrant-reload:
+            vagrant-berkshelf:
+
+aws:
+  includes:
+    - stacks/infrastructure/core
+    - components/aws/core
+  chef:
+    json:
+      gusztavvargadr_workstations_vagrant:
+        profiles:
+          plugins:
+            vagrant-aws:
+
+docker:
+  includes:
+    - stacks/infrastructure/core
+    - components/docker/core
+
+virtualbox:
+  includes:
+    - stacks/infrastructure/core
+  chef:
+    json:
+      gusztavvargadr_workstations_os:
+        tools:
+          chocolatey:
+            virtualbox:
