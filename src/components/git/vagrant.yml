@@ -1,0 +1,9 @@
+core:
+  chef:
+    cookbooks:
+      - gusztavvargadr_workstations_git
+    json:
+      gusztavvargadr_workstations_git:
+        tools:
+          files:
+            components/git/.gitconfig: /Users/vagrant/.gitconfig

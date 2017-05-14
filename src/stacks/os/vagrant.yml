@@ -1,0 +1,12 @@
+core:
+  includes:
+    - stacks/core/core
+
+w10:
+  includes:
+    - stacks/os/core
+  box: w10e
+
+w16:
+  includes:
+    - stacks/os/core

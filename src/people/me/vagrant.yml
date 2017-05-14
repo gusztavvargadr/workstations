@@ -1,0 +1,19 @@
+dotnet:
+  includes:
+    - stacks/dotnet/vs17c
+
+sql:
+  includes:
+    - stacks/sql/ssms16
+
+infrastructure:
+  includes:
+    - stacks/infrastructure/docker
+
+java:
+  includes:
+    - stacks/java/intellij
+
+os:
+  includes:
+    - stacks/os/w16

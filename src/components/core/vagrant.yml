@@ -1,0 +1,12 @@
+core:
+  includes: []
+  default: false
+  box: w16s
+  virtualbox:
+    gui: false
+    memory: 4096
+    cpus: 2
+  chef:
+    install: false
+    cookbooks: []
+    json: {}

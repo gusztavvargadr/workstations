@@ -1,0 +1,75 @@
+require 'yaml'
+require 'erb'
+
+def gusztavvargadr_workstations_vm(config, src_directory, includes, vm)
+  options = gusztavvargadr_workstations_vm_options(src_directory, includes)
+
+  config.vm.define vm, primary: options['default'], autostart: options['default'] do |config_vm|
+    box = options['box']
+    box = vm if box.to_s.empty?
+    box = "gusztavvargadr/#{box}" unless box.include?('/')
+    config_vm.vm.box = box
+
+    box_url = "#{src_directory}/components/core/boxes/#{box}.json"
+    config_vm.vm.box_url = "file://#{box_url}" if File.exist?(box_url)
+
+    config_vm.vm.provider 'virtualbox' do |vb|
+      vb.gui = options['virtualbox']['gui']
+      vb.memory = options['virtualbox']['memory']
+      vb.cpus = options['virtualbox']['cpus']
+    end
+
+    config_vm.vm.synced_folder src_directory, '/vagrant-workstations-src'
+
+    options_chef = options['chef']
+    gusztavvargadr_workstations_vm_chef config_vm, options_chef, 'requirements'
+    config_vm.vm.provision :reload
+    gusztavvargadr_workstations_vm_chef config_vm, options_chef, 'tools'
+    config_vm.vm.provision :reload
+    gusztavvargadr_workstations_vm_chef config_vm, options_chef, 'profiles'
+  end
+end
+
+def gusztavvargadr_workstations_vm_options(src_directory, includes)
+  options = {}
+  unless includes.nil?
+    includes.each do |include|
+      include_parts = include.split('/')
+      next if include_parts.length != 3
+
+      include_type = include_parts[0]
+      include_name = include_parts[1]
+      include_version = include_parts[2]
+
+      options_current = gusztavvargadr_workstations_yml(src_directory, include_type, include_name)[include_version]
+      options = options.deep_merge(gusztavvargadr_workstations_vm_options(src_directory, options_current['includes']).deep_merge(options_current))
+    end
+  end
+  options
+end
+
+def gusztavvargadr_workstations_yml(src_directory, type, name)
+  yml_path = "#{src_directory}/#{type}/#{name}/vagrant.yml"
+  return {} unless File.exist?(yml_path)
+  YAML.load(ERB.new(File.read(yml_path)).result)
+end
+
+def gusztavvargadr_workstations_vm_chef(config_vm, options, stage)
+  config_vm.vm.provision 'chef_solo' do |chef|
+    chef.install = options['install']
+
+    chef.cookbooks_path = ['']
+    options['cookbooks'].each do |cookbook|
+      chef.add_recipe "#{cookbook}::#{stage}"
+    end
+
+    chef.json = options['json']
+  end
+end
+
+class ::Hash
+  def deep_merge(other)
+    merger = proc { |key, v1, v2| Hash === v1 && Hash === v2 ? v1.merge(v2, &merger) : Array === v1 && Array === v2 ? v1 | v2 : [:undefined, nil, :nil].include?(v2) ? v1 : v2 }
+    self.merge(other.to_h, &merger)
+  end
+end

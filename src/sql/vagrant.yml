@@ -1,9 +1,0 @@
-sql14d:
-  box: w16s-sql14d
-
-ssms16:
-  default: true
-  box: w16s
-  chef:
-    cookbooks:
-      - gusztavvargadr_workstations_ssms

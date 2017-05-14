@@ -1,0 +1,13 @@
+core:
+  includes:
+    - stacks/core/core
+
+sql14:
+  includes:
+    - stacks/sql/core
+  box: w16s-sql14d
+
+ssms16:
+  includes:
+    - stacks/sql/core
+    - components/ssms/core
