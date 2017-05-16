@@ -28,7 +28,7 @@ suites:
           plugins:
             vagrant-reload:
           boxes:
-            https://atlas.hashicorp.com/ubuntu/boxes/trusty32:
+            ubuntu/trusty32:
     verifier:
       inspec_tests:
         - test/smoke/default

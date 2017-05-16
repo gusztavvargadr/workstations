@@ -27,8 +27,8 @@ aws:
           plugins:
             vagrant-aws:
           boxes:
-            https://github.com/mitchellh/vagrant-aws/raw/master/dummy.box:
-              name: dummy
+            dummy:
+              address: https://github.com/mitchellh/vagrant-aws/raw/master/dummy.box
 
 docker:
   includes:
@@ -47,4 +47,4 @@ virtualbox:
       gusztavvargadr_workstations_vagrant:
         profiles:
           boxes:
-            https://atlas.hashicorp.com/ubuntu/boxes/trusty32:
+            ubuntu/trusty32:

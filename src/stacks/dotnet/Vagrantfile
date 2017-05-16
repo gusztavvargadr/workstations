@@ -1,10 +1,10 @@
-src_directory = File.expand_path('../../..', __FILE__)
-require "#{src_directory}/components/core/Vagrantfile.core"
+directory = File.dirname(__FILE__)
+require "#{directory}/../../Vagrantfile.core"
 
 Vagrant.configure('2') do |config|
-  gusztavvargadr_workstations_vm config, src_directory, ['stacks/dotnet/vs10p'], 'vs10p'
-  gusztavvargadr_workstations_vm config, src_directory, ['stacks/dotnet/vs15c'], 'vs15c'
-  gusztavvargadr_workstations_vm config, src_directory, ['stacks/dotnet/vs15p'], 'vs15p'
-  gusztavvargadr_workstations_vm config, src_directory, ['stacks/dotnet/vs17c'], 'vs17c'
-  gusztavvargadr_workstations_vm config, src_directory, ['stacks/dotnet/vs17p'], 'vs17p'
+  gusztavvargadr_workstations_vm config, directory, 'vs10p'
+  gusztavvargadr_workstations_vm config, directory, 'vs15c'
+  gusztavvargadr_workstations_vm config, directory, 'vs15p'
+  gusztavvargadr_workstations_vm config, directory, 'vs17c'
+  gusztavvargadr_workstations_vm config, directory, 'vs17p'
 end
