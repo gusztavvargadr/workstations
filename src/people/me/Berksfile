@@ -5,11 +5,12 @@ source 'https://supermarket.chef.io'
 
 gusztavvargadr_workstations_cookbook 'components', 'os'
 gusztavvargadr_workstations_cookbook 'components', 'git'
+gusztavvargadr_workstations_cookbook 'components', 'svn'
 gusztavvargadr_workstations_cookbook 'components', 'nuget'
+gusztavvargadr_workstations_cookbook 'components', 'ssms'
 gusztavvargadr_workstations_cookbook 'components', 'vagrant'
 gusztavvargadr_workstations_cookbook 'components', 'docker'
 gusztavvargadr_workstations_cookbook 'components', 'aws'
-gusztavvargadr_workstations_cookbook 'components', 'ssms'
 gusztavvargadr_workstations_cookbook 'components', 'core'
 
 gusztavvargadr_cookbook 'windows'

@@ -4,7 +4,7 @@ property :image_options, Hash
 default_action :pull
 
 action :pull do
-  powershell_script "Pull image #{image_name}" do
+  gusztavvargadr_windows_powershell_script_elevated "Pull image #{image_name}" do
     code <<-EOH
       docker pull #{image_name}
     EOH
