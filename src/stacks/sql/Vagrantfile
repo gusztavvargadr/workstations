@@ -1,7 +1,7 @@
-src_directory = File.expand_path('../../..', __FILE__)
-require "#{src_directory}/components/core/Vagrantfile.core"
+directory = File.dirname(__FILE__)
+require "#{directory}/../../Vagrantfile.core"
 
 Vagrant.configure('2') do |config|
-  gusztavvargadr_workstations_vm config, src_directory, ['stacks/sql/sql14'], 'sql14'
-  gusztavvargadr_workstations_vm config, src_directory, ['stacks/sql/ssms16'], 'ssms16'
+  gusztavvargadr_workstations_vm config, directory, 'sql14'
+  gusztavvargadr_workstations_vm config, directory, 'ssms16'
 end

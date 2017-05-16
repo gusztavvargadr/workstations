@@ -1,7 +1,9 @@
 require 'yaml'
 require 'erb'
 
-def gusztavvargadr_workstations_vm(config, src_directory, includes, vm)
+def gusztavvargadr_workstations_vm(config, vm_directory, vm)
+  src_directory = File.dirname(__FILE__)
+  includes = ["#{(Pathname.new vm_directory).relative_path_from (Pathname.new src_directory)}/#{vm}"]
   options = gusztavvargadr_workstations_vm_options(src_directory, includes)
 
   config.vm.define vm, primary: options['default'], autostart: options['default'] do |config_vm|
@@ -10,7 +12,7 @@ def gusztavvargadr_workstations_vm(config, src_directory, includes, vm)
     box = "gusztavvargadr/#{box}" unless box.include?('/')
     config_vm.vm.box = box
 
-    box_url = "#{src_directory}/components/core/boxes/#{box}.json"
+    box_url = "#{src_directory}/boxes/#{box}.json"
     config_vm.vm.box_url = "file://#{box_url}" if File.exist?(box_url)
 
     config_vm.vm.provider 'virtualbox' do |vb|

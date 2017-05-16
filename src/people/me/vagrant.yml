@@ -38,6 +38,7 @@ infrastructure:
     - people/me/core
     - stacks/infrastructure/docker
     - stacks/infrastructure/virtualbox
+    - stacks/infrastructure/aws
 
 os:
   includes:

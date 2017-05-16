@@ -1,7 +1,9 @@
-src_directory = File.expand_path('../../..', __FILE__)
-instance_eval(File.read("#{src_directory}/components/core/Berksfile.core.rb"))
+directory = File.dirname(__FILE__)
+require "#{directory}/../../Berksfile.core"
 
-gusztavvargadr_workstations_cookbook src_directory, 'components', 'os'
-gusztavvargadr_workstations_cookbook src_directory, 'components', 'core'
+source 'https://supermarket.chef.io'
+
+gusztavvargadr_workstations_cookbook 'components', 'os'
+gusztavvargadr_workstations_cookbook 'components', 'core'
 
 gusztavvargadr_cookbook 'windows'
