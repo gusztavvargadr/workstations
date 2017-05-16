@@ -1,0 +1,24 @@
+core:
+  includes:
+    - components/svn/core
+  chef:
+    json:
+      gusztavvargadr_workstations_svn:
+        profiles:
+          workspaces:
+            apache:
+              address: http://svn.apache.org/repos
+              directory: /Users/vagrant/Repos/apache
+
+log4net:
+  includes:
+    - projects/apache/core
+  chef:
+    json:
+      gusztavvargadr_workstations_svn:
+        profiles:
+          workspaces:
+            apache:
+              repositories:
+                asf/logging/log4net/trunk:
+                  directory: log4net

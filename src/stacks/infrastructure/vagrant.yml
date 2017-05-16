@@ -34,6 +34,12 @@ docker:
   includes:
     - stacks/infrastructure/core
     - components/docker/core
+  chef:
+    json:
+      gusztavvargadr_workstations_docker:
+        profiles:
+          images:
+            microsoft/nanoserver:
 
 virtualbox:
   includes:
