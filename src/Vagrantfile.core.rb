@@ -15,10 +15,16 @@ def gusztavvargadr_workstations_vm(config, vm_directory, vm)
     box_url = "#{src_directory}/boxes/#{box}.json"
     config_vm.vm.box_url = "file://#{box_url}" if File.exist?(box_url)
 
+    config_vm.vm.provider 'hyperv' do |h, override|
+      h.memory = options['provider']['memory']
+      h.cpus = options['provider']['cpus']
+
+      override.vm.synced_folder '.', '/vagrant', smb_username: ENV['VAGRANT_SMB_USERNAME'], smb_password: ENV['VAGRANT_SMB_PASSWORD']
+    end
+
     config_vm.vm.provider 'virtualbox' do |vb|
-      vb.gui = options['virtualbox']['gui']
-      vb.memory = options['virtualbox']['memory']
-      vb.cpus = options['virtualbox']['cpus']
+      vb.memory = options['provider']['memory']
+      vb.cpus = options['provider']['cpus']
     end
 
     config_vm.vm.synced_folder src_directory, '/vagrant-workstations-src'

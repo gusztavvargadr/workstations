@@ -2,7 +2,7 @@ core:
   includes:
     - stacks/core/core
 
-sql14:
+sql14d:
   includes:
     - stacks/sql/core
   box: w16s-sql14d
