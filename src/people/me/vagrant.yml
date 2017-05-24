@@ -44,4 +44,4 @@ infrastructure:
 os:
   includes:
     - people/me/core
-    - stacks/os/w16
+    - stacks/os/w16s
