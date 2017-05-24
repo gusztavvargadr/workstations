@@ -2,11 +2,11 @@ core:
   includes:
     - stacks/core/core
 
-w10:
+w10e:
   includes:
     - stacks/os/core
   box: w10e
 
-w16:
+w16s:
   includes:
     - stacks/os/core
