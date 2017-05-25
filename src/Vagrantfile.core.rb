@@ -18,7 +18,7 @@ def gusztavvargadr_workstations_vm(config, vm_directory, vm)
     config_vm.vm.provider 'hyperv' do |h, override|
       h.memory = options['provider']['memory']
       h.cpus = options['provider']['cpus']
-
+      override.vm.network 'private_network', bridge: ENV['VAGRANT_NETWORK_BRIDGE']
       override.vm.synced_folder '.', '/vagrant', smb_username: ENV['VAGRANT_SMB_USERNAME'], smb_password: ENV['VAGRANT_SMB_PASSWORD']
     end
 

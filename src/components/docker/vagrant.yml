@@ -1,4 +1,0 @@
-core:
-  chef:
-    cookbooks:
-      - gusztavvargadr_workstations_docker
