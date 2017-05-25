@@ -122,14 +122,15 @@ Boot the workstation:
 
 ```
 $ cd src/stacks/infrastructure
-$ vagrant up (aws|docker|virtualbox)
+$ vagrant up (aws|dockerc|dockere|virtualbox)
 ```
 
 The workstation is created by default with the following tools installed and configured:
 
 * [Windows Server 2016 Standard][w16s]
   * aws - [AWS] command line tools
-  * docker - Windows Containers
+  * dockerc - Docker Community Edition (Edge)
+  * dockere - Docker Enterprise Edition
   * virtualbox - VirtualBox
 * [OS]
 * [Git]

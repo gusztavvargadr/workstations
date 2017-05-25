@@ -21,9 +21,9 @@ platforms:
 suites:
   - name: default
     run_list:
-      - recipe[gusztavvargadr_workstations_docker::default]
+      - recipe[gusztavvargadr_workstations_dockere::default]
     attributes:
-      gusztavvargadr_workstations_docker:
+      gusztavvargadr_workstations_dockere:
         profiles:
           images:
             microsoft/nanoserver:

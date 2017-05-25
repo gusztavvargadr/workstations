@@ -3,10 +3,6 @@ require "#{directory}/../../Berksfile.core"
 
 source 'https://supermarket.chef.io'
 
-gusztavvargadr_workstations_cookbook 'components', 'os'
-gusztavvargadr_workstations_cookbook 'components', 'vagrant'
-gusztavvargadr_workstations_cookbook 'components', 'aws'
-gusztavvargadr_workstations_cookbook 'components', 'dockerc'
 gusztavvargadr_workstations_cookbook 'components', 'dockere'
 gusztavvargadr_workstations_cookbook 'components', 'core'
 

@@ -9,7 +9,7 @@ gusztavvargadr_workstations_cookbook 'components', 'svn'
 gusztavvargadr_workstations_cookbook 'components', 'nuget'
 gusztavvargadr_workstations_cookbook 'components', 'ssms'
 gusztavvargadr_workstations_cookbook 'components', 'vagrant'
-gusztavvargadr_workstations_cookbook 'components', 'docker'
+gusztavvargadr_workstations_cookbook 'components', 'dockere'
 gusztavvargadr_workstations_cookbook 'components', 'aws'
 gusztavvargadr_workstations_cookbook 'components', 'core'
 

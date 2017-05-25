@@ -10,7 +10,7 @@ action :create do
     action :create
   end
 
-  gusztavvargadr_workstations_docker_profiles_images '' do
+  gusztavvargadr_workstations_dockere_profiles_images '' do
     profiles_images_options profiles_options['images']
     action :pull
   end
