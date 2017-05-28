@@ -15,7 +15,7 @@ action :pull do
     action :create
   end
 
-  image_script_file_name = "#{image_script_name.tr(' ', '-').tr(':', '-').tr.('/', '-')}.cmd"
+  image_script_file_name = "#{image_script_name.tr(' ', '-').tr(':', '-').tr('/', '-')}.cmd"
   image_script_file_path = "#{image_script_directory_path}/#{image_script_file_name}"
   file image_script_file_path do
     content image_script_code
