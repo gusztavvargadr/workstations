@@ -20,8 +20,8 @@ core:
 dotnet:
   includes:
     - people/me/core
-    - stacks/dotnet/vs17c
     - projects/apache/log4net
+    - stacks/dotnet/vs17c
   chef:
     json:
       gusztavvargadr_workstations_core:
