@@ -18,6 +18,8 @@ def gusztavvargadr_workstations_vm(config, vm_directory, vm)
     config_vm.vm.provider 'hyperv' do |h, override|
       h.memory = options['provider']['memory']
       h.cpus = options['provider']['cpus']
+      h.enable_virtualization_extensions = true
+      h.differencing_disk = true if options['provider']['linked_clone']
       override.vm.network 'private_network', bridge: ENV['VAGRANT_NETWORK_BRIDGE']
       override.vm.synced_folder '.', '/vagrant', smb_username: ENV['VAGRANT_SMB_USERNAME'], smb_password: ENV['VAGRANT_SMB_PASSWORD']
     end
@@ -25,9 +27,10 @@ def gusztavvargadr_workstations_vm(config, vm_directory, vm)
     config_vm.vm.provider 'virtualbox' do |vb|
       vb.memory = options['provider']['memory']
       vb.cpus = options['provider']['cpus']
+      vb.linked_clone = true if options['provider']['linked_clone']
     end
 
-    config_vm.vm.synced_folder src_directory, '/vagrant-workstations-src'
+    config_vm.vm.synced_folder "#{src_directory}/..", '/vagrant-workstations'
 
     options_chef = options['chef']
     gusztavvargadr_workstations_vm_chef config_vm, options_chef, 'requirements'

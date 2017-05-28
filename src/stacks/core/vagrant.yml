@@ -1,4 +1,3 @@
 core:
   includes:
-    - components/core/core
     - components/os/core

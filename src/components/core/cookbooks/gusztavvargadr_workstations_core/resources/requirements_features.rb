@@ -6,8 +6,12 @@ action :enable do
   return if requirements_features_options.nil?
 
   requirements_features_options.each do |feature_name, feature_options|
-    gusztavvargadr_windows_windows_feature feature_name do
-      action :enable
+    powershell_script "Enable Windows Feature '#{feature_name}'" do
+      code <<-EOH
+        DISM.exe /Online /Enable-Feature /FeatureName:#{feature_name} /All /NoRestart
+      EOH
+      returns [0, 3010]
+      action :run
     end
   end
 end

@@ -1,7 +1,4 @@
-options = node['gusztavvargadr_workstations_dockerc']
-return if options.nil?
-
-gusztavvargadr_workstations_dockerc_tools '' do
-  tools_options options['tools']
-  action :install
+powershell_script 'Set service \'WinRM\' to \'Autostart\'' do
+  code 'sc.exe config winrm start= auto'
+  action :run
 end

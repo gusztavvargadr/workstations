@@ -6,16 +6,41 @@ action :install do
   return if tools_windows_options.nil?
 
   tools_windows_options.each do |package_name, package_options|
-    package_source = package_options.nil? ? nil : package_options['source']
-    package_install = package_options.nil? ? nil : package_options['install']
-    package_directory = package_options.nil? ? nil : package_options['directory']
+    package_options = {} if package_options.nil?
 
-    windows_package package_name do
+    package_source = package_options['source']
+    package_install = package_options['install'].nil? ? {} : package_options['install']
+    package_directory = package_options['directory']
+    package_elevated = package_options['elevated']
+
+    next if !package_directory.nil? && ::Dir.exist?(package_directory)
+
+    package_download_directory_path = "#{Chef::Config[:file_cache_path]}/gusztavvargadr_workstations_core"
+
+    directory package_download_directory_path do
+      recursive true
+      action :create
+    end
+
+    package_download_file_path = "#{package_download_directory_path}/#{package_name.tr(' ', '-')}.exe"
+    remote_file package_download_file_path do
       source package_source
-      installer_type :custom
-      options package_install
-      action :install
-      not_if { !package_directory.nil? && ::Dir.exist?(package_directory) }
+      action :create
+    end
+
+    package_script_name = "Install Windows package '#{package_name}'"
+    package_script_code = "Start-Process \"#{package_download_file_path.tr('/', '\\')}\" \"#{package_install.join(' ')}\" -Wait"
+
+    if package_elevated
+      gusztavvargadr_windows_powershell_script_elevated package_script_name do
+        code package_script_code
+        action :run
+      end
+    else
+      powershell_script package_script_name do
+        code package_script_code
+        action :run
+      end
     end
   end
 end

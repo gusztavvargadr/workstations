@@ -1,0 +1,71 @@
+---
+driver:
+  name: vagrant
+  vagrantfiles:
+    - ../../../../Vagrantfile.kitchen
+
+provisioner:
+  name: chef_solo
+
+verifier:
+  name: inspec
+
+platforms:
+  - name: w
+    transport:
+      name: winrm
+    driver:
+      box: gusztavvargadr/w16s
+
+suites:
+  - name: default
+    run_list:
+      - recipe[gusztavvargadr_workstations_core::default]
+    attributes:
+      gusztavvargadr_workstations_core:
+        requirements:
+          # Installs Windows Features
+          # https://msdn.microsoft.com/en-us/windows/hardware/commercialize/manufacture/desktop/enable-or-disable-windows-features-using-dism#to-find-available-windows-features-in-an-image
+          features:
+            TelnetClient:
+            # IIS-WebServerRole
+        tools:
+          # Installs Chocolatey packages
+          # For the list of available packages see https://chocolatey.org/packages 
+          chocolatey:
+            # Installs the Chocolatey package 'nuget.commandline'
+            nuget.commandline:
+            # Installs the Chocolatey package 'terraform' of version '0.8.8'
+            # For the list of available versions see the package's Chocolatey page
+            terraform:
+              version: 0.8.8
+            # Installs the 'git' Chocolatey package with the specified Chocolatey options
+            # For the list of available options see the pacakge's Chocolatey page and https://chocolatey.org/docs/commands-install'
+            git:
+              install:
+                ignorechecksum:
+                params: "'/GitAndUnixToolsOnPath /NoShellIntegration'"
+            # Installs the 'powershell' Chocolatey package with elevated permissions
+            powershell:
+              elevated: true
+          # Installs Windows packages
+          # To be used with native installers for which not Chocolatey package exists
+          windows:
+            # Installs the '.NET Core SDK' Chocolatey package
+            .NET Core SDK:
+              source: https://download.microsoft.com/download/B/9/F/B9F1AF57-C14A-4670-9973-CDF47209B5BF/dotnet-dev-win-x64.1.0.4.exe
+              install:
+                - /install
+                - /quiet
+                - /norestart
+              directory: /Program Files/dotnet
+            SQL Server Management Studio 16:
+              source: https://download.microsoft.com/download/9/3/3/933EA6DD-58C5-4B78-8BEC-2DF389C72BE0/SSMS-Setup-ENU.exe
+              install:
+                - /install
+                - /quiet
+                - /norestart
+              directory: /Program Files (x86)/Microsoft SQL Server/130/Tools/Binn/ManagementStudio
+              elevated: true
+          files:
+            file:///Windows/System32/drivers/etc/hosts: /Users/vagrant/AppData/Local/Temp/hosts

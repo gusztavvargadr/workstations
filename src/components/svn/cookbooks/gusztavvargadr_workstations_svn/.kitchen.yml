@@ -1,9 +1,8 @@
 ---
 driver:
   name: vagrant
-  customize:
-    memory: 4096
-    cpus: 2
+  vagrantfiles:
+    - ../../../../Vagrantfile.kitchen
 
 provisioner:
   name: chef_solo
@@ -12,7 +11,7 @@ verifier:
   name: inspec
 
 platforms:
-  - name: w16s
+  - name: w
     transport:
       name: winrm
     driver:
@@ -21,8 +20,13 @@ platforms:
 suites:
   - name: default
     run_list:
+      - recipe[gusztavvargadr_workstations_core::default]
       - recipe[gusztavvargadr_workstations_svn::default]
     attributes:
+      gusztavvargadr_workstations_core:
+        tools:
+          chocolatey:
+            svn:
       gusztavvargadr_workstations_svn:
         profiles:
           workspaces:
@@ -31,6 +35,3 @@ suites:
               directory: /Users/vagrant/Repos/apache
               repositories:
                 asf/logging/log4net/trunk:
-    verifier:
-      inspec_tests:
-        - test/smoke/default

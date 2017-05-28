@@ -3,7 +3,7 @@ require "#{directory}/../../Vagrantfile.core"
 
 Vagrant.configure('2') do |config|
   gusztavvargadr_workstations_vm config, directory, 'dotnet'
-  gusztavvargadr_workstations_vm config, directory, 'sql'
   gusztavvargadr_workstations_vm config, directory, 'infrastructure'
   gusztavvargadr_workstations_vm config, directory, 'os'
+  gusztavvargadr_workstations_vm config, directory, 'sql'
 end

@@ -1,4 +1,14 @@
 core:
+  includes:
+    - components/core/core
   chef:
     cookbooks:
       - gusztavvargadr_workstations_git
+    json:
+      gusztavvargadr_workstations_core:
+        tools:
+          chocolatey:
+            git:
+              version: 2.11.1
+              install:
+                params: "'/GitAndUnixToolsOnPath /NoShellIntegration'"

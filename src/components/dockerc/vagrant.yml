@@ -1,4 +1,23 @@
 core:
+  includes:
+    - components/core/core
   chef:
     cookbooks:
       - gusztavvargadr_workstations_dockerc
+    json:
+      gusztavvargadr_workstations_core:
+        requirements:
+          features:
+            Microsoft-Hyper-V:
+            Microsoft-Hyper-V-Management-Clients:
+            Microsoft-Hyper-V-Management-PowerShell:
+            RSAT-Hyper-V-Tools-Feature:
+            Containers:
+        tools:
+          windows:
+            Docker for Windows (Edge):
+              source: https://download.docker.com/win/edge/Docker%20for%20Windows%20Installer.exe
+              install:
+                - install
+                - --quiet
+              directory: /Program Files/Docker
