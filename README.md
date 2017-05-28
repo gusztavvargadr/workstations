@@ -1,7 +1,5 @@
 # Workstations
 
-<!-- TODO: customizations full review -->
-
 **Quick links** [Vagrant boxes] | [Packer templates]  
 
 This repository contains Windows-based workstations for .NET, SQL Server and infrastructure development and default OS installations using Vagrant with Hyper-V / VirtualBox and Chef.
@@ -19,7 +17,7 @@ This repository contains Windows-based workstations for the following scenarios:
 
 All of them support an easy, source-controlled way of installing and configuring the most common development tools for the related stacks, and the management of the source code of your projects, based on [Vagrant] with [Hyper-V] / [VirtualBox] and [Chef]:
 
-- Managing the core [OS][ComponentsOS] settings, installing features and custom packages.
+- Managing [OS][ComponentsOS] settings, installing features and custom packages.
 - Working with [Git][ComponentsGit] and [SVN][ComponentsSVN] repositories.
 - Managing [NuGet][ComponentsNuGet] sources.
 - Downloading [Vagrant][ComponentsVagrant] boxes and pulling [Docker][ComponentsDocker] images.
@@ -35,15 +33,9 @@ This way you can easily create the same workstations anytime, anywhere, and inst
 
 **Note** The workstations have been tested on Windows hosts only, but they are supposed to run on any other platform as well, given that the actual virtualization provider (e.g. VirtualBox) supports it. [Let me know][Contributing] if you encounter any issues and I'm glad to help.  
 
-**Note** Booting a workstation for the first time can take a significant amount of time. If you have a slow connection, downloading the [Vagrant boxes] - usually several GBs for Windows guests - might require some patience and retries. Creating another machine from the same box later though will reuse the already downloaded one of course.  
-
-**Note** Configuring the core OS after Sysprep (to support actually unique virtual machines) and provisioning the workstations (e.g. installing the custom tools not included in the [original boxes][Packer templates]) by default happens during the initial boot as well. However, starting the machines again later will not need these steps, so the process will be significantly faster.  
-
 [Getting started]: #getting-started
 
 [VagrantGettingStarted]: https://www.vagrantup.com/intro/getting-started/index.html
-[Vagrant boxes]: https://atlas.hashicorp.com/gusztavvargadr
-[Packer templates]: https://github.com/gusztavvargadr/packer
 
 ### Installing the tools
 
@@ -62,32 +54,44 @@ Follow the steps below to install the required tools:
 [VagrantBerkshelfInstallation]: https://github.com/berkshelf/vagrant-berkshelf#installation
 
 [VagrantEnvDefaultProvider]: https://www.vagrantup.com/docs/other/environmental-variables.html#vagrant_default_provider
+[VagrantCliUpProvider]: https://www.vagrantup.com/docs/cli/up.html#provider-x
 
 #### Using Hyper-V
 
 **Note** Other virtualization providers that you might use will not work when Hyper-V is enabled. See [Hanselman's post][HyperVSwitching] for switching between them easily.  
 
 1. Enable [Hyper-V][HyperVEnabling]. You will need Windows 10 or Windows Server 2016 version 1607 or later on the host.
-1. Optionally, if you plan to use Hyper-V by default, add the [environment variable][VagrantEnvDefaultProvider] `VAGRANT_DEFAULT_PROVIDER` with the value of `hyperv`.
-1. Create a [virtual switch][HyperVVirtualSwitchCreating] to be used with Vagrant with access to the external network. Optionally, Add the [environment variable][VagrantCoreNetworkingBridge] `VAGRANT_NETWORK_BRIDGE` with the value of the name of the virtual switch you've created to prevent Vagrant from asking for it every time a machine gets [created][VagrantVNetworkingHyper].
-1. Optionally, add the [environment variables][VagrantCoreSyncedFoldersSMB] `VAGRANT_SMB_USERNAME` and `VAGRANT_SMB_PASSWORD` with your credentials on the host to prevent Vagrant from asking it every time a machine gets [booted][VagrantSyncedFoldersSMB].
+    - Optionally, if you plan to use Hyper-V by default, add the [environment variable][VagrantEnvDefaultProvider] `VAGRANT_DEFAULT_PROVIDER` with the value of `hyperv` to prevent specifying it every time a machine is [booted][VagrantCliUpProvider].
+    - Optionally, add the [environment variable][VagrantCoreHyperVLinkedClone] `VAGRANT_LINKED_CLONE` to save some disk space using [differencing disks][VagrantHyperVDifferencingDisks].
+    - Optionally, add the [environment variables][VagrantCoreSyncedFoldersSMB] `VAGRANT_SMB_USERNAME` and `VAGRANT_SMB_PASSWORD` with your credentials on the host to prevent Vagrant from asking it every time a machine gets [booted][VagrantSyncedFoldersSMB].
+1. Create a [virtual switch][HyperVVirtualSwitchCreating] to be used with Vagrant with access to the external network.
+    - Optionally, add the [environment variable][VagrantCoreHyperVNetworkingBridge] `VAGRANT_NETWORK_BRIDGE` with the value of the name of the virtual switch you've created to prevent Vagrant from asking for it every time a machine gets [created][VagrantHyperVNetworking].
 
 [HyperVSwitching]: http://www.hanselman.com/blog/SwitchEasilyBetweenVirtualBoxAndHyperVWithABCDEditBootEntryInWindows81.aspx
 [HyperVEnabling]: https://docs.microsoft.com/en-us/virtualization/hyper-v-on-windows/quick-start/enable-hyper-v
-[HyperVVirtualSwitchCreating]: https://docs.microsoft.com/en-us/virtualization/hyper-v-on-windows/quick-start/connect-to-network
-[VagrantCoreNetworkingBridge]: src/Vagrantfile.core.rb#L21
-[VagrantNetworkingHyperV]: https://www.vagrantup.com/docs/hyperv/limitations.html#limited-networking
+[VagrantCoreHyperVLinkedClone]: src/Vagrantfile.core.rb#22
+[VagrantHyperVDifferencingDisks]: https://www.vagrantup.com/docs/hyperv/configuration.html#differencing_disk
+[VagrantCoreSyncedFoldersSMB]: src/Vagrantfile.core.rb#L24
 [VagrantSyncedFoldersSMB]: https://www.vagrantup.com/docs/synced-folders/smb.html#options
-[VagrantCoreSyncedFoldersSMB]: src/Vagrantfile.core.rb#L22
+[HyperVVirtualSwitchCreating]: https://docs.microsoft.com/en-us/virtualization/hyper-v-on-windows/quick-start/connect-to-network
+[VagrantCoreHyperVNetworkingBridge]: src/Vagrantfile.core.rb#L23
+[VagrantHyperVNetworking]: https://www.vagrantup.com/docs/hyperv/limitations.html#limited-networking
 
 #### Using VirtualBox
 
 1. Install [VirtualBox][VirtualBoxInstallation]. It is recommended to have VirtualBox version 5.1.22 or later on the host.
-1. Optionally, if you plan to use VirtualBox by default, add the [environment variable][VagrantEnvDefaultProvider] `VAGRANT_DEFAULT_PROVIDER` with the value of `virtualbox`.
+    - Optionally, if you plan to use VirtualBox by default, add the [environment variable][VagrantEnvDefaultProvider] `VAGRANT_DEFAULT_PROVIDER` with the value of `virtualbox` to prevent specifying it every time a machine is [booted][VagrantCliUpProvider].
+    - Optionally, add the [environment variable][VagrantCoreVirtualBoxLinkedClone] `VAGRANT_LINKED_CLONE` to save some disk space using [linked clones][VagrantVirtualBoxLinkedClone].
 
 [VirtualBoxInstallation]: https://www.virtualbox.org/wiki/Downloads
+[VagrantCoreVirtualBoxLinkedClone]: src/Vagrantfile.core.rb#30
+[VagrantVirtualBoxLinkedClone]: https://www.vagrantup.com/docs/virtualbox/configuration.html#linked-clones
 
 ### Creating the first workstation
+
+**Note** Booting a workstation for the first time can take a significant amount of time. If you have a slow connection, downloading the [Vagrant boxes] - usually several GBs for Windows guests - might require some patience and retries. Creating another machine from the same box later though will reuse the already downloaded one of course.  
+
+**Note** Configuring the core OS after Sysprep (to support actually unique virtual machines) and provisioning the workstations (e.g. installing the custom tools not included in the [original boxes][Packer templates]) by default happens during the initial boot as well. However, starting the machines again later will not need these steps, so the process will be significantly faster.  
 
 **Note** The sample in this section creates a workstation with some minimal configuration by default, focusing on demonstrating the management of machines in general. You will see the details of how to customize it according to your preferences [later][Usage].
 
@@ -115,7 +119,7 @@ Then, for example, to create a .NET workstation, simply invoke `vagrant up`:
 clone/src/people/me$ vagrant up dotnet
 ```
 
-Now, it's time to be patient. The box - in this case, by default with [Visual Studio 2017 Community][w16s-vs17c] including [Windows Server 2016 Standard][w16s] - will be downloaded and the machine will be provisioned before the first use. If this is not the configuration that you want, you can terminate the process anytime with Ctrl-C.
+Now, it's time to be patient. The box - in this case, by default with [Visual Studio 2017 Community][w16s-vs17c] including [Windows Server 2016 Standard][w16s] - will be downloaded and the machine will be provisioned before the first use. If this is not the configuration that you want, you can terminate the process anytime.
 
 Once the machine is ready, you can connect to it with RDP or open a remote PowerShell shell:
 
@@ -152,6 +156,9 @@ clone/src/people/me$ vagrant destroy dotnet
 ```
 
 The box will remain on your system after destroying the machine as `vagrant box list` reports it, as other machines might still use it. You can use `vagrant box remove` to clean it up if you no longer need it.
+
+[Vagrant boxes]: https://atlas.hashicorp.com/gusztavvargadr
+[Packer templates]: https://github.com/gusztavvargadr/packer
 
 ## Usage
 
@@ -208,7 +215,7 @@ Even if being run in a VM with Hyper-V or VirtualBox, Windows still loves to be 
 
 In the `requirements` stage core settings like Windows Features and environment variables get installed and configured.
 
-After those are set up correctly, the `tools` stage is used to install e.g. Chocolatey packages or applications with native installers.
+After those have been set up correctly, the `tools` stage is used to install e.g. Chocolatey packages or applications with native installers.
 
 Finally, in the `profiles` stage all the tools can now be used properly, for example, to clone Git repositories or manage NuGet sources.
 
@@ -229,35 +236,22 @@ Besides the above, you can of course add any of your own customizations using th
 
 ### Components
 
-#### Core
-
-[ComponentsCoreYaml]: src/components/core/vagrant.yml
-[ComponentsCoreCookbook]: src/components/os/cookbooks/gusztavvargadr_workstations_core
-[ComponentsOSSamples]: src/components/os/cookbooks/gusztavvargadr_workstations_core/.kitchen.yml
-
 #### OS
 
-<!--
-  * Configuring locales, time zone and environment variables.
-  * Installing OS features.
-  * Installing Chocolatey and native packages.
--->
-
+[Samples][ComponentsCoreSamples]
 [Samples][ComponentsOSSamples]
 
 [ComponentsOS]: #os
 
+[ComponentsCoreYaml]: src/components/core/vagrant.yml
+[ComponentsCoreCookbook]: src/components/os/cookbooks/gusztavvargadr_workstations_core
+[ComponentsCoreSamples]: src/components/os/cookbooks/gusztavvargadr_workstations_core/.kitchen.yml#L25
+
 [ComponentsOSYaml]: src/components/os/vagrant.yml
 [ComponentsOSCookbook]: src/components/os/cookbooks/gusztavvargadr_workstations_os
-[ComponentsOSSamples]: src/components/os/cookbooks/gusztavvargadr_workstations_os/.kitchen.yml#L26-L33
+[ComponentsOSSamples]: src/components/os/cookbooks/gusztavvargadr_workstations_os/.kitchen.yml#L26
 
 #### Git
-
-<!--
-  * Installing the core Git tools.
-  * Configuring Git settings.
-  * Cloning public and private repositories.
--->
 
 [Samples][ComponentsGitSamples]
 
@@ -265,15 +259,9 @@ Besides the above, you can of course add any of your own customizations using th
 
 [ComponentsGitYaml]: src/components/git/vagrant.yml
 [ComponentsGitCookbook]: src/components/git/cookbooks/gusztavvargadr_workstations_git
-[ComponentsGitSamples]: src/components/git/cookbooks/gusztavvargadr_workstations_git/.kitchen.yml
+[ComponentsGitSamples]: src/components/git/cookbooks/gusztavvargadr_workstations_git/.kitchen.yml#26
 
 #### SVN
-
-<!--
-* SVN
-  * Installing the core SVN tools.
-  * Checking out public and private repositories.
--->
 
 [Samples][ComponentsSVNSamples]
 
@@ -281,15 +269,9 @@ Besides the above, you can of course add any of your own customizations using th
 
 [ComponentsSVNYaml]: src/components/svn/vagrant.yml
 [ComponentsSVNCookbook]: src/components/svn/cookbooks/gusztavvargadr_workstations_svn
-[ComponentsSVNSamples]: src/components/svn/cookbooks/gusztavvargadr_workstations_svn/.kitchen.yml
+[ComponentsSVNSamples]: src/components/svn/cookbooks/gusztavvargadr_workstations_svn/.kitchen.yml#26
 
 #### NuGet
-
-<!--
-* NuGet
-  * Installing the core NuGet tools.
-  * Adding public and private package sources.
--->
 
 [Samples][ComponentsNuGetSamples]
 
@@ -297,15 +279,9 @@ Besides the above, you can of course add any of your own customizations using th
 
 [ComponentsNuGetYaml]: src/components/nuget/vagrant.yml
 [ComponentsNuGetCookbook]: src/components/nuget/cookbooks/gusztavvargadr_workstations_nuget
-[ComponentsNuGetSamples]: src/components/nuget/cookbooks/gusztavvargadr_workstations_nuget/.kitchen.yml
+[ComponentsNuGetSamples]: src/components/nuget/cookbooks/gusztavvargadr_workstations_nuget/.kitchen.yml#26
 
 #### Vagrant
-
-<!--
-* Vagrant
-  * Installing Vagrant itself and its plugins.
-  * Adding boxes.
--->
 
 [Samples][ComponentsVagrantSamples]
 
@@ -313,15 +289,9 @@ Besides the above, you can of course add any of your own customizations using th
 
 [ComponentsVagrantYaml]: src/components/vagrant/vagrant.yml
 [ComponentsVagrantCookbook]: src/components/vagrant/cookbooks/gusztavvargadr_workstations_vagrant
-[ComponentsVagrantSamples]: src/components/vagrant/cookbooks/gusztavvargadr_workstations_vagrant/.kitchen.yml
+[ComponentsVagrantSamples]: src/components/vagrant/cookbooks/gusztavvargadr_workstations_vagrant/.kitchen.yml#26
 
 #### Docker
-
-<!--
-* Docker
-  * Installing the core Docker tools.
-  * Pulling images.
--->
 
 [Samples][ComponentsDockerSamples]
 
@@ -329,15 +299,9 @@ Besides the above, you can of course add any of your own customizations using th
 
 [ComponentsDockerYaml]: src/components/dockere/vagrant.yml
 [ComponentsDockerCookbook]: src/components/dockere/cookbooks/gusztavvargadr_workstations_dockere
-[ComponentsDockerSamples]: src/components/dockere/cookbooks/gusztavvargadr_workstations_dockere/.kitchen.yml
+[ComponentsDockerSamples]: src/components/dockere/cookbooks/gusztavvargadr_workstations_dockere/.kitchen.yml#26
 
 #### AWS
-
-<!--
-* AWS
-  * Installing the core AWS tools.
-  * Setting up AWS CLI profiles.
--->
 
 [Samples][ComponentsAWSSamples]
 
@@ -345,34 +309,25 @@ Besides the above, you can of course add any of your own customizations using th
 
 [ComponentsAWSYaml]: src/components/aws/vagrant.yml
 [ComponentsAWSCookbook]: src/components/dockere/cookbooks/gusztavvargadr_workstations_dockere
-[ComponentsAWSSamples]: src/components/dockere/cookbooks/gusztavvargadr_workstations_dockere/.kitchen.yml
+[ComponentsAWSSamples]: src/components/dockere/cookbooks/gusztavvargadr_workstations_dockere/.kitchen.yml#26
 
 ### Stacks
 
 #### .NET development
-
-Boot the workstation:
 
 ```sh
 $ cd src/stacks/dotnet
 $ vagrant up (vs10p|vs15c|vs15p|vs17c|vs17p)
 ```
 
-The workstation is created by default with the following tools installed and configured:
-
-* [Windows Server 2016 Standard][w16s]
-  * **vs10p** - [Visual Studio 2010 Professional][w16s-vs10p]
-  * **vs15c** - [Visual Studio 2015 Community][w16s-vs15c]
-  * vs15p - [Visual Studio 2015 Professional][w16s-vs15p]
-  * vs17c - [Visual Studio 2017 Community][w16s-vs17c]
-  * vs17p - [Visual Studio 2017 Professional][w16s-vs17p]
-* [OS]
-* [Git]
-* [NuGet]
+- vs10p - [Visual Studio 2010 Professional][w16s-vs10p]
+- vs15c - [Visual Studio 2015 Community][w16s-vs15c]
+- vs15p - [Visual Studio 2015 Professional][w16s-vs15p]
+- vs17c - [Visual Studio 2017 Community][w16s-vs17c]
+- vs17p - [Visual Studio 2017 Professional][w16s-vs17p]
 
 [.NET development]: #net-development
 
-[w16s]: https://atlas.hashicorp.com/gusztavvargadr/boxes/w16s
 [w16s-vs10p]: https://atlas.hashicorp.com/gusztavvargadr/boxes/w16s-vs10p
 [w16s-vs15c]: https://atlas.hashicorp.com/gusztavvargadr/boxes/w16s-vs15c
 [w16s-vs15p]: https://atlas.hashicorp.com/gusztavvargadr/boxes/w16s-vs15p
@@ -381,20 +336,13 @@ The workstation is created by default with the following tools installed and con
 
 #### SQL Server development
 
-Boot the workstation:
-
 ```sh
 $ cd src/stacks/sql
 $ vagrant up (sql14d|ssms16)
 ```
 
-The workstation is created by default with the following tools installed and configured:
-
-* [Windows Server 2016 Standard][w16s]
-  * sql14d - [SQL Server 2014 Developer][w16s-sql14d]
-  * ssms16 - SQL Server Management Studio 16
-* [OS]
-* [Git]
+- sql14d - [SQL Server 2014 Developer][w16s-sql14d]
+- ssms16 - SQL Server Management Studio 16
 
 [SQL Server development]: #sql-server-development
 
@@ -402,36 +350,38 @@ The workstation is created by default with the following tools installed and con
 
 #### Infrastructure development
 
-Boot the workstation:
-
 ```sh
 $ cd src/stacks/infrastructure
 $ vagrant up (aws|dockerc|dockere|virtualbox)
 ```
 
-The workstation is created by default with the following tools installed and configured:
-
-* [Windows Server 2016 Standard][w16s]
-  * aws - [AWS] command line tools
-  * dockerc - Docker Community Edition (Edge)
-  * dockere - Docker Enterprise Edition
-  * virtualbox - VirtualBox
-* [OS]
-* [Git]
-* [Chef], [Packer], [Terraform]
-* [Vagrant]
+- aws - AWS command line tools
+- dockerc - Docker Community Edition (Edge)
+- dockere - Docker Enterprise Edition
+- virtualbox - VirtualBox
 
 [Infrastructure development]: #infrastructure-development
-[Packer]: https://chocolatey.org/packages/packer
-[Terraform]: https://chocolatey.org/packages/terraform
 
 #### OS installations
 
+```sh
+$ cd src/stacks/infrastructure
+$ vagrant up (w10e|w16s)
+```
+
+- w10e - [Windows 10 Enterprise][w10e]
+- w16s - [Windows Server 2016 Standard][w16s]
+
 [OS installations]: #os-installations
 
+[w10e]: https://atlas.hashicorp.com/gusztavvargadr/boxes/w10e
+[w16s]: https://atlas.hashicorp.com/gusztavvargadr/boxes/w16s
+
+<!--
 ### Projects
 
 ### People
+-->
 
 ## Contributing
 
@@ -441,14 +391,17 @@ The workstation is created by default with the following tools installed and con
 [ChefGettingStarted]: https://learn.chef.io/tutorials/
 -->
 
-Any feedback, [issues] and / or [pull requests] are welcome and greatly appreciated.
+Any feedback, [issues] or [pull requests] are welcome and greatly appreciated. Chek out the [milestones] for the list of planned releases.
 
 [Contributing]: #contributing
 
 [Issues]: https://github.com/gusztavvargadr/workstations/issues
 [Pull requests]: https://github.com/gusztavvargadr/workstations/pulls
+[Milestones]: https://github.com/gusztavvargadr/workstations/milestones
 
 ## Resources
+
+This repository could not exist without the following great tools:
 
 * [Vagrant]
 * [Hyper-V]
