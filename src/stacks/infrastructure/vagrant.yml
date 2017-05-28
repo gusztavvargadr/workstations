@@ -27,7 +27,8 @@ aws:
           plugins:
             vagrant-aws:
           boxes:
-            file:///vagrant-workstations/src/boxes/dummy.json:
+            dummy:
+              address: file:///vagrant-workstations/src/boxes/dummy.json
 
 dockerc:
   includes:
