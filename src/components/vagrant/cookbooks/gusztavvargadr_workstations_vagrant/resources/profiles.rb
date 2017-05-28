@@ -5,11 +5,6 @@ default_action :create
 action :create do
   return if profiles_options.nil?
 
-  gusztavvargadr_workstations_core_profiles '' do
-    profiles_options new_resource.profiles_options
-    action :create
-  end
-
   gusztavvargadr_workstations_vagrant_profiles_plugins '' do
     profiles_plugins_options profiles_options['plugins']
     action :install

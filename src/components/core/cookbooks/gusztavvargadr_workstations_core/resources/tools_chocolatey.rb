@@ -6,22 +6,29 @@ action :install do
   return if tools_chocolatey_options.nil?
 
   tools_chocolatey_options.each do |package_name, package_options|
-    package_version = package_options.nil? ? nil : package_options['version']
-    package_install = "--ignorechecksums #{package_options.nil? ? nil : package_options['install']}"
-    if !package_options.nil? && package_options['ignorecodes']
-      package_install = "#{package_install} --ignorepackagecodes"
+    package_options = {} if package_options.nil?
+
+    package_version = package_options['version']
+    package_install = package_options['install'].nil? ? {} : package_options['install']
+    package_elevated = package_options['elevated']
+
+    package_script_name = "Install Chocolatey package '#{package_name}'"
+    package_script_code = "choco install #{package_name} --confirm"
+    package_script_code = "#{package_script_code} --version #{package_version}" unless package_version.nil?
+    package_install.each do |package_install_name, package_install_value|
+      package_script_code = "#{package_script_code} --#{package_install_name}"
+      package_script_code = "#{package_script_code} #{package_install_value}" unless package_install_value.nil? 
     end
 
-    if package_version.nil?
-      chocolatey_package package_name do
-        options package_install
-        action :install
+    if package_elevated
+      gusztavvargadr_windows_powershell_script_elevated package_script_name do
+        code package_script_code
+        action :run
       end
     else
-      chocolatey_package package_name do
-        version package_version
-        options package_install
-        action :install
+      powershell_script package_script_name do
+        code package_script_code
+        action :run
       end
     end
   end

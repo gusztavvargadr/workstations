@@ -1,0 +1,3 @@
+include_recipe 'gusztavvargadr_workstations_core::requirements'
+include_recipe 'gusztavvargadr_workstations_core::tools'
+include_recipe 'gusztavvargadr_workstations_core::profiles'

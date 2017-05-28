@@ -1,9 +1,8 @@
 ---
 driver:
   name: vagrant
-  customize:
-    memory: 4096
-    cpus: 2
+  vagrantfiles:
+    - ../../../../Vagrantfile.kitchen
 
 provisioner:
   name: chef_solo
@@ -12,7 +11,7 @@ verifier:
   name: inspec
 
 platforms:
-  - name: w16s
+  - name: w
     transport:
       name: winrm
     driver:
@@ -21,6 +20,7 @@ platforms:
 suites:
   - name: default
     run_list:
+      - recipe[gusztavvargadr_workstations_core::default]
       - recipe[gusztavvargadr_workstations_os::default]
     attributes:
       gusztavvargadr_workstations_os:
@@ -31,6 +31,3 @@ suites:
             user: en-GB
           datetime:
             timezone: GMT Standard Time
-    verifier:
-      inspec_tests:
-        - test/smoke/default

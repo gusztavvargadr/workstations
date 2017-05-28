@@ -4,12 +4,12 @@ core:
     - components/vagrant/core
   chef:
     json:
-      gusztavvargadr_workstations_os:
+      gusztavvargadr_workstations_core:
         tools:
           chocolatey:
             chefdk:
-            terraform:
             packer:
+            terraform:
       gusztavvargadr_workstations_vagrant:
         profiles:
           plugins:
@@ -27,41 +27,24 @@ aws:
           plugins:
             vagrant-aws:
           boxes:
-            dummy:
-              address: https://github.com/mitchellh/vagrant-aws/raw/master/dummy.box
+            file:///vagrant-workstations/src/boxes/dummy.json:
 
 dockerc:
   includes:
     - stacks/infrastructure/core
     - components/dockerc/core
-  chef:
-    json:
-      gusztavvargadr_workstations_dockerc:
-        profiles:
-          images:
-            ubuntu:
 
 dockere:
   includes:
     - stacks/infrastructure/core
     - components/dockere/core
-  chef:
-    json:
-      gusztavvargadr_workstations_dockere:
-        profiles:
-          images:
-            microsoft/nanoserver:
 
 virtualbox:
   includes:
     - stacks/infrastructure/core
   chef:
     json:
-      gusztavvargadr_workstations_os:
+      gusztavvargadr_workstations_core:
         tools:
           chocolatey:
             virtualbox:
-      gusztavvargadr_workstations_vagrant:
-        profiles:
-          boxes:
-            ubuntu/trusty32:

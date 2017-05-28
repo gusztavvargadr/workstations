@@ -1,9 +1,7 @@
----
 driver:
   name: vagrant
-  customize:
-    memory: 4096
-    cpus: 2
+  vagrantfiles:
+    - ../../../../Vagrantfile.kitchen
 
 provisioner:
   name: chef_solo
@@ -12,7 +10,7 @@ verifier:
   name: inspec
 
 platforms:
-  - name: w16s
+  - name: w
     transport:
       name: winrm
     driver:
@@ -21,12 +19,14 @@ platforms:
 suites:
   - name: default
     run_list:
+      - recipe[gusztavvargadr_workstations_core::default]
       - recipe[gusztavvargadr_workstations_dockere::default]
     attributes:
-      gusztavvargadr_workstations_dockere:
+      gusztavvargadr_workstations_core:
+        requirements:
+          features:
+            Containers:
+      gusztavvargadr_workstations_dockerc:
         profiles:
           images:
-            microsoft/nanoserver:
-    verifier:
-      inspec_tests:
-        - test/smoke/default
+            hello-world:nanoserver:

@@ -1,4 +1,11 @@
 core:
+  includes:
+    - components/core/core
   chef:
     cookbooks:
       - gusztavvargadr_workstations_nuget
+    json:
+      gusztavvargadr_workstations_core:
+        tools:
+          chocolatey:
+            nuget.commandline:

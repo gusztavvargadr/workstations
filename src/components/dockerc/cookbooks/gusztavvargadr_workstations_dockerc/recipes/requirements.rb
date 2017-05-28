@@ -1,7 +1,4 @@
-options = node['gusztavvargadr_workstations_dockerc']
-return if options.nil?
-
-gusztavvargadr_workstations_dockerc_requirements '' do
-  requirements_options options['requirements']
-  action :ensure
+powershell_script 'Set service \'WinRM\' to \'Autostart (Delayed)\'' do
+  code 'sc.exe config winrm start= delayed-auto'
+  action :run
 end

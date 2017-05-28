@@ -1,4 +1,6 @@
 core:
+  includes:
+    - components/core/core
   chef:
     cookbooks:
       - gusztavvargadr_workstations_os

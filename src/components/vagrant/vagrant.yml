@@ -1,4 +1,13 @@
 core:
+  includes:
+    - components/core/core
   chef:
     cookbooks:
       - gusztavvargadr_workstations_vagrant
+    json:
+      gusztavvargadr_workstations_core:
+        tools:
+          chocolatey:
+            vagrant:
+              install:
+                ignorepackagecodes:

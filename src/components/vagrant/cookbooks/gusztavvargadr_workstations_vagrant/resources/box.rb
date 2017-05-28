@@ -13,7 +13,7 @@ action :add do
     powershell_script_code = "#{powershell_script_code} #{box_address} --name #{box_name}"
   end
   powershell_script_guard = "((vagrant box list) | Out-String).Contains(\"#{box_name}\")"
-  powershell_script "Add box #{box_name}" do
+  powershell_script "Add box '#{box_name}'" do
     code powershell_script_code
     action :run
     guard_interpreter :powershell_script

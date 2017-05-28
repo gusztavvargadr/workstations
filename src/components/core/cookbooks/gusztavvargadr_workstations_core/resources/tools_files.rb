@@ -14,7 +14,7 @@ action :create do
     end
 
     remote_file target_file do
-      source "file:///vagrant-workstations-src/#{source_file}"
+      source source_file
       action :create
     end
   end

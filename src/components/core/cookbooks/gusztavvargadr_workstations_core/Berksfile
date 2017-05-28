@@ -1,0 +1,8 @@
+directory = File.dirname(__FILE__)
+require "#{directory}/../../../../Berksfile.core"
+
+source 'https://supermarket.chef.io'
+
+gusztavvargadr_workstations_cookbook 'components', 'core'
+
+gusztavvargadr_cookbook 'windows'
