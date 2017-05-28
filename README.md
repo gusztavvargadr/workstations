@@ -63,13 +63,13 @@ Follow the steps below to install the required tools:
 1. Enable [Hyper-V][HyperVEnabling]. You will need Windows 10 or Windows Server 2016 version 1607 or later on the host.
     - Optionally, if you plan to use Hyper-V by default, add the [environment variable][VagrantEnvDefaultProvider] `VAGRANT_DEFAULT_PROVIDER` with the value of `hyperv` to prevent specifying it every time a machine is [booted][VagrantCliUpProvider].
     - Optionally, add the [environment variable][VagrantCoreHyperVLinkedClone] `VAGRANT_LINKED_CLONE` to save some disk space using [differencing disks][VagrantHyperVDifferencingDisks].
-    - Optionally, add the [environment variables][VagrantCoreSyncedFoldersSMB] `VAGRANT_SMB_USERNAME` and `VAGRANT_SMB_PASSWORD` with your credentials on the host to prevent Vagrant from asking it every time a machine gets [booted][VagrantSyncedFoldersSMB].
+    - Optionally, add the [environment variables][VagrantCoreSyncedFoldersSMB] `VAGRANT_SMB_USERNAME` and `VAGRANT_SMB_PASSWORD` with your credentials on the host to prevent Vagrant from asking it every time a machine is [booted][VagrantSyncedFoldersSMB].
 1. Create a [virtual switch][HyperVVirtualSwitchCreating] to be used with Vagrant with access to the external network.
-    - Optionally, add the [environment variable][VagrantCoreHyperVNetworkingBridge] `VAGRANT_NETWORK_BRIDGE` with the value of the name of the virtual switch you've created to prevent Vagrant from asking for it every time a machine gets [created][VagrantHyperVNetworking].
+    - Optionally, add the [environment variable][VagrantCoreHyperVNetworkingBridge] `VAGRANT_NETWORK_BRIDGE` with the value of the name of the virtual switch you've created to prevent Vagrant from asking for it every time a machine is [created][VagrantHyperVNetworking].
 
 [HyperVSwitching]: http://www.hanselman.com/blog/SwitchEasilyBetweenVirtualBoxAndHyperVWithABCDEditBootEntryInWindows81.aspx
 [HyperVEnabling]: https://docs.microsoft.com/en-us/virtualization/hyper-v-on-windows/quick-start/enable-hyper-v
-[VagrantCoreHyperVLinkedClone]: src/Vagrantfile.core.rb#22
+[VagrantCoreHyperVLinkedClone]: src/Vagrantfile.core.rb#L22
 [VagrantHyperVDifferencingDisks]: https://www.vagrantup.com/docs/hyperv/configuration.html#differencing_disk
 [VagrantCoreSyncedFoldersSMB]: src/Vagrantfile.core.rb#L24
 [VagrantSyncedFoldersSMB]: https://www.vagrantup.com/docs/synced-folders/smb.html#options
@@ -84,7 +84,7 @@ Follow the steps below to install the required tools:
     - Optionally, add the [environment variable][VagrantCoreVirtualBoxLinkedClone] `VAGRANT_LINKED_CLONE` to save some disk space using [linked clones][VagrantVirtualBoxLinkedClone].
 
 [VirtualBoxInstallation]: https://www.virtualbox.org/wiki/Downloads
-[VagrantCoreVirtualBoxLinkedClone]: src/Vagrantfile.core.rb#30
+[VagrantCoreVirtualBoxLinkedClone]: src/Vagrantfile.core.rb#L30
 [VagrantVirtualBoxLinkedClone]: https://www.vagrantup.com/docs/virtualbox/configuration.html#linked-clones
 
 ### Creating the first workstation
@@ -211,7 +211,7 @@ TODO: attributes, stacks, projects, people
 
 #### Provisioning
 
-Even if being run in a VM with Hyper-V or VirtualBox, Windows still loves to be restarted, and this is especially the case during provisioning, when e.g. Windows Features or specific tools get installed. To support those scenarios when provisioning would require the use of another component which just got installed, but it requires a restart, all the custom cookbooks support being executed in different stages, and the custom Vagrant extension will [reboot the machine][VagrantCore] between them.
+Even if being run in a VM with Hyper-V or VirtualBox, Windows still loves to be restarted, and this is especially the case during provisioning, when e.g. Windows Features or specific tools get installed. To support those scenarios when provisioning would require the use of another component which just got installed, but it requires a restart, all the custom cookbooks support being executed in different stages, and the custom Vagrant extension will [restart the machine][VagrantCoreRestart] between them.
 
 In the `requirements` stage core settings like Windows Features and environment variables get installed and configured.
 
@@ -219,7 +219,7 @@ After those have been set up correctly, the `tools` stage is used to install e.g
 
 Finally, in the `profiles` stage all the tools can now be used properly, for example, to clone Git repositories or manage NuGet sources.
 
-[VagrantCore]: src/Vagrantfile.core.rb
+[VagrantCoreRestart]: src/Vagrantfile.core.rb#L37
 
 <!--
 todo: download optimization and / or build own
@@ -244,8 +244,8 @@ Besides the above, you can of course add any of your own customizations using th
 [ComponentsOS]: #os
 
 [ComponentsCoreYaml]: src/components/core/vagrant.yml
-[ComponentsCoreCookbook]: src/components/os/cookbooks/gusztavvargadr_workstations_core
-[ComponentsCoreSamples]: src/components/os/cookbooks/gusztavvargadr_workstations_core/.kitchen.yml#L25
+[ComponentsCoreCookbook]: src/components/core/cookbooks/gusztavvargadr_workstations_core
+[ComponentsCoreSamples]: src/components/core/cookbooks/gusztavvargadr_workstations_core/.kitchen.yml#L25
 
 [ComponentsOSYaml]: src/components/os/vagrant.yml
 [ComponentsOSCookbook]: src/components/os/cookbooks/gusztavvargadr_workstations_os
@@ -259,7 +259,7 @@ Besides the above, you can of course add any of your own customizations using th
 
 [ComponentsGitYaml]: src/components/git/vagrant.yml
 [ComponentsGitCookbook]: src/components/git/cookbooks/gusztavvargadr_workstations_git
-[ComponentsGitSamples]: src/components/git/cookbooks/gusztavvargadr_workstations_git/.kitchen.yml#26
+[ComponentsGitSamples]: src/components/git/cookbooks/gusztavvargadr_workstations_git/.kitchen.yml#L26
 
 #### SVN
 
@@ -269,7 +269,7 @@ Besides the above, you can of course add any of your own customizations using th
 
 [ComponentsSVNYaml]: src/components/svn/vagrant.yml
 [ComponentsSVNCookbook]: src/components/svn/cookbooks/gusztavvargadr_workstations_svn
-[ComponentsSVNSamples]: src/components/svn/cookbooks/gusztavvargadr_workstations_svn/.kitchen.yml#26
+[ComponentsSVNSamples]: src/components/svn/cookbooks/gusztavvargadr_workstations_svn/.kitchen.yml#L26
 
 #### NuGet
 
@@ -279,7 +279,7 @@ Besides the above, you can of course add any of your own customizations using th
 
 [ComponentsNuGetYaml]: src/components/nuget/vagrant.yml
 [ComponentsNuGetCookbook]: src/components/nuget/cookbooks/gusztavvargadr_workstations_nuget
-[ComponentsNuGetSamples]: src/components/nuget/cookbooks/gusztavvargadr_workstations_nuget/.kitchen.yml#26
+[ComponentsNuGetSamples]: src/components/nuget/cookbooks/gusztavvargadr_workstations_nuget/.kitchen.yml#L26
 
 #### Vagrant
 
@@ -289,7 +289,7 @@ Besides the above, you can of course add any of your own customizations using th
 
 [ComponentsVagrantYaml]: src/components/vagrant/vagrant.yml
 [ComponentsVagrantCookbook]: src/components/vagrant/cookbooks/gusztavvargadr_workstations_vagrant
-[ComponentsVagrantSamples]: src/components/vagrant/cookbooks/gusztavvargadr_workstations_vagrant/.kitchen.yml#26
+[ComponentsVagrantSamples]: src/components/vagrant/cookbooks/gusztavvargadr_workstations_vagrant/.kitchen.yml#L26
 
 #### Docker
 
@@ -299,7 +299,7 @@ Besides the above, you can of course add any of your own customizations using th
 
 [ComponentsDockerYaml]: src/components/dockere/vagrant.yml
 [ComponentsDockerCookbook]: src/components/dockere/cookbooks/gusztavvargadr_workstations_dockere
-[ComponentsDockerSamples]: src/components/dockere/cookbooks/gusztavvargadr_workstations_dockere/.kitchen.yml#26
+[ComponentsDockerSamples]: src/components/dockere/cookbooks/gusztavvargadr_workstations_dockere/.kitchen.yml#L26
 
 #### AWS
 
@@ -309,7 +309,7 @@ Besides the above, you can of course add any of your own customizations using th
 
 [ComponentsAWSYaml]: src/components/aws/vagrant.yml
 [ComponentsAWSCookbook]: src/components/dockere/cookbooks/gusztavvargadr_workstations_dockere
-[ComponentsAWSSamples]: src/components/dockere/cookbooks/gusztavvargadr_workstations_dockere/.kitchen.yml#26
+[ComponentsAWSSamples]: src/components/dockere/cookbooks/gusztavvargadr_workstations_dockere/.kitchen.yml#L26
 
 ### Stacks
 
