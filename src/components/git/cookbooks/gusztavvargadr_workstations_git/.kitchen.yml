@@ -1,9 +1,8 @@
 ---
 driver:
   name: vagrant
-  customize:
-    memory: 4096
-    cpus: 2
+  vagrantfiles:
+    - ../../../../Vagrantfile.kitchen
 
 provisioner:
   name: chef_solo
@@ -12,7 +11,7 @@ verifier:
   name: inspec
 
 platforms:
-  - name: w16s
+  - name: w
     transport:
       name: winrm
     driver:
@@ -21,8 +20,16 @@ platforms:
 suites:
   - name: default
     run_list:
+      - recipe[gusztavvargadr_workstations_core::default]
       - recipe[gusztavvargadr_workstations_git::default]
     attributes:
+      gusztavvargadr_workstations_core:
+        tools:
+          chocolatey:
+            git:
+              version: 2.11.1
+              install:
+                params: "'/GitAndUnixToolsOnPath /NoShellIntegration'"
       gusztavvargadr_workstations_git:
         profiles:
           workspaces:
@@ -31,6 +38,3 @@ suites:
               directory: /Users/vagrant/Repos/github
               repositories:
                 gitignore:
-    verifier:
-      inspec_tests:
-        - test/smoke/default

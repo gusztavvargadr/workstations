@@ -4,6 +4,10 @@ core:
     - projects/github/git
   chef:
     json:
+      gusztavvargadr_workstations_core:
+        tools:
+          files:
+            file:///vagrant-workstations/src/people/me/.gitconfig: /Users/vagrant/.gitconfig
       gusztavvargadr_workstations_os:
         requirements:
           locales:
@@ -12,10 +16,6 @@ core:
             user: en-US
           datetime:
             timezone: UTC
-      gusztavvargadr_workstations_git:
-        tools:
-          files:
-            people/me/.gitconfig: /Users/vagrant/.gitconfig
 
 dotnet:
   includes:
@@ -24,15 +24,10 @@ dotnet:
     - projects/apache/log4net
   chef:
     json:
-      gusztavvargadr_workstations_nuget:
+      gusztavvargadr_workstations_core:
         tools:
           files:
-            people/me/NuGet.Config: /Users/vagrant/AppData/Roaming/NuGet/NuGet.Config
-
-sql:
-  includes:
-    - people/me/core
-    - stacks/sql/ssms16
+            file:///vagrant-workstations/src/people/me/NuGet.Config: /Users/vagrant/AppData/Roaming/NuGet/NuGet.Config
 
 infrastructure:
   includes:
@@ -40,8 +35,23 @@ infrastructure:
     - stacks/infrastructure/dockere
     - stacks/infrastructure/virtualbox
     - stacks/infrastructure/aws
+  chef:
+    json:
+      gusztavvargadr_workstations_dockere:
+        profiles:
+          images:
+            hello-world:nanoserver:
+      gusztavvargadr_workstations_vagrant:
+        profiles:
+          boxes:
+            ubuntu/trusty32:
 
 os:
   includes:
     - people/me/core
     - stacks/os/w16s
+
+sql:
+  includes:
+    - people/me/core
+    - stacks/sql/ssms16
