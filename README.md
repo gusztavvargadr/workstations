@@ -1,5 +1,7 @@
 # Workstations
 
+<!-- TODO: customizations full review -->
+
 **Quick links** [Vagrant boxes] | [Packer templates]  
 
 This repository contains Windows-based workstations for .NET, SQL Server and infrastructure development and default OS installations using Vagrant with Hyper-V / VirtualBox and Chef.
