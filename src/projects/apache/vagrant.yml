@@ -13,6 +13,7 @@ core:
 log4net:
   includes:
     - projects/apache/core
+    - stacks/dotnetfx/library
   chef:
     json:
       gusztavvargadr_workstations_svn:

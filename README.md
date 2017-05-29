@@ -10,18 +10,15 @@ This repository contains Windows-based workstations for .NET, SQL Server and inf
 
 This repository contains Windows-based workstations for the following scenarios:
 
-- [.NET development] with Visual Studio 2017, 2015 and 2010.
-- [SQL Server development] with SQL Server Management Studio 2016 and SQL Server 2014.
-- [Infrastructure development] with Chef, Packer and Terraform using Docker, VirtualBox and AWS.
-- Default [OS installations] for generic experiments with Windows Server 2016 and Windows 10.
+- [.NET development][ComponentsVisualStudio] with Visual Studio 2017, 2015 and 2010.
+- [SQL Server development][ComponentsSQL] with SQL Server Management Studio 2016 and SQL Server 2014.
+- [Infrastructure development][ComponentsVagrant] with Vagrant using Docker, VirtualBox and AWS.
 
 All of them support an easy, source-controlled way of installing and configuring the most common development tools for the related stacks, and the management of the source code of your projects, based on [Vagrant] with [Hyper-V] / [VirtualBox] and [Chef]:
 
-- Managing [OS][ComponentsOS] settings, installing features and custom packages.
+- Installing [core][ComponentsCore] features, packages and managing [OS][ComponentsOS] settings, .
 - Working with [Git][ComponentsGit] and [SVN][ComponentsSVN] repositories.
 - Managing [NuGet][ComponentsNuGet] sources.
-- Downloading [Vagrant][ComponentsVagrant] boxes and pulling [Docker][ComponentsDocker] images.
-- Setting up [AWS][ComponentsAWS] profiles.
 
 This way you can easily create the same workstations anytime, anywhere, and instead of writing extensive documentation, you can simply share the ready to use environments with your teammates and contributors. Of course, you can extend the above options freely with any of your own configuration and provisioning steps.
 
@@ -93,7 +90,7 @@ Follow the steps below to install the required tools:
 
 **Note** Configuring the core OS after Sysprep (to support actually unique virtual machines) and provisioning the workstations (e.g. installing the custom tools not included in the [original boxes][Packer templates]) by default happens during the initial boot as well. However, starting the machines again later will not need these steps, so the process will be significantly faster.  
 
-**Note** The sample in this section creates a workstation with some minimal configuration by default, focusing on demonstrating the management of machines in general. You will see the details of how to customize it according to your preferences [later][Usage].
+**Note** The example in this section creates a workstation with a sample configuration by default, focusing on demonstrating the management of machines in general. You will see the details of how to customize it according to your preferences [later][Usage].
 
 You are now ready to create a workstation with Vagrant.
 
@@ -107,52 +104,50 @@ clone/src/people/me$ vagrant status
 The output will be something similar to this:
 
 ```
-dotnet                    not_created (hyperv)
-sql                       not_created (hyperv)
-infrastructure            not_created (hyperv)
-os                        not_created (hyperv)
+work                      not_created (hyperv)
+playground                not_created (hyperv)
+private                   not_created (hyperv)
 ```
 
-Then, for example, to create a .NET workstation, simply invoke `vagrant up`:
+Then, for example, to create the `playground` workstation, simply invoke `vagrant up`:
 
 ```sh
-clone/src/people/me$ vagrant up dotnet
+clone/src/people/me$ vagrant up playground
 ```
 
-Now, it's time to be patient. The box - in this case, by default with [Visual Studio 2017 Community][w16s-vs17c] including [Windows Server 2016 Standard][w16s] - will be downloaded and the machine will be provisioned before the first use. If this is not the configuration that you want, you can terminate the process anytime.
+Now, it's time to be patient. The box - in this case, by default with [Visual Studio 2017 Community][w16s-vs17c] including [Windows Server 2016 Standard][w16s] - will be downloaded and the machine will be provisioned before the first use to include all the components this repository supports. If this is not the configuration that you want, you can terminate the process anytime.
 
-Once the machine is ready, you can connect to it with RDP or open a remote PowerShell shell:
+Once the machine is ready, you can connect to it with RDP or open a remote PowerShell shell using the default credentials, `vagrant` for both the user name and password:
 
 ```sh
-clone/src/people/me$ vagrant rdp dotnet
-clone/src/people/me$ vagrant powershell dotnet
+clone/src/people/me$ vagrant rdp playground
+clone/src/people/me$ vagrant powershell playground
 ``` 
 
 Later, you can check the status of your machines by typing `vagrant status` again in the same directory or `vagrant global-status` anywhere to list all the machines on your host.
 
 ```sh
 clone/src/people/me$ vagrant status
-dotnet                    running (hyperv)
-sql                       not_created (hyperv)
-infrastructure            not_created (hyperv)
-os                        not_created (hyperv)
+work                      not_created (hyperv)
+playground                running (hyperv)
+private                   not_created (hyperv)
 ```
 
 ```sh
 $ vagrant global-status
-id  dotnet hyperv running    clone/src/people/me
+id  playground hyperv running    clone/src/people/me
 ```
 
 When you've finished with your work, you can shut down the machine with `vagrant halt`. This will persist the machine's state, so next time when you invoke `vagrant up`, it will boot much more faster than for the first time, and your files and settings will be preserved.
 
 ```sh
-clone/src/people/me$ vagrant halt dotnet
+clone/src/people/me$ vagrant halt playground
 ```
 
 If you no longer need a machine, you can destroy it. As expected, this will wipe it completely from your system (on the next `vagrant up`, it will be provisioned again from scratch):
 
 ```sh
-clone/src/people/me$ vagrant destroy dotnet
+clone/src/people/me$ vagrant destroy playground
 ```
 
 The box will remain on your system after destroying the machine as `vagrant box list` reports it, as other machines might still use it. You can use `vagrant box remove` to clean it up if you no longer need it.
@@ -185,15 +180,14 @@ For example, you can define some [reasonable defaults][ComponentsCoreYaml] to be
 ```yml
 # src/components/core/vagrant.yml
 core:
-  box: w16s
   provider:
     memory: 4096
     cpus: 2
 ```
 
-This means that by default the machines will use the [Windows Server 2016 Standard][w16s] box and they will be allocated 4 GB of RAM and 2 virtual CPUs.
+This means that by default the machines will allocate 4 GB RAM and 2 virtual CPUs.
 
-Also, you can define how various components, for example, the core [OS][ComponentsOSYaml] is being provisioned:
+Also, you can define how various components, like the core [OS][ComponentsOSYaml] is being provisioned:
 
 ```yml
 # src/components/os/vagrant.yml
@@ -201,12 +195,39 @@ core:
   chef:
     cookbooks:
       - gusztavvargadr_workstations_os
+    json:
+      gusztavvargadr_workstations_os:
+        requirements:
+          locales:
+            system: en-US
+            ui: en-US
+            user: en-US
+          datetime:
+            timezone: UTC
 ```
 
-This means that the custom [OS cookbook][ComponentsOSCookbook] will be used for provisioning.
+This means that the custom [OS cookbook][ComponentsOSCookbook] will be used for provisioning, and the specified values, in this case, `en-US` for all the locales and `UTC` for the timezone will be set. The cookbooks provide [detailed samples][ComponentsOSSamples] for the scenarios they support.
+
+You can also define further parameters for Vagrant, in this case, a base box specifying the [Visual Studio][ComponentsVSYaml] version being used:
+
+```yml
+# src/components/vs/vagrant.yml
+core:
+  includes:
+    - components/core/core
+
+17c:
+  includes:
+    - components/vs/core
+  box: w16s-vs17c
+```
+
+In this case the configuration named `components/vs/17c` will use the [Visual Studio 2017 Community][w16s-vs17c] box. This options is very useful for tools which take significant time to install, so instead of applying them on the first boot, they can be already included in the [Vagrant boxes].
+
+You can also see how the existing configuration is being reused. For `components/vs/core` the above `components/core/core` part (specifying the memory and the CPU settings) is being included as a new baseline, as `components/vs/17c` includes `components/vs/core` in turn. As the list notation suggests, you can include any number or other components. If you specify a single value which exists in the included part (like the box), it will be overridden, while collections (for example, the list of cookbooks) will be merged.
 
 <!--
-TODO: attributes, stacks, projects, people
+TODO: stacks, projects, people
 -->
 
 #### Provisioning
@@ -236,50 +257,60 @@ Besides the above, you can of course add any of your own customizations using th
 
 ### Components
 
-#### OS
+#### Core
 
 [Samples][ComponentsCoreSamples]
-[Samples][ComponentsOSSamples]
 
-[ComponentsOS]: #os
+[ComponentsCore]: #core
 
 [ComponentsCoreYaml]: src/components/core/vagrant.yml
 [ComponentsCoreCookbook]: src/components/core/cookbooks/gusztavvargadr_workstations_core
 [ComponentsCoreSamples]: src/components/core/cookbooks/gusztavvargadr_workstations_core/.kitchen.yml#L25
 
+#### OS
+
+- w10e - [Windows 10 Enterprise][w10e]
+- w16s - [Windows Server 2016 Standard][w16s]
+
+[Samples][ComponentsOSSamples]
+
+[ComponentsOS]: #os
+
+[w10e]: https://atlas.hashicorp.com/gusztavvargadr/boxes/w10e
+[w16s]: https://atlas.hashicorp.com/gusztavvargadr/boxes/w16s
+
 [ComponentsOSYaml]: src/components/os/vagrant.yml
 [ComponentsOSCookbook]: src/components/os/cookbooks/gusztavvargadr_workstations_os
 [ComponentsOSSamples]: src/components/os/cookbooks/gusztavvargadr_workstations_os/.kitchen.yml#L26
 
-#### Git
+#### Visual Studio
 
-[Samples][ComponentsGitSamples]
+- vs10p - [Visual Studio 2010 Professional][w16s-vs10p]
+- vs15c - [Visual Studio 2015 Community][w16s-vs15c]
+- vs15p - [Visual Studio 2015 Professional][w16s-vs15p]
+- vs17c - [Visual Studio 2017 Community][w16s-vs17c]
+- vs17p - [Visual Studio 2017 Professional][w16s-vs17p]
 
-[ComponentsGit]: #git
+[ComponentsVisualStudio]: #visual-studio
 
-[ComponentsGitYaml]: src/components/git/vagrant.yml
-[ComponentsGitCookbook]: src/components/git/cookbooks/gusztavvargadr_workstations_git
-[ComponentsGitSamples]: src/components/git/cookbooks/gusztavvargadr_workstations_git/.kitchen.yml#L26
+[w16s-vs10p]: https://atlas.hashicorp.com/gusztavvargadr/boxes/w16s-vs10p
+[w16s-vs15c]: https://atlas.hashicorp.com/gusztavvargadr/boxes/w16s-vs15c
+[w16s-vs15p]: https://atlas.hashicorp.com/gusztavvargadr/boxes/w16s-vs15p
+[w16s-vs17c]: https://atlas.hashicorp.com/gusztavvargadr/boxes/w16s-vs17c
+[w16s-vs17p]: https://atlas.hashicorp.com/gusztavvargadr/boxes/w16s-vs17p
 
-#### SVN
+[ComponentsVisualStudioYaml]: src/components/vs/vagrant.yml
 
-[Samples][ComponentsSVNSamples]
+#### SQL Server
 
-[ComponentsSVN]: #svn
+- sql14d - [SQL Server 2014 Developer][w16s-sql14d]
+- ssms16 - SQL Server Management Studio 16
 
-[ComponentsSVNYaml]: src/components/svn/vagrant.yml
-[ComponentsSVNCookbook]: src/components/svn/cookbooks/gusztavvargadr_workstations_svn
-[ComponentsSVNSamples]: src/components/svn/cookbooks/gusztavvargadr_workstations_svn/.kitchen.yml#L26
+[ComponentsSQL]: #sql-server
 
-#### NuGet
+[w16s-sql14d]: https://atlas.hashicorp.com/gusztavvargadr/boxes/w16s-sql14d
 
-[Samples][ComponentsNuGetSamples]
-
-[ComponentsNuGet]: #nuget
-
-[ComponentsNuGetYaml]: src/components/nuget/vagrant.yml
-[ComponentsNuGetCookbook]: src/components/nuget/cookbooks/gusztavvargadr_workstations_nuget
-[ComponentsNuGetSamples]: src/components/nuget/cookbooks/gusztavvargadr_workstations_nuget/.kitchen.yml#L26
+[ComponentsSQLYaml]: src/components/sql/vagrant.yml
 
 #### Vagrant
 
@@ -311,77 +342,47 @@ Besides the above, you can of course add any of your own customizations using th
 [ComponentsAWSCookbook]: src/components/dockere/cookbooks/gusztavvargadr_workstations_dockere
 [ComponentsAWSSamples]: src/components/dockere/cookbooks/gusztavvargadr_workstations_dockere/.kitchen.yml#L26
 
+#### Git
+
+[Samples][ComponentsGitSamples]
+
+[ComponentsGit]: #git
+
+[ComponentsGitYaml]: src/components/git/vagrant.yml
+[ComponentsGitCookbook]: src/components/git/cookbooks/gusztavvargadr_workstations_git
+[ComponentsGitSamples]: src/components/git/cookbooks/gusztavvargadr_workstations_git/.kitchen.yml#L26
+
+#### SVN
+
+[Samples][ComponentsSVNSamples]
+
+[ComponentsSVN]: #svn
+
+[ComponentsSVNYaml]: src/components/svn/vagrant.yml
+[ComponentsSVNCookbook]: src/components/svn/cookbooks/gusztavvargadr_workstations_svn
+[ComponentsSVNSamples]: src/components/svn/cookbooks/gusztavvargadr_workstations_svn/.kitchen.yml#L26
+
+#### NuGet
+
+[Samples][ComponentsNuGetSamples]
+
+[ComponentsNuGet]: #nuget
+
+[ComponentsNuGetYaml]: src/components/nuget/vagrant.yml
+[ComponentsNuGetCookbook]: src/components/nuget/cookbooks/gusztavvargadr_workstations_nuget
+[ComponentsNuGetSamples]: src/components/nuget/cookbooks/gusztavvargadr_workstations_nuget/.kitchen.yml#L26
+
 ### Stacks
 
-#### .NET development
+#### .NET Core
 
-```sh
-$ cd src/stacks/dotnet
-$ vagrant up (vs10p|vs15c|vs15p|vs17c|vs17p)
-```
+#### .NET Framework
 
-- vs10p - [Visual Studio 2010 Professional][w16s-vs10p]
-- vs15c - [Visual Studio 2015 Community][w16s-vs15c]
-- vs15p - [Visual Studio 2015 Professional][w16s-vs15p]
-- vs17c - [Visual Studio 2017 Community][w16s-vs17c]
-- vs17p - [Visual Studio 2017 Professional][w16s-vs17p]
+#### SQL Server
 
-[.NET development]: #net-development
-
-[w16s-vs10p]: https://atlas.hashicorp.com/gusztavvargadr/boxes/w16s-vs10p
-[w16s-vs15c]: https://atlas.hashicorp.com/gusztavvargadr/boxes/w16s-vs15c
-[w16s-vs15p]: https://atlas.hashicorp.com/gusztavvargadr/boxes/w16s-vs15p
-[w16s-vs17c]: https://atlas.hashicorp.com/gusztavvargadr/boxes/w16s-vs17c
-[w16s-vs17p]: https://atlas.hashicorp.com/gusztavvargadr/boxes/w16s-vs17p
-
-#### SQL Server development
-
-```sh
-$ cd src/stacks/sql
-$ vagrant up (sql14d|ssms16)
-```
-
-- sql14d - [SQL Server 2014 Developer][w16s-sql14d]
-- ssms16 - SQL Server Management Studio 16
-
-[SQL Server development]: #sql-server-development
-
-[w16s-sql14d]: https://atlas.hashicorp.com/gusztavvargadr/boxes/w16s-sql14d
-
-#### Infrastructure development
-
-```sh
-$ cd src/stacks/infrastructure
-$ vagrant up (aws|dockerc|dockere|virtualbox)
-```
-
-- aws - AWS command line tools
-- dockerc - Docker Community Edition (Edge)
-- dockere - Docker Enterprise Edition
-- virtualbox - VirtualBox
-
-[Infrastructure development]: #infrastructure-development
-
-#### OS installations
-
-```sh
-$ cd src/stacks/infrastructure
-$ vagrant up (w10e|w16s)
-```
-
-- w10e - [Windows 10 Enterprise][w10e]
-- w16s - [Windows Server 2016 Standard][w16s]
-
-[OS installations]: #os-installations
-
-[w10e]: https://atlas.hashicorp.com/gusztavvargadr/boxes/w10e
-[w16s]: https://atlas.hashicorp.com/gusztavvargadr/boxes/w16s
-
-<!--
 ### Projects
 
 ### People
--->
 
 ## Contributing
 

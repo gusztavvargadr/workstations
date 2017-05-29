@@ -11,3 +11,44 @@ core:
             vagrant:
               install:
                 ignorepackagecodes:
+            chefdk:
+            packer:
+      gusztavvargadr_workstations_vagrant:
+        profiles:
+          plugins:
+            vagrant-reload:
+            vagrant-berkshelf:
+
+aws:
+  includes:
+    - components/vagrant/core
+    - components/aws/core
+  chef:
+    json:
+      gusztavvargadr_workstations_vagrant:
+        profiles:
+          plugins:
+            vagrant-aws:
+          boxes:
+            dummy:
+              address: file:///vagrant-workstations/src/boxes/dummy.json
+
+dockerc:
+  includes:
+    - components/vagrant/core
+    - components/dockerc/core
+
+dockere:
+  includes:
+    - components/vagrant/core
+    - components/dockere/core
+
+virtualbox:
+  includes:
+    - components/vagrant/core
+  chef:
+    json:
+      gusztavvargadr_workstations_core:
+        tools:
+          chocolatey:
+            virtualbox:

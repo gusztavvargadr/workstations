@@ -1,0 +1,49 @@
+core:
+  includes:
+    - components/git/core
+  chef:
+    json:
+      gusztavvargadr_workstations_git:
+        profiles:
+          workspaces:
+            identityserver:
+              address: https://github.com/identityserver
+              directory: /Users/vagrant/Repos/identityserver
+
+v3:
+  includes:
+    - projects/identityserver/core
+    - stacks/dotnetfx/web
+    - stacks/sql/management
+  chef:
+    json:
+      gusztavvargadr_workstations_git:
+        profiles:
+          workspaces:
+            identityserver:
+              repositories:
+                IdentityServer3:
+                  directory: v3/core
+                IdentityServer3.AccessTokenValidation:
+                  directory: v3/accesstokenvalidation
+                IdentityServer3.Samples:
+                  directory: v3/samples
+
+v4:
+  includes:
+    - projects/identityserver/core
+    - stacks/dotnetcore/web
+    - stacks/sql/management
+  chef:
+    json:
+      gusztavvargadr_workstations_git:
+        profiles:
+          workspaces:
+            identityserver:
+              repositories:
+                IdentityServer4:
+                  directory: v4/core
+                IdentityServer4.AccessTokenValidation:
+                  directory: v4/accesstokenvalidation
+                IdentityServer4.Samples:
+                  directory: v4/samples

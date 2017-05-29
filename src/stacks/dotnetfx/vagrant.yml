@@ -1,0 +1,12 @@
+core:
+  includes:
+    - components/vs/17c
+    - components/nuget/core
+
+library:
+  includes:
+    - stacks/dotnetfx/core
+
+web:
+  includes:
+    - stacks/dotnetfx/core

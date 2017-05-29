@@ -4,3 +4,22 @@ core:
   chef:
     cookbooks:
       - gusztavvargadr_workstations_os
+    json:
+      gusztavvargadr_workstations_os:
+        requirements:
+          locales:
+            system: en-US
+            ui: en-US
+            user: en-US
+          datetime:
+            timezone: UTC
+
+w10e:
+  includes:
+    - components/os/core
+  box: w10e
+
+w16s:
+  includes:
+    - components/os/core
+  box: w16s

@@ -1,40 +1,24 @@
-core:
+work:
   includes:
-    - stacks/core/core
+    - components/os/w16s
     - projects/github/git
-  chef:
-    json:
-      gusztavvargadr_workstations_core:
-        tools:
-          files:
-            file:///vagrant-workstations/src/people/me/.gitconfig: /Users/vagrant/.gitconfig
-      gusztavvargadr_workstations_os:
-        requirements:
-          locales:
-            system: en-US
-            ui: en-US
-            user: en-US
-          datetime:
-            timezone: UTC
-
-dotnet:
-  includes:
-    - people/me/core
+    - projects/aspnet/logging
     - projects/apache/log4net
-    - stacks/dotnet/vs17c
-  chef:
-    json:
-      gusztavvargadr_workstations_core:
-        tools:
-          files:
-            file:///vagrant-workstations/src/people/me/NuGet.Config: /Users/vagrant/AppData/Roaming/NuGet/NuGet.Config
+    - projects/identityserver/v3
+    - projects/identityserver/v4
+  default: true
 
-infrastructure:
+playground:
   includes:
-    - people/me/core
-    - stacks/infrastructure/dockere
-    - stacks/infrastructure/virtualbox
-    - stacks/infrastructure/aws
+    - components/os/w16s
+    - components/vs/17c
+    - components/nuget/core
+    - components/sql/16ms
+    - components/git/core
+    - components/svn/core
+    - components/vagrant/dockere
+    - components/vagrant/virtualbox
+    - components/vagrant/aws
   chef:
     json:
       gusztavvargadr_workstations_dockere:
@@ -46,12 +30,6 @@ infrastructure:
           boxes:
             ubuntu/trusty32:
 
-os:
+private:
   includes:
-    - people/me/core
-    - stacks/os/w16s
-
-sql:
-  includes:
-    - people/me/core
-    - stacks/sql/ssms16
+    - components/os/w10e

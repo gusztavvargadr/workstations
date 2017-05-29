@@ -1,6 +1,4 @@
 Vagrant.configure('2') do |config|
-  config.vm.box = 'gusztavvargadr/w10e'
-
   config.vm.provider 'hyperv' do |h, override|
     h.memory = 4096
     h.cpus = 2

@@ -1,0 +1,25 @@
+core:
+  includes:
+    - components/git/core
+  chef:
+    json:
+      gusztavvargadr_workstations_git:
+        profiles:
+          workspaces:
+            aspnet:
+              address: https://github.com/aspnet
+              directory: /Users/vagrant/Repos/aspnet
+
+logging:
+  includes:
+    - projects/aspnet/core
+    - stacks/dotnetcore/library
+  chef:
+    json:
+      gusztavvargadr_workstations_git:
+        profiles:
+          workspaces:
+            aspnet:
+              repositories:
+                Logging:
+                  directory: logging

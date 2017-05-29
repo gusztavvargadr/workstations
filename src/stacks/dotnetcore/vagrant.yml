@@ -1,0 +1,25 @@
+core:
+  includes:
+    - components/vs/17c
+    - components/nuget/core
+    - components/vagrant/dockere
+  chef:
+    json:
+      gusztavvargadr_workstations_dockere:
+        profiles:
+          images:
+            microsoft/dotnet:sdk-nanoserver:
+
+library:
+  includes:
+    - stacks/dotnetcore/core
+
+web:
+  includes:
+    - stacks/dotnetcore/core
+  chef:
+    json:
+      gusztavvargadr_workstations_dockere:
+        profiles:
+          images:
+            microsoft/aspnetcore-build:nanoserver:
