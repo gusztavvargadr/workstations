@@ -1,10 +1,5 @@
 # Workstations
 
-<!--
-samples: add output for provisining
-kitchen samples - multiple instances where available
--->
-
 **Quick links** [Vagrant boxes] | [Packer templates] | [Vagrant resources]  
 
 This repository contains Windows-based virtual workstations for .NET, SQL and infrastructure development using Vagrant with Hyper-V and VirtualBox.
@@ -99,13 +94,17 @@ Follow the steps below to install the required tools:
     - Optionally, if you plan to use VirtualBox by default, add the [environment variable][VagrantEnvDefaultProvider] `VAGRANT_DEFAULT_PROVIDER` with the value of `virtualbox` to prevent specifying it every time a machine is [booted][VagrantCliUpProvider].
     - Optionally, add the [environment variable][VagrantCoreVirtualBoxLinkedClone] `VAGRANT_LINKED_CLONE` to save some disk space using [linked clones][VagrantVirtualBoxLinkedClone].
 
-[Using Hyper-V]: #using-virtualbox
+[Using VirtualBox]: #using-virtualbox
 
 [VirtualBoxInstallation]: https://www.virtualbox.org/wiki/Downloads
 [VagrantCoreVirtualBoxLinkedClone]: src/Vagrantfile.core.rb#L30
 [VagrantVirtualBoxLinkedClone]: https://www.vagrantup.com/docs/virtualbox/configuration.html#linked-clones
 
 ### Creating your first workstation
+
+<!--
+TODO: samples: add output of Vagrant
+-->
 
 **Note** Booting a workstation for the first time can take a significant amount of time. If you have a slow connection, downloading the [Vagrant boxes] - usually several GBs for Windows guests - might require some patience and retries. Creating another machine from the same box later though will reuse the already downloaded one of course.  
 
@@ -130,7 +129,7 @@ playground                not_created (hyperv)
 private                   not_created (hyperv)
 ```
 
-Then, for example, to create the `playground` workstation, simply invoke `vagrant up`:
+The list shows the three default workstations, `work` intended to support the projects you work on, `playground` for generic experiments, and `private` for anything else like communication. None of these exsit yet, so for example, to create the `playground` one, simply invoke `vagrant up`:
 
 ```sh
 clone/src/people/me$ vagrant up playground
@@ -180,9 +179,15 @@ The box will remain on your system after destroying the machine as `vagrant box 
 
 ## Usage
 
+<!--
+TODO: download optimization and / or build own
+TODO: vagrant options
+TODO: vagrant extensions (e.g. ruby block)
+-->
+
 **In this section** [Basics] | [Components] | [Stacks] | [Projects] | [People]  
 
-**Note** At this point you might want to [fork this repository][Fork] and create your own branch to save your changes so you can [compare your workstations][Compare] easily with others.
+**Note** At this point you might want to [fork this repository][Fork] and create your own branch to save your changes and to [compare your workstations][Compare] easily with others.
 
 Take a moment to realize that this might have been the last time you installed something for your workstations manually.
 
@@ -205,7 +210,11 @@ This repository uses custom [Vagrant extensions][VagrantCore] to enable creating
 
 #### Configuration
 
-For example, you can define some [reasonable defaults][ComponentsCoreYaml] to be applied to every configuration:
+<!--
+TODO: ERB sample
+-->
+
+For example, you can define some [reasonable defaults][ComponentsCore] to be applied to every configuration:
 
 ```yml
 # src/components/core/vagrant.yml
@@ -214,10 +223,11 @@ core:
     memory: 4096
     cpus: 2
 ```
+[Source][ComponentsCoreYaml]
 
 This means that by default the machines will allocate 4 GB RAM and 2 virtual CPUs.
 
-Also, you can define how various components, like the core [OS][ComponentsOSYaml] is being provisioned:
+Also, you can define how [components][Components], like the [core OS][ComponentsOS] is being provisioned:
 
 ```yml
 # src/components/os/vagrant.yml
@@ -235,10 +245,11 @@ core:
           datetime:
             timezone: UTC
 ```
+[Source][ComponentsOSYaml]
 
-This means that the custom [OS cookbook][ComponentsOSCookbook] will be used for provisioning, and the specified values, in this case, `en-US` for all the locales and `UTC` for the timezone will be set. The cookbooks provide [detailed samples][ComponentsOSSamples] for the scenarios they support.
+This shows that the custom [OS cookbook][ComponentsOSCookbook] will be used for provisioning, and the specified values, in this case, `en-US` for all the locales and `UTC` for the timezone will be set. The cookbooks provide [complete samples][ComponentsOSSamples] for the scenarios they support so you can select the options you need.
 
-You can also define further parameters for Vagrant, in this case, a base box specifying the [Visual Studio][ComponentsVisualStudioYaml] version being used:
+You can also define further parameters for Vagrant, in this case, a base box specifying the [Visual Studio][ComponentsVisualStudio] version being used:
 
 ```yml
 # src/components/vs/vagrant.yml
@@ -251,18 +262,137 @@ core:
     - components/vs/core
   box: w16s-vs17c
 ```
+[Source][ComponentsVisualStudioYaml]
 
-In this case the configuration named `components/vs/17c` will use the [Visual Studio 2017 Community][w16s-vs17c] box. This options is very useful for tools which take significant time to install, so instead of applying them on the first boot, they can be already included in the [Vagrant boxes].
+In this case the configuration named `components/vs/17c` will use the [Visual Studio 2017 Community][w16s-vs17c] box including [Windows Server 2016 Standard][w16s]. This options is very useful for tools which take significant time to install, so instead of applying them on the first boot, they can be already included in the [Vagrant boxes].
 
-You can also see how the existing configuration is being reused. For `components/vs/core` the above `components/core/core` part (specifying the memory and the CPU settings) is being included as a new baseline, as `components/vs/17c` includes `components/vs/core` in turn. As the list notation suggests, you can include any number or other components. If you specify a single value which exists in the included part (like the box), it will be overridden, while collections (for example, the list of cookbooks) will be merged.
+You can also see how the existing configuration is being reused. `components/vs/17c` includes `components/vs/core`, which in turn includes the above `components/core/core` (specifying the memory and the CPU settings). As the list notation suggests, you can include any number or other configurations. If you specify a single value (like the box) defined earlier, it will be overridden. Collections (for example, the list of cookbooks) will be merged, the new values being added after the existing ones.
 
-<!--
-TODO: stacks, projects, people
--->
+Components like to appear in groups to form [stacks], like using a dedicated .NET version and the related hosting options for local development. For example, for [.NET Core][StacksDotnetCore] you can define to use [Docker][ComponentsDocker] with the usual images:
+
+```yml
+# src/stacks/dotnetcore/vagrant.yml
+core:
+  includes:
+    - stacks/dotnet/core
+    - stacks/infrastructure/dockere
+  chef:
+    json:
+      gusztavvargadr_workstations_dockere:
+        profiles:
+          images:
+            microsoft/dotnet:sdk-nanoserver:
+
+library:
+  includes:
+    - stacks/dotnetcore/core
+    - stacks/dotnet/library
+
+web:
+  includes:
+    - stacks/dotnetcore/core
+    - stacks/dotnet/web
+  chef:
+    json:
+      gusztavvargadr_workstations_dockere:
+        profiles:
+          images:
+            microsoft/aspnetcore-build:nanoserver:
+```
+[Source][StacksDotnetCoreYaml]
+
+The referenced [generic .NET][StacksDotnet] configuration specifies the default Visual Studio version which you've seen before and includes [NuGet][ComponentsNuGet] as well:
+
+```yml
+# src/stacks/dotnet/vagrant.yml
+core:
+  includes:
+    - components/vs/v17c
+    - components/nuget/core
+    - stacks/infrastructure/core
+
+library:
+  includes:
+    - stacks/dotnet/core
+
+web:
+  includes:
+    - stacks/dotnet/core
+```
+[Source][StacksDotnetYaml]
+
+Stacks aren't of course l'art pour l'art, but to be used in [projects]. For example, to define the core repositories of the one and only [IdentityServer], you can use the following configuration:
+
+```yml
+# src/stacks/dotnetcore/vagrant.yml
+core:
+  includes:
+    - components/git/core
+  chef:
+    json:
+      gusztavvargadr_workstations_git:
+        profiles:
+          workspaces:
+            identityserver:
+              address: https://github.com/identityserver
+              directory: /Users/vagrant/Repos/identityserver
+
+v4:
+  includes:
+    - projects/identityserver/core
+    - stacks/dotnetcore/library
+    - stacks/dotnetcore/web
+  chef:
+    json:
+      gusztavvargadr_workstations_git:
+        profiles:
+          workspaces:
+            identityserver:
+              repositories:
+                IdentityServer4:
+                  directory: v4/core
+                IdentityServer4.AccessTokenValidation:
+                  directory: v4/accesstokenvalidation
+                IdentityServer4.Samples:
+                  directory: v4/samples
+```
+[Source][ProjectsIdentityServerYaml]
+
+This configuration, being referenced in your workstation will check out the mentioned repositories using [Git][ComponentsGit], and install the tools and pull the images as you've seen above. 
+
+Finally, you can define [your workstation][People] to include projects like this:
+
+```yml
+# src/people/me/vagrant.yml
+work:
+  includes:
+    - components/os/w16s
+    - projects/identityserver/v4
+  default: true
+```
+[Source][PeopleYaml]
+
+And have your `Vagrantfile` reference the YAML configuration:
+
+```ruby
+directory = File.dirname(__FILE__)
+require "#{directory}/../../Vagrantfile.core"
+
+Vagrant.configure('2') do |config|
+  gusztavvargadr_workstations_vm config, directory, 'work'
+end
+```
+[Source][PeopleVagrantfile]
+
+This is a quick introduction of what happens behind the scenes when you invoke `vagrant up`.
 
 [Configuration]: #configuration
 
 #### Provisioning
+
+<!--
+TODO: vagrant output samples
+-->
 
 Even if being run in a VM with Hyper-V or VirtualBox, Windows still loves to be restarted, and this is especially the case during provisioning, when e.g. Windows Features or specific tools get installed. To support those scenarios when provisioning would require the use of another component which just got installed, but it requires a restart, all the custom cookbooks support being executed in different stages, and the custom Vagrant extension will [restart the machine][VagrantCoreRestart] between them.
 
@@ -276,20 +406,12 @@ Finally, in the `profiles` stage all the tools can now be used properly, for exa
 
 [VagrantCoreRestart]: src/Vagrantfile.core.rb#L37
 
-<!--
-todo: download optimization and / or build own
--->
-
-<!--
-multi machine
-options
-
-Besides the above, you can of course add any of your own customizations using the tools [Vagrant supports][VagrantProvisioning].
-
-[VagrantProvisioning]: https://www.vagrantup.com/docs/provisioning/
--->
-
 ### Components
+
+<!--
+TODO: description of core features
+TODO: kitchen samples - multiple instances where available
+-->
 
 **In this section** [Core][ComponentsCore] | [OS][ComponentsOS] | [Visual Studio][ComponentsVisualStudio] | [SQL Server][ComponentsSQLServer] | [Vagrant][ComponentsVagrant] | [Docker][ComponentsDocker] | [AWS][ComponentsAWS] | [Git][ComponentsGit] | [SVN][ComponentsSVN] | [NuGet][ComponentsNuGet]  
 
@@ -469,33 +591,56 @@ Besides the above, you can of course add any of your own customizations using th
 
 ### Projects
 
-[Apache] log4net  
-[ASP.NET Core] Logging  
-[GitHub] gitignore  
-[IdentityServer] v3 v4  
+Below is a list of a few sample projects to demonstrate the grouping of source code with the required development and deployment tools: 
+
+Using [Git][ComponentsGit]:
+- [GitHub][GitHubYaml]
+  - `projects/github/gitignore`
+- [ASP.NET Core][AspNetCoreYaml] Logging
+  - `projects/aspnet/logging`
+- [IdentityServer][IdentityServerYaml]
+  - `projects/identityserver/v3`
+  - `projects/identityserver/v4`
+
+Using [SVN][ComponentsSVN]:
+- [Apache][ProjectsApacheYaml]
+  - `projects/apache/log4net`
 
 [Projects]: #projects
 
+[ProjectsAspNetCoreYaml]: src/projects/aspnet/vagrant.yml
+[IdentityServer]: https://identityserver.io/
+[IdentityServerYaml]: src/projects/identityserver/vagrant.yml
+
+[ProjectsApacheYaml]: src/projects/apache/vagrany.yml
+
 ### People
 
-[You actual workstations](src/people/me/vagrant.yml)
+[Your actual workstations][PeopleYaml] reference the above [components], [stacks] and [projects] and now can [ask Vagrant][PeopleVagrantfile] to create them.
 
 ```sh
 clone$ cd src/people/me
 clone/src/people/me$ vagrant up (work|playground|private)
 ```
 
+The current samples contain only a single personal configuration, but this approach can be used to define baseline configurations for teams or organizations. Simple create a new folder within `src/people` for your entities, and include the projects and stacks you require as you've seen above. Then include the team or organizaton in your personal one according to your current membership or projects you want to work with.
+
 [People]: #people
+[PeopleYaml]: src/people/me/vagrant.yml
+[PeopleVagrantfile]: src/people/me/Vagrantfile 
 
 ## Contributing
 
+Any feedback, [issues] or [pull requests] are welcome and greatly appreciated. Chek out the [milestones] for the list of planned releases.
+
 <!--
+TODO: Extending - adding new cookbooks
+TODO: Extending - adding new Vagrant envs
+
 **Note** This section assumes you are familiar with the basics of [Chef]. If that's not the case, it's recommended that you take a quick look at its [getting started guide][ChefGettingStarted].  
 
 [ChefGettingStarted]: https://learn.chef.io/tutorials/
 -->
-
-Any feedback, [issues] or [pull requests] are welcome and greatly appreciated. Chek out the [milestones] for the list of planned releases.
 
 [Contributing]: #contributing
 
