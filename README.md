@@ -210,10 +210,6 @@ This repository uses custom [Vagrant extensions][VagrantCore] to enable creating
 
 #### Configuration
 
-<!--
-TODO: ERB sample
--->
-
 For example, you can define some [reasonable defaults][ComponentsCore] to be applied to every configuration:
 
 ```yml
@@ -249,6 +245,14 @@ core:
 
 This shows that the custom [OS cookbook][ComponentsOSCookbook] will be used for provisioning, and the specified values, in this case, `en-US` for all the locales and `UTC` for the timezone will be set. The cookbooks provide [complete samples][ComponentsOSSamples] for the scenarios they support so you can select the options you need.
 
+YAML files are processed as ERB-templates first, so for example you can dynamically set the host's timezone for the guest:
+
+```yaml
+timezone: <%= `tzutil /g`.strip %>
+```
+
+This approach can be also used to e.g. pass secrets or other sensitive information to the guests without hard-coding them, retrieving the values for example from host environment variables dynamically.
+
 You can also define further parameters for Vagrant, in this case, a base box specifying the [Visual Studio][ComponentsVisualStudio] version being used:
 
 ```yml
@@ -266,7 +270,7 @@ core:
 
 In this case the configuration named `components/vs/17c` will use the [Visual Studio 2017 Community][w16s-vs17c] box including [Windows Server 2016 Standard][w16s]. This options is very useful for tools which take significant time to install, so instead of applying them on the first boot, they can be already included in the [Vagrant boxes].
 
-You can also see how the existing configuration is being reused. `components/vs/17c` includes `components/vs/core`, which in turn includes the above `components/core/core` (specifying the memory and the CPU settings). As the list notation suggests, you can include any number or other configurations. If you specify a single value (like the box) defined earlier, it will be overridden. Collections (for example, the list of cookbooks) will be merged, the new values being added after the existing ones.
+You can also see how the existing configuration is being reused. `components/vs/17c` includes `components/vs/core`, which in turn includes the above `components/core/core` (specifying the memory and the CPU settings). As the list notation suggests, you can include any number or other configurations. If you specify a single value (like the `box`) defined earlier, it will be overridden. Collections (for example, the list of `cookbooks`) will be merged, the new values being added after the existing ones.
 
 Components like to appear in groups to form [stacks], like using a dedicated .NET version and the related hosting options for local development. For example, for [.NET Core][StacksDotnetCore] you can define to use [Docker][ComponentsDocker] with the usual images:
 
@@ -375,6 +379,7 @@ work:
 And have your `Vagrantfile` reference the YAML configuration:
 
 ```ruby
+# src/people/me/Vagrantfile
 directory = File.dirname(__FILE__)
 require "#{directory}/../../Vagrantfile.core"
 
@@ -409,15 +414,22 @@ Finally, in the `profiles` stage all the tools can now be used properly, for exa
 ### Components
 
 <!--
-TODO: description of core features
-TODO: kitchen samples - multiple instances where available
+TODO: kitchen samples annotated - multiple instances where available
 -->
 
 **In this section** [Core][ComponentsCore] | [OS][ComponentsOS] | [Visual Studio][ComponentsVisualStudio] | [SQL Server][ComponentsSQLServer] | [Vagrant][ComponentsVagrant] | [Docker][ComponentsDocker] | [AWS][ComponentsAWS] | [Git][ComponentsGit] | [SVN][ComponentsSVN] | [NuGet][ComponentsNuGet]  
 
+See below the list of components with their features supported out of the box.
+
 [Components]: #components
 
 #### Core
+
+- Sets environment variables
+- Enables Windows Features
+- Installs Chocolatey packages
+- Installs native packages
+- Copies files to the host
 
 [Samples][ComponentsCoreSamples]
 
@@ -429,8 +441,11 @@ TODO: kitchen samples - multiple instances where available
 
 #### OS
 
-- w10e - [Windows 10 Enterprise][w10e]
-- w16s - [Windows Server 2016 Standard][w16s]
+- Selects a box with the core OS
+  - w10e - [Windows 10 Enterprise][w10e]
+  - w16s - [Windows Server 2016 Standard][w16s]
+- Configures locales
+- Configures timezone
 
 [Samples][ComponentsOSSamples]
 
@@ -445,11 +460,12 @@ TODO: kitchen samples - multiple instances where available
 
 #### Visual Studio
 
-- vs10p - [Visual Studio 2010 Professional][w16s-vs10p]
-- vs15c - [Visual Studio 2015 Community][w16s-vs15c]
-- vs15p - [Visual Studio 2015 Professional][w16s-vs15p]
-- vs17c - [Visual Studio 2017 Community][w16s-vs17c]
-- vs17p - [Visual Studio 2017 Professional][w16s-vs17p]
+- Selects a box with Visual Studio preinstalled
+  - v10p - [Visual Studio 2010 Professional][w16s-vs10p]
+  - v15c - [Visual Studio 2015 Community][w16s-vs15c]
+  - v15p - [Visual Studio 2015 Professional][w16s-vs15p]
+  - v17c - [Visual Studio 2017 Community][w16s-vs17c]
+  - v17p - [Visual Studio 2017 Professional][w16s-vs17p]
 
 [Samples][ComponentsVisualStudioSamples]
 
@@ -466,7 +482,8 @@ TODO: kitchen samples - multiple instances where available
 
 #### SQL Server
 
-- sql14d - [SQL Server 2014 Developer][w16s-sql14d]
+- Selects a box with SQL Server preinstalled
+  - s14d - [SQL Server 2014 Developer][w16s-sql14d]
 
 [Samples][ComponentsSQLServerSamples]
 
@@ -478,6 +495,10 @@ TODO: kitchen samples - multiple instances where available
 [ComponentsSQLServerSamples]: src/stacks/dotnet/vagrant.yml#L24
 
 #### Vagrant
+
+- Installs Vagrant
+- Installs plugins
+- Adds boxes
 
 [Samples][ComponentsVagrantSamples]
 
@@ -493,6 +514,9 @@ TODO: kitchen samples - multiple instances where available
 
 ##### Docker Community Edition
 
+- Installs Docker Community Edition (Edge) (requires Hyper-V host and Windows Server 2016 guest)
+- Pulls Docker images
+
 [Samples][ComponentsDockerCSamples]
 
 [ComponentsDockerCYaml]: src/components/dockerc/vagrant.yml
@@ -501,6 +525,9 @@ TODO: kitchen samples - multiple instances where available
 
 ##### Docker Enterprise Edition
 
+- Installs Docker Enterprise Edition (requires Windows Server 2016 guest)
+- Pulls Docker images
+
 [Samples][ComponentsDockerCSamples]
 
 [ComponentsDockerEYaml]: src/components/dockere/vagrant.yml
@@ -508,6 +535,9 @@ TODO: kitchen samples - multiple instances where available
 [ComponentsDockerECookbook]: src/components/dockere/cookbooks/gusztavvargadr_workstations_dockere
 
 #### AWS
+
+- Installs the AWS command-line tools
+- Configures AWS profiles
 
 [Samples][ComponentsAWSSamples]
 
@@ -519,6 +549,9 @@ TODO: kitchen samples - multiple instances where available
 
 #### Git
 
+- Installs Git
+- Clones public or private repositories
+
 [Samples][ComponentsGitSamples]
 
 [ComponentsGit]: #git
@@ -529,6 +562,9 @@ TODO: kitchen samples - multiple instances where available
 
 #### SVN
 
+- Installs SVN
+- Checks out public or private repositories
+
 [Samples][ComponentsSVNSamples]
 
 [ComponentsSVN]: #svn
@@ -538,6 +574,9 @@ TODO: kitchen samples - multiple instances where available
 [ComponentsSVNCookbook]: src/components/svn/cookbooks/gusztavvargadr_workstations_svn
 
 #### NuGet
+
+- Installs NuGet
+- Adds sources
 
 [Samples][ComponentsNuGetSamples]
 
@@ -555,23 +594,45 @@ TODO: kitchen samples - multiple instances where available
 
 #### .NET
 
+- Defines the base box for Visual Studio version
+- Configures tools and settings for .NET class libraries
+- Configures tools and settings for .NET web applications
+
+[Samples][StacksDotnetSamples]
+
 [StacksDotnet]: #net
+
+[StacksDotnetYaml]: src/stacks/dotnet/vagrant.yml
+[StacksDotnetSamples]: src/stacks/dotnetcore/vagrant.yml#L3
 
 ##### .NET Core
 
+- Configures tools and settings for .NET Core class libraries including Docker
+- Configures tools and settings for .NET Core web applications including Docker
+
 [Samples][StacksDotnetCoreSamples]
+
+[StacksDotnetCore]: #net-core
 
 [StacksDotnetCoreYaml]: src/stacks/dotnetcore/vagrant.yml
 [StacksDotnetCoreSamples]: src/projects/identityserver/vagrant.yml#L36
 
 ##### .NET Framework
 
+- Configures tools and settings for .NET Framework class libraries
+- Configures tools and settings for .NET Framework web applications
+
 [Samples][StacksDotnetFrameworkSamples]
+
+[StacksDotnetFramework]: #net-framework
 
 [StacksDotnetFrameworkYaml]: src/stacks/dotnetfx/vagrant.yml
 [StacksDotnetFrameworkSamples]: src/projects/identityserver/vagrant.yml#L16
 
 #### SQL
+
+- Defines the base box for SQL Server versions
+- Installs SQL Server Management Studio 17
 
 [Samples][StacksSQLSamples]
 
@@ -581,6 +642,13 @@ TODO: kitchen samples - multiple instances where available
 [StacksSQLSamples]: src/projects/identityserver/vagrant.yml#L18
 
 #### Infrastructure
+
+- Installs Vagrant with Chef, Packer and the related Vagrant plugins
+- Installs either:
+  - Docker Community Edition
+  - Docker Enterprise Edition
+  - VirtualBox
+  - AWS command-line tools
 
 [Samples][StacksInfrastructureSamples]
 
@@ -594,11 +662,11 @@ TODO: kitchen samples - multiple instances where available
 Below is a list of a few sample projects to demonstrate the grouping of source code with the required development and deployment tools: 
 
 Using [Git][ComponentsGit]:
-- [GitHub][GitHubYaml]
+- [GitHub][ProjectsGitHubYaml]
   - `projects/github/gitignore`
-- [ASP.NET Core][AspNetCoreYaml] Logging
+- [ASP.NET Core][ProjectsAspNetCoreYaml] Logging
   - `projects/aspnet/logging`
-- [IdentityServer][IdentityServerYaml]
+- [IdentityServer][ProjectsIdentityServerYaml]
   - `projects/identityserver/v3`
   - `projects/identityserver/v4`
 
@@ -608,11 +676,12 @@ Using [SVN][ComponentsSVN]:
 
 [Projects]: #projects
 
+[ProjectsGitHubYaml]: src/projects/github/vagrant.yml
 [ProjectsAspNetCoreYaml]: src/projects/aspnet/vagrant.yml
 [IdentityServer]: https://identityserver.io/
-[IdentityServerYaml]: src/projects/identityserver/vagrant.yml
+[ProjectsIdentityServerYaml]: src/projects/identityserver/vagrant.yml
 
-[ProjectsApacheYaml]: src/projects/apache/vagrany.yml
+[ProjectsApacheYaml]: src/projects/apache/vagrant.yml
 
 ### People
 
