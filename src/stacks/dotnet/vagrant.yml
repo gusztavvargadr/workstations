@@ -1,29 +1,13 @@
 core:
   includes:
-    - stacks/core/core
+    - components/vs/v17c
     - components/nuget/core
+    - stacks/infrastructure/core
 
-vs10p:
+library:
   includes:
     - stacks/dotnet/core
-  box: w16s-vs10p
 
-vs15c:
+web:
   includes:
     - stacks/dotnet/core
-  box: w16s-vs15c
-
-vs15p:
-  includes:
-    - stacks/dotnet/core
-  box: w16s-vs15p
-
-vs17c:
-  includes:
-    - stacks/dotnet/core
-  box: w16s-vs17c
-
-vs17p:
-  includes:
-    - stacks/dotnet/core
-  box: w16s-vs17p

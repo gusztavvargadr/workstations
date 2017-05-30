@@ -1,25 +1,24 @@
 core:
   includes:
-    - stacks/core/core
-
-sql14d:
-  includes:
-    - stacks/sql/core
-  box: w16s-sql14d
-
-ssms16:
-  includes:
-    - stacks/sql/core
+    - components/sql/core
   chef:
     json:
       gusztavvargadr_workstations_core:
         tools:
           windows:
-            SQL Server Management Studio 16:
-              source: https://download.microsoft.com/download/9/3/3/933EA6DD-58C5-4B78-8BEC-2DF389C72BE0/SSMS-Setup-ENU.exe
+            SQL Server Management Studio 17:
+              source: https://download.microsoft.com/download/5/0/B/50B02ECB-CB5C-4C23-A1D3-DAB4467604DA/SSMS-Setup-ENU.exe
               install:
                 - /install
                 - /quiet
                 - /norestart
-              directory: /Program Files (x86)/Microsoft SQL Server/130/Tools/Binn/ManagementStudio
-              elevated: true
+              directory: /Program Files (x86)/Microsoft SQL Server/140/Tools/Binn/ManagementStudio
+
+management:
+  includes:
+    - stacks/sql/core
+
+engine:
+  includes:
+    - stacks/sql/core
+    - components/sql/v14d

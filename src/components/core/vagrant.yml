@@ -1,7 +1,6 @@
 core:
   includes: []
   default: false
-  box: w16s
   provider:
     memory: 4096
     cpus: 2

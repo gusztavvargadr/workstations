@@ -12,3 +12,5 @@ core:
               version: 2.11.1
               install:
                 params: "'/GitAndUnixToolsOnPath /NoShellIntegration'"
+          files:
+            file:///vagrant-workstations/src/components/git/.gitconfig: /Users/vagrant/.gitconfig

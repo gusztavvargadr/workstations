@@ -1,0 +1,8 @@
+core:
+  includes:
+    - components/core/core
+
+v14d:
+  includes:
+    - components/sql/core
+  box: w16s-sql14d
