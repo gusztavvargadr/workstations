@@ -53,6 +53,7 @@ def gusztavvargadr_workstations_vm_options(src_directory, includes)
       include_version = include_parts[2]
 
       options_current = gusztavvargadr_workstations_yml(src_directory, include_type, include_name)[include_version]
+      puts include if options_current.nil?
       options = options.deep_merge(gusztavvargadr_workstations_vm_options(src_directory, options_current['includes']).deep_merge(options_current))
     end
   end

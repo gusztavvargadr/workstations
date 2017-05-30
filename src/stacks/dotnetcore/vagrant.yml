@@ -1,8 +1,7 @@
 core:
   includes:
-    - components/vs/17c
-    - components/nuget/core
-    - components/vagrant/dockere
+    - stacks/dotnet/core
+    - stacks/infrastructure/dockere
   chef:
     json:
       gusztavvargadr_workstations_dockere:
@@ -13,10 +12,12 @@ core:
 library:
   includes:
     - stacks/dotnetcore/core
+    - stacks/dotnet/library
 
 web:
   includes:
     - stacks/dotnetcore/core
+    - stacks/dotnet/web
   chef:
     json:
       gusztavvargadr_workstations_dockere:

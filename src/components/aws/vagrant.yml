@@ -9,4 +9,3 @@ core:
         tools:
           chocolatey:
             awscli:
-            terraform:

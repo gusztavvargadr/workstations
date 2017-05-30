@@ -2,27 +2,27 @@ core:
   includes:
     - components/core/core
 
-10p:
+v10p:
   includes:
     - components/vs/core
   box: w16s-vs10p
 
-15c:
+v15c:
   includes:
     - components/vs/core
   box: w16s-vs15c
 
-15p:
+v15p:
   includes:
     - components/vs/core
   box: w16s-vs15p
 
-17c:
+v17c:
   includes:
     - components/vs/core
   box: w16s-vs17c
 
-17p:
+v17p:
   includes:
     - components/vs/core
   box: w16s-vs17p

@@ -1,5 +1,12 @@
 # Workstations
 
+<!--
+samples: add output for provisining
+order and version fixes in docs
+subcontents for long sections
+kitchen samples - multiple instances where available
+-->
+
 **Quick links** [Vagrant boxes] | [Packer templates]  
 
 This repository contains Windows-based workstations for .NET, SQL Server and infrastructure development and default OS installations using Vagrant with Hyper-V / VirtualBox and Chef.
@@ -10,13 +17,17 @@ This repository contains Windows-based workstations for .NET, SQL Server and inf
 
 This repository contains Windows-based workstations for the following scenarios:
 
-- [.NET development][ComponentsVisualStudio] with Visual Studio 2017, 2015 and 2010.
-- [SQL Server development][ComponentsSQL] with SQL Server Management Studio 2016 and SQL Server 2014.
-- [Infrastructure development][ComponentsVagrant] with Vagrant using Docker, VirtualBox and AWS.
+- [.NET development][StacksDotnet] with Visual Studio 2017, 2015 and 2010.
+- [SQL development][StacksSQL] with SQL Server Management Studio 17 and SQL Server 2014.
+- [Infrastructure development][StacksInfrastructure] with Vagrant using Docker, VirtualBox and AWS.
 
 All of them support an easy, source-controlled way of installing and configuring the most common development tools for the related stacks, and the management of the source code of your projects, based on [Vagrant] with [Hyper-V] / [VirtualBox] and [Chef]:
 
-- Installing [core][ComponentsCore] features, packages and managing [OS][ComponentsOS] settings, .
+- Installing [core][ComponentsCore] features, packages and managing [OS][ComponentsOS] settings.
+- Using different versions of [Visual Studio][ComponentsVisualStudio] and [SQL Server][ComponentsSQLServer].
+- Managing [Vagrant][ComponentsVagrant] plugins and downloading boxes.
+- Pulling [Docker][ComponentsDocker] images.
+- Configuring [AWS][ComponentsAWS] profiles.
 - Working with [Git][ComponentsGit] and [SVN][ComponentsSVN] repositories.
 - Managing [NuGet][ComponentsNuGet] sources.
 
@@ -170,6 +181,7 @@ Take a moment to realize that this might have been the last time you installed s
 
 This repository uses custom [Vagrant extensions][VagrantCore] to enable creating and reusing dynamic configurations based on [YAML] and [ERB] for the most common machine parameters and provisioning options.
 
+[VagrantCore]: src/Vagrantfile.core.rb
 [YAML]: https://en.wikipedia.org/wiki/YAML
 [ERB]: http://www.stuartellis.name/articles/erb/
 
@@ -208,7 +220,7 @@ core:
 
 This means that the custom [OS cookbook][ComponentsOSCookbook] will be used for provisioning, and the specified values, in this case, `en-US` for all the locales and `UTC` for the timezone will be set. The cookbooks provide [detailed samples][ComponentsOSSamples] for the scenarios they support.
 
-You can also define further parameters for Vagrant, in this case, a base box specifying the [Visual Studio][ComponentsVSYaml] version being used:
+You can also define further parameters for Vagrant, in this case, a base box specifying the [Visual Studio][ComponentsVisualStudioYaml] version being used:
 
 ```yml
 # src/components/vs/vagrant.yml
@@ -264,8 +276,8 @@ Besides the above, you can of course add any of your own customizations using th
 [ComponentsCore]: #core
 
 [ComponentsCoreYaml]: src/components/core/vagrant.yml
-[ComponentsCoreCookbook]: src/components/core/cookbooks/gusztavvargadr_workstations_core
 [ComponentsCoreSamples]: src/components/core/cookbooks/gusztavvargadr_workstations_core/.kitchen.yml#L25
+[ComponentsCoreCookbook]: src/components/core/cookbooks/gusztavvargadr_workstations_core
 
 #### OS
 
@@ -280,8 +292,8 @@ Besides the above, you can of course add any of your own customizations using th
 [w16s]: https://atlas.hashicorp.com/gusztavvargadr/boxes/w16s
 
 [ComponentsOSYaml]: src/components/os/vagrant.yml
-[ComponentsOSCookbook]: src/components/os/cookbooks/gusztavvargadr_workstations_os
 [ComponentsOSSamples]: src/components/os/cookbooks/gusztavvargadr_workstations_os/.kitchen.yml#L26
+[ComponentsOSCookbook]: src/components/os/cookbooks/gusztavvargadr_workstations_os
 
 #### Visual Studio
 
@@ -290,6 +302,8 @@ Besides the above, you can of course add any of your own customizations using th
 - vs15p - [Visual Studio 2015 Professional][w16s-vs15p]
 - vs17c - [Visual Studio 2017 Community][w16s-vs17c]
 - vs17p - [Visual Studio 2017 Professional][w16s-vs17p]
+
+[Samples][ComponentsVisualStudioSamples]
 
 [ComponentsVisualStudio]: #visual-studio
 
@@ -300,17 +314,20 @@ Besides the above, you can of course add any of your own customizations using th
 [w16s-vs17p]: https://atlas.hashicorp.com/gusztavvargadr/boxes/w16s-vs17p
 
 [ComponentsVisualStudioYaml]: src/components/vs/vagrant.yml
+[ComponentsVisualStudioSamples]: src/stacks/dotnet/vagrant.yml#L3
 
 #### SQL Server
 
 - sql14d - [SQL Server 2014 Developer][w16s-sql14d]
-- ssms16 - SQL Server Management Studio 16
 
-[ComponentsSQL]: #sql-server
+[Samples][ComponentsSQLServerSamples]
+
+[ComponentsSQLServer]: #sql-server
 
 [w16s-sql14d]: https://atlas.hashicorp.com/gusztavvargadr/boxes/w16s-sql14d
 
-[ComponentsSQLYaml]: src/components/sql/vagrant.yml
+[ComponentsSQLServerYaml]: src/components/sql/vagrant.yml
+[ComponentsSQLServerSamples]: src/stacks/dotnet/vagrant.yml#L24
 
 #### Vagrant
 
@@ -319,18 +336,29 @@ Besides the above, you can of course add any of your own customizations using th
 [ComponentsVagrant]: #vagrant
 
 [ComponentsVagrantYaml]: src/components/vagrant/vagrant.yml
-[ComponentsVagrantCookbook]: src/components/vagrant/cookbooks/gusztavvargadr_workstations_vagrant
 [ComponentsVagrantSamples]: src/components/vagrant/cookbooks/gusztavvargadr_workstations_vagrant/.kitchen.yml#L26
+[ComponentsVagrantCookbook]: src/components/vagrant/cookbooks/gusztavvargadr_workstations_vagrant
 
 #### Docker
 
-[Samples][ComponentsDockerSamples]
+<!--
+c
+e
+-->
+
+[Samples][ComponentsDockerCSamples]
+
+[Samples][ComponentsDockerCSamples]
 
 [ComponentsDocker]: #docker
 
-[ComponentsDockerYaml]: src/components/dockere/vagrant.yml
-[ComponentsDockerCookbook]: src/components/dockere/cookbooks/gusztavvargadr_workstations_dockere
-[ComponentsDockerSamples]: src/components/dockere/cookbooks/gusztavvargadr_workstations_dockere/.kitchen.yml#L26
+[ComponentsDockerCYaml]: src/components/dockerc/vagrant.yml
+[ComponentsDockerCSamples]: src/components/dockerc/cookbooks/gusztavvargadr_workstations_dockerc/.kitchen.yml#L26
+[ComponentsDockerCCookbook]: src/components/dockerc/cookbooks/gusztavvargadr_workstations_dockerc
+
+[ComponentsDockerEYaml]: src/components/dockere/vagrant.yml
+[ComponentsDockerESamples]: src/components/dockere/cookbooks/gusztavvargadr_workstations_dockere/.kitchen.yml#L26
+[ComponentsDockerECookbook]: src/components/dockere/cookbooks/gusztavvargadr_workstations_dockere
 
 #### AWS
 
@@ -339,8 +367,8 @@ Besides the above, you can of course add any of your own customizations using th
 [ComponentsAWS]: #aws
 
 [ComponentsAWSYaml]: src/components/aws/vagrant.yml
-[ComponentsAWSCookbook]: src/components/dockere/cookbooks/gusztavvargadr_workstations_dockere
-[ComponentsAWSSamples]: src/components/dockere/cookbooks/gusztavvargadr_workstations_dockere/.kitchen.yml#L26
+[ComponentsAWSSamples]: src/components/aws/cookbooks/gusztavvargadr_workstations_aws/.kitchen.yml#L26
+[ComponentsAWSCookbook]: src/components/aws/cookbooks/gusztavvargadr_workstations_aws
 
 #### Git
 
@@ -349,8 +377,8 @@ Besides the above, you can of course add any of your own customizations using th
 [ComponentsGit]: #git
 
 [ComponentsGitYaml]: src/components/git/vagrant.yml
-[ComponentsGitCookbook]: src/components/git/cookbooks/gusztavvargadr_workstations_git
 [ComponentsGitSamples]: src/components/git/cookbooks/gusztavvargadr_workstations_git/.kitchen.yml#L26
+[ComponentsGitCookbook]: src/components/git/cookbooks/gusztavvargadr_workstations_git
 
 #### SVN
 
@@ -359,8 +387,8 @@ Besides the above, you can of course add any of your own customizations using th
 [ComponentsSVN]: #svn
 
 [ComponentsSVNYaml]: src/components/svn/vagrant.yml
-[ComponentsSVNCookbook]: src/components/svn/cookbooks/gusztavvargadr_workstations_svn
 [ComponentsSVNSamples]: src/components/svn/cookbooks/gusztavvargadr_workstations_svn/.kitchen.yml#L26
+[ComponentsSVNCookbook]: src/components/svn/cookbooks/gusztavvargadr_workstations_svn
 
 #### NuGet
 
@@ -369,16 +397,47 @@ Besides the above, you can of course add any of your own customizations using th
 [ComponentsNuGet]: #nuget
 
 [ComponentsNuGetYaml]: src/components/nuget/vagrant.yml
-[ComponentsNuGetCookbook]: src/components/nuget/cookbooks/gusztavvargadr_workstations_nuget
 [ComponentsNuGetSamples]: src/components/nuget/cookbooks/gusztavvargadr_workstations_nuget/.kitchen.yml#L26
+[ComponentsNuGetCookbook]: src/components/nuget/cookbooks/gusztavvargadr_workstations_nuget
 
 ### Stacks
 
-#### .NET Core
+#### .NET
 
-#### .NET Framework
+<!--
+core
+fx
+-->
 
-#### SQL Server
+[Samples][StacksDotnetCoreSamples]
+
+[Samples][StacksDotnetFrameworkSamples]
+
+[StacksDotnet]: #net
+
+[StacksDotnetCoreYaml]: src/stacks/dotnetcore/vagrant.yml
+[StacksDotnetCoreSamples]: src/projects/identityserver/vagrant.yml#L36
+
+[StacksDotnetFrameworkYaml]: src/stacks/dotnetfx/vagrant.yml
+[StacksDotnetFrameworkSamples]: src/projects/identityserver/vagrant.yml#L16
+
+#### SQL
+
+[Samples][StacksSQLSamples]
+
+[StacksSQL]: #sql
+
+[StacksSQLYaml]: src/stacks/dotnetcore/vagrant.yml
+[StacksSQLSamples]: src/projects/identityserver/vagrant.yml#L18
+
+#### Infrastructure
+
+[Samples][StacksSQLSamples]
+
+[StacksInfrastructureSamples]: #infrastructure
+
+[StacksInfrastructureYaml]: src/stacks/infrastructure/vagrant.yml
+[StacksInfrastructureSamples]: src/stacks/dotnetcore/vagrant.yml#L4
 
 ### Projects
 

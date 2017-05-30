@@ -1,7 +1,24 @@
+core:
+  includes:
+    - components/sql/core
+  chef:
+    json:
+      gusztavvargadr_workstations_core:
+        tools:
+          windows:
+            SQL Server Management Studio 17:
+              source: https://download.microsoft.com/download/5/0/B/50B02ECB-CB5C-4C23-A1D3-DAB4467604DA/SSMS-Setup-ENU.exe
+              install:
+                - /install
+                - /quiet
+                - /norestart
+              directory: /Program Files (x86)/Microsoft SQL Server/140/Tools/Binn/ManagementStudio
+
 management:
   includes:
-    - components/sql/16ms
+    - stacks/sql/core
 
 engine:
   includes:
-    - components/sql/14d
+    - stacks/sql/core
+    - components/sql/v14d

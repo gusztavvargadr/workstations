@@ -13,6 +13,7 @@ core:
 v3:
   includes:
     - projects/identityserver/core
+    - stacks/dotnetfx/library
     - stacks/dotnetfx/web
     - stacks/sql/management
   chef:
@@ -32,6 +33,7 @@ v3:
 v4:
   includes:
     - projects/identityserver/core
+    - stacks/dotnetcore/library
     - stacks/dotnetcore/web
     - stacks/sql/management
   chef:

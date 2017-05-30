@@ -11,14 +11,16 @@ work:
 playground:
   includes:
     - components/os/w16s
-    - components/vs/17c
-    - components/nuget/core
-    - components/sql/16ms
+    - stacks/dotnetcore/library
+    - stacks/dotnetcore/web
+    - stacks/dotnetfx/library
+    - stacks/dotnetfx/web
+    - stacks/sql/management
+    - stacks/infrastructure/dockere
+    - stacks/infrastructure/virtualbox
+    - stacks/infrastructure/aws
     - components/git/core
     - components/svn/core
-    - components/vagrant/dockere
-    - components/vagrant/virtualbox
-    - components/vagrant/aws
   chef:
     json:
       gusztavvargadr_workstations_dockere:
