@@ -2,20 +2,20 @@
 
 <!--
 samples: add output for provisining
-order and version fixes in docs
-subcontents for long sections
 kitchen samples - multiple instances where available
 -->
 
-**Quick links** [Vagrant boxes] | [Packer templates]  
+**Quick links** [Vagrant boxes] | [Packer templates] | [Vagrant resources]  
 
-This repository contains Windows-based workstations for .NET, SQL Server and infrastructure development and default OS installations using Vagrant with Hyper-V / VirtualBox and Chef.
+This repository contains Windows-based virtual workstations for .NET, SQL and infrastructure development using Vagrant with Hyper-V and VirtualBox.
+
+[Vagrant resources]: https://github.com/gusztavvargadr/vagrant
 
 **Contents** [Overview] | [Getting started] | [Usage] | [Contributing] | [Resources]  
 
 ## Overview
 
-This repository contains Windows-based workstations for the following scenarios:
+This repository contains Windows-based virtual workstations for the following scenarios:
 
 - [.NET development][StacksDotnet] with Visual Studio 2017, 2015 and 2010.
 - [SQL development][StacksSQL] with SQL Server Management Studio 17 and SQL Server 2014.
@@ -37,6 +37,8 @@ This way you can easily create the same workstations anytime, anywhere, and inst
 
 ## Getting started
 
+**In this section** [Installing the tools] | [Creating your first workstation]  
+
 **Note** This section assumes you are familiar with the basics of Vagrant. If that's not the case, it's recommended that you take a quick look at its [getting started guide][VagrantGettingStarted].  
 
 **Note** The workstations have been tested on Windows hosts only, but they are supposed to run on any other platform as well, given that the actual virtualization provider (e.g. VirtualBox) supports it. [Let me know][Contributing] if you encounter any issues and I'm glad to help.  
@@ -47,6 +49,8 @@ This way you can easily create the same workstations anytime, anywhere, and inst
 
 ### Installing the tools
 
+**In this section** [Using Hyper-V] | [Using VirtualBox]  
+
 Follow the steps below to install the required tools:
 
 1. Install [Vagrant][VagrantInstallation].
@@ -55,6 +59,8 @@ Follow the steps below to install the required tools:
     1. [vagrant-reload][VagrantReloadInstallation].
     1. [vagrant-berkshelf][VagrantBerkshelfInstallation].
 1. Install the tools for the virtualization provider you want to use.
+
+[Installing the tools]: #installing-the-tools
 
 [VagrantInstallation]: https://www.vagrantup.com/docs/installation/
 [ChefDKInstallation]: https://downloads.chef.io/chef-dk/
@@ -75,6 +81,8 @@ Follow the steps below to install the required tools:
 1. Create a [virtual switch][HyperVVirtualSwitchCreating] to be used with Vagrant with access to the external network.
     - Optionally, add the [environment variable][VagrantCoreHyperVNetworkingBridge] `VAGRANT_NETWORK_BRIDGE` with the value of the name of the virtual switch you've created to prevent Vagrant from asking for it every time a machine is [created][VagrantHyperVNetworking].
 
+[Using Hyper-V]: #using-hyper-v
+
 [HyperVSwitching]: http://www.hanselman.com/blog/SwitchEasilyBetweenVirtualBoxAndHyperVWithABCDEditBootEntryInWindows81.aspx
 [HyperVEnabling]: https://docs.microsoft.com/en-us/virtualization/hyper-v-on-windows/quick-start/enable-hyper-v
 [VagrantCoreHyperVLinkedClone]: src/Vagrantfile.core.rb#L22
@@ -91,11 +99,13 @@ Follow the steps below to install the required tools:
     - Optionally, if you plan to use VirtualBox by default, add the [environment variable][VagrantEnvDefaultProvider] `VAGRANT_DEFAULT_PROVIDER` with the value of `virtualbox` to prevent specifying it every time a machine is [booted][VagrantCliUpProvider].
     - Optionally, add the [environment variable][VagrantCoreVirtualBoxLinkedClone] `VAGRANT_LINKED_CLONE` to save some disk space using [linked clones][VagrantVirtualBoxLinkedClone].
 
+[Using Hyper-V]: #using-virtualbox
+
 [VirtualBoxInstallation]: https://www.virtualbox.org/wiki/Downloads
 [VagrantCoreVirtualBoxLinkedClone]: src/Vagrantfile.core.rb#L30
 [VagrantVirtualBoxLinkedClone]: https://www.vagrantup.com/docs/virtualbox/configuration.html#linked-clones
 
-### Creating the first workstation
+### Creating your first workstation
 
 **Note** Booting a workstation for the first time can take a significant amount of time. If you have a slow connection, downloading the [Vagrant boxes] - usually several GBs for Windows guests - might require some patience and retries. Creating another machine from the same box later though will reuse the already downloaded one of course.  
 
@@ -103,7 +113,7 @@ Follow the steps below to install the required tools:
 
 **Note** The example in this section creates a workstation with a sample configuration by default, focusing on demonstrating the management of machines in general. You will see the details of how to customize it according to your preferences [later][Usage].
 
-You are now ready to create a workstation with Vagrant.
+You are now ready to create your workstations with Vagrant.
 
 Clone this repository and navigate to the root directory of the clone using your shell. Then, enter the directory of your personal environment to list the available machines:
 
@@ -163,10 +173,14 @@ clone/src/people/me$ vagrant destroy playground
 
 The box will remain on your system after destroying the machine as `vagrant box list` reports it, as other machines might still use it. You can use `vagrant box remove` to clean it up if you no longer need it.
 
+[Creating your first workstation]: #creating-your-first-workstation
+
 [Vagrant boxes]: https://atlas.hashicorp.com/gusztavvargadr
 [Packer templates]: https://github.com/gusztavvargadr/packer
 
 ## Usage
+
+**In this section** [Basics] | [Components] | [Stacks] | [Projects] | [People]  
 
 **Note** At this point you might want to [fork this repository][Fork] and create your own branch to save your changes so you can [compare your workstations][Compare] easily with others.
 
@@ -179,7 +193,11 @@ Take a moment to realize that this might have been the last time you installed s
 
 ### Basics
 
+**In this section** [Configuration] | [Provisioning]  
+
 This repository uses custom [Vagrant extensions][VagrantCore] to enable creating and reusing dynamic configurations based on [YAML] and [ERB] for the most common machine parameters and provisioning options.
+
+[Basics]: #basics
 
 [VagrantCore]: src/Vagrantfile.core.rb
 [YAML]: https://en.wikipedia.org/wiki/YAML
@@ -242,6 +260,8 @@ You can also see how the existing configuration is being reused. For `components
 TODO: stacks, projects, people
 -->
 
+[Configuration]: #configuration
+
 #### Provisioning
 
 Even if being run in a VM with Hyper-V or VirtualBox, Windows still loves to be restarted, and this is especially the case during provisioning, when e.g. Windows Features or specific tools get installed. To support those scenarios when provisioning would require the use of another component which just got installed, but it requires a restart, all the custom cookbooks support being executed in different stages, and the custom Vagrant extension will [restart the machine][VagrantCoreRestart] between them.
@@ -251,6 +271,8 @@ In the `requirements` stage core settings like Windows Features and environment 
 After those have been set up correctly, the `tools` stage is used to install e.g. Chocolatey packages or applications with native installers.
 
 Finally, in the `profiles` stage all the tools can now be used properly, for example, to clone Git repositories or manage NuGet sources.
+
+[Provisioning]: #provisioning
 
 [VagrantCoreRestart]: src/Vagrantfile.core.rb#L37
 
@@ -268,6 +290,10 @@ Besides the above, you can of course add any of your own customizations using th
 -->
 
 ### Components
+
+**In this section** [Core][ComponentsCore] | [OS][ComponentsOS] | [Visual Studio][ComponentsVisualStudio] | [SQL Server][ComponentsSQLServer] | [Vagrant][ComponentsVagrant] | [Docker][ComponentsDocker] | [AWS][ComponentsAWS] | [Git][ComponentsGit] | [SVN][ComponentsSVN] | [NuGet][ComponentsNuGet]  
+
+[Components]: #components
 
 #### Core
 
@@ -341,20 +367,19 @@ Besides the above, you can of course add any of your own customizations using th
 
 #### Docker
 
-<!--
-c
-e
--->
-
-[Samples][ComponentsDockerCSamples]
-
-[Samples][ComponentsDockerCSamples]
-
 [ComponentsDocker]: #docker
+
+##### Docker Community Edition
+
+[Samples][ComponentsDockerCSamples]
 
 [ComponentsDockerCYaml]: src/components/dockerc/vagrant.yml
 [ComponentsDockerCSamples]: src/components/dockerc/cookbooks/gusztavvargadr_workstations_dockerc/.kitchen.yml#L26
 [ComponentsDockerCCookbook]: src/components/dockerc/cookbooks/gusztavvargadr_workstations_dockerc
+
+##### Docker Enterprise Edition
+
+[Samples][ComponentsDockerCSamples]
 
 [ComponentsDockerEYaml]: src/components/dockere/vagrant.yml
 [ComponentsDockerESamples]: src/components/dockere/cookbooks/gusztavvargadr_workstations_dockere/.kitchen.yml#L26
@@ -402,21 +427,24 @@ e
 
 ### Stacks
 
+**In this section** [.NET][StacksDotnet] | [SQL][StacksSQL] | [Infrastructure][StacksInfrastructure]  
+
+[Stacks]: #stacks
+
 #### .NET
-
-<!--
-core
-fx
--->
-
-[Samples][StacksDotnetCoreSamples]
-
-[Samples][StacksDotnetFrameworkSamples]
 
 [StacksDotnet]: #net
 
+##### .NET Core
+
+[Samples][StacksDotnetCoreSamples]
+
 [StacksDotnetCoreYaml]: src/stacks/dotnetcore/vagrant.yml
 [StacksDotnetCoreSamples]: src/projects/identityserver/vagrant.yml#L36
+
+##### .NET Framework
+
+[Samples][StacksDotnetFrameworkSamples]
 
 [StacksDotnetFrameworkYaml]: src/stacks/dotnetfx/vagrant.yml
 [StacksDotnetFrameworkSamples]: src/projects/identityserver/vagrant.yml#L16
@@ -432,16 +460,32 @@ fx
 
 #### Infrastructure
 
-[Samples][StacksSQLSamples]
+[Samples][StacksInfrastructureSamples]
 
-[StacksInfrastructureSamples]: #infrastructure
+[StacksInfrastructure]: #infrastructure
 
 [StacksInfrastructureYaml]: src/stacks/infrastructure/vagrant.yml
 [StacksInfrastructureSamples]: src/stacks/dotnetcore/vagrant.yml#L4
 
 ### Projects
 
+[Apache] log4net  
+[ASP.NET Core] Logging  
+[GitHub] gitignore  
+[IdentityServer] v3 v4  
+
+[Projects]: #projects
+
 ### People
+
+[You actual workstations](src/people/me/vagrant.yml)
+
+```sh
+clone$ cd src/people/me
+clone/src/people/me$ vagrant up (work|playground|private)
+```
+
+[People]: #people
 
 ## Contributing
 
