@@ -3,9 +3,9 @@ work:
     - components/os/w16s
     - projects/github/git
     - projects/aspnet/logging
+    - projects/identityserver/v4
     - projects/apache/log4net
     - projects/identityserver/v3
-    - projects/identityserver/v4
   default: true
 
 playground:
