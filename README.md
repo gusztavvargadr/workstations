@@ -195,7 +195,7 @@ Take a moment to realize that this might have been the last time you installed s
 [Usage]: #usage
 
 [Fork]: https://help.github.com/articles/fork-a-repo/
-[Compare]: https://github.com/gusztavvargadr/workstations/compare/people/gusztavvargadr
+[Compare]: https://github.com/gusztavvargadr/workstations/compare/people/gusztavvargadr#files_bucket
 
 ### Basics
 
