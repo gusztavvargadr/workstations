@@ -1,6 +1,6 @@
 # Workstations
 
-**Quick links** [Vagrant boxes] | [Packer templates] | [Vagrant resources]  
+**Quick links** [Vagrant resources] | [Vagrant boxes] | [Packer templates]  
 
 This repository contains Windows-based virtual workstations for .NET, SQL and infrastructure development using Vagrant with Hyper-V and VirtualBox.
 
@@ -108,7 +108,7 @@ TODO: samples: add output of Vagrant
 
 **Note** Booting a workstation for the first time can take a significant amount of time. If you have a slow connection, downloading the [Vagrant boxes] - usually several GBs for Windows guests - might require some patience and retries. Creating another machine from the same box later though will reuse the already downloaded one of course.  
 
-**Note** Configuring the core OS after Sysprep (to support actually unique virtual machines) and provisioning the workstations (e.g. installing the custom tools not included in the [original boxes][Packer templates]) by default happens during the initial boot as well. However, starting the machines again later will not need these steps, so the process will be significantly faster.  
+**Note** Configuring the core OS after Sysprep (to support actually unique virtual machines) and provisioning the workstations (e.g. installing the custom tools not included in the [Packer templates]) by default happens during the initial boot as well. However, starting the machines again later will not need these steps, so the process will be significantly faster.  
 
 **Note** The example in this section creates a workstation with a sample configuration by default, focusing on demonstrating the management of machines in general. You will see the details of how to customize it according to your preferences [later][Usage].
 
@@ -129,7 +129,7 @@ playground                not_created (hyperv)
 private                   not_created (hyperv)
 ```
 
-The list shows the three default workstations, `work` intended to support the projects you work on, `playground` for generic experiments, and `private` for anything else like communication. None of these exsit yet, so for example, to create the `playground` one, simply invoke `vagrant up`:
+The list shows the three default workstations, `work` intended to support the projects you work on, `playground` for generic experiments, and `private` for anything else, like communication or generic office work. None of these exsit yet, so for example, to create the `playground` one, simply invoke `vagrant up`:
 
 ```sh
 clone/src/people/me$ vagrant up playground
@@ -243,7 +243,7 @@ core:
 ```
 [Source][ComponentsOSYaml]
 
-This shows that the custom [OS cookbook][ComponentsOSCookbook] will be used for provisioning, and the specified values, in this case, `en-US` for all the locales and `UTC` for the timezone will be set. The cookbooks provide [complete samples][ComponentsOSSamples] for the scenarios they support so you can select the options you need.
+This shows that the custom [OS cookbook][ComponentsOSCookbook] will be used for provisioning, and the specified values, in this case, `en-US` for all the locales and `UTC` for the timezone will be set. The cookbooks provide [complete samples][ComponentsOSSamples] for the scenarios they support so you can define only the options you need.
 
 YAML files are processed as ERB-templates first, so for example you can dynamically set the host's timezone for the guest:
 
@@ -328,7 +328,7 @@ web:
 Stacks aren't of course l'art pour l'art, but to be used in [projects]. For example, to define the core repositories of the one and only [IdentityServer], you can use the following configuration:
 
 ```yml
-# src/stacks/dotnetcore/vagrant.yml
+# src/projects/identityserver/vagrant.yml
 core:
   includes:
     - components/git/core
@@ -431,7 +431,8 @@ See below the list of components with their features supported out of the box.
 - Installs native packages
 - Copies files to the host
 
-[Samples][ComponentsCoreSamples]
+[Source][ComponentsCoreYaml]  
+[Samples][ComponentsCoreSamples]  
 
 [ComponentsCore]: #core
 
@@ -441,13 +442,14 @@ See below the list of components with their features supported out of the box.
 
 #### OS
 
-- Selects a box with the core OS
+- Selects a box with the core OS preinstalled
   - w10e - [Windows 10 Enterprise][w10e]
   - w16s - [Windows Server 2016 Standard][w16s]
 - Configures locales
 - Configures timezone
 
-[Samples][ComponentsOSSamples]
+[Source][ComponentsOSYaml]  
+[Samples][ComponentsOSSamples]  
 
 [ComponentsOS]: #os
 
@@ -467,7 +469,8 @@ See below the list of components with their features supported out of the box.
   - v17c - [Visual Studio 2017 Community][w16s-vs17c]
   - v17p - [Visual Studio 2017 Professional][w16s-vs17p]
 
-[Samples][ComponentsVisualStudioSamples]
+[Source][ComponentsVisualStudioYaml]  
+[Samples][ComponentsVisualStudioSamples]  
 
 [ComponentsVisualStudio]: #visual-studio
 
@@ -483,16 +486,17 @@ See below the list of components with their features supported out of the box.
 #### SQL Server
 
 - Selects a box with SQL Server preinstalled
-  - s14d - [SQL Server 2014 Developer][w16s-sql14d]
+  - v14d - [SQL Server 2014 Developer][w16s-sql14d]
 
-[Samples][ComponentsSQLServerSamples]
+[Source][ComponentsSQLServerYaml]  
+[Samples][ComponentsSQLServerSamples]  
 
 [ComponentsSQLServer]: #sql-server
 
 [w16s-sql14d]: https://atlas.hashicorp.com/gusztavvargadr/boxes/w16s-sql14d
 
 [ComponentsSQLServerYaml]: src/components/sql/vagrant.yml
-[ComponentsSQLServerSamples]: src/stacks/dotnet/vagrant.yml#L24
+[ComponentsSQLServerSamples]: src/projects/identityserver/vagrant.yml#L18
 
 #### Vagrant
 
@@ -500,12 +504,13 @@ See below the list of components with their features supported out of the box.
 - Installs plugins
 - Adds boxes
 
-[Samples][ComponentsVagrantSamples]
+[Source][ComponentsVagrantYaml]  
+[Samples][ComponentsVagrantSamples]  
 
 [ComponentsVagrant]: #vagrant
 
 [ComponentsVagrantYaml]: src/components/vagrant/vagrant.yml
-[ComponentsVagrantSamples]: src/components/vagrant/cookbooks/gusztavvargadr_workstations_vagrant/.kitchen.yml#L26
+[ComponentsVagrantSamples]: src/components/vagrant/cookbooks/gusztavvargadr_workstations_vagrant/.kitchen.yml#L32
 [ComponentsVagrantCookbook]: src/components/vagrant/cookbooks/gusztavvargadr_workstations_vagrant
 
 #### Docker
@@ -517,10 +522,11 @@ See below the list of components with their features supported out of the box.
 - Installs Docker Community Edition (Edge) (requires Hyper-V host and Windows Server 2016 guest)
 - Pulls Docker images
 
-[Samples][ComponentsDockerCSamples]
+[Source][ComponentsDockerCYaml]  
+[Samples][ComponentsDockerCSamples]  
 
 [ComponentsDockerCYaml]: src/components/dockerc/vagrant.yml
-[ComponentsDockerCSamples]: src/components/dockerc/cookbooks/gusztavvargadr_workstations_dockerc/.kitchen.yml#L26
+[ComponentsDockerCSamples]: src/components/dockerc/cookbooks/gusztavvargadr_workstations_dockerc/.kitchen.yml#L41
 [ComponentsDockerCCookbook]: src/components/dockerc/cookbooks/gusztavvargadr_workstations_dockerc
 
 ##### Docker Enterprise Edition
@@ -528,10 +534,11 @@ See below the list of components with their features supported out of the box.
 - Installs Docker Enterprise Edition (requires Windows Server 2016 guest)
 - Pulls Docker images
 
-[Samples][ComponentsDockerCSamples]
+[Source][ComponentsDockerEYaml]  
+[Samples][ComponentsDockerESamples]  
 
 [ComponentsDockerEYaml]: src/components/dockere/vagrant.yml
-[ComponentsDockerESamples]: src/components/dockere/cookbooks/gusztavvargadr_workstations_dockere/.kitchen.yml#L26
+[ComponentsDockerESamples]: src/components/dockere/cookbooks/gusztavvargadr_workstations_dockere/.kitchen.yml#L29
 [ComponentsDockerECookbook]: src/components/dockere/cookbooks/gusztavvargadr_workstations_dockere
 
 #### AWS
@@ -539,12 +546,13 @@ See below the list of components with their features supported out of the box.
 - Installs the AWS command-line tools
 - Configures AWS profiles
 
-[Samples][ComponentsAWSSamples]
+[Source][ComponentsAWSYaml]  
+[Samples][ComponentsAWSSamples]  
 
 [ComponentsAWS]: #aws
 
 [ComponentsAWSYaml]: src/components/aws/vagrant.yml
-[ComponentsAWSSamples]: src/components/aws/cookbooks/gusztavvargadr_workstations_aws/.kitchen.yml#L26
+[ComponentsAWSSamples]: src/components/aws/cookbooks/gusztavvargadr_workstations_aws/.kitchen.yml#L30
 [ComponentsAWSCookbook]: src/components/aws/cookbooks/gusztavvargadr_workstations_aws
 
 #### Git
@@ -552,12 +560,13 @@ See below the list of components with their features supported out of the box.
 - Installs Git
 - Clones public or private repositories
 
-[Samples][ComponentsGitSamples]
+[Source][ComponentsGitYaml]  
+[Samples][ComponentsGitSamples]  
 
 [ComponentsGit]: #git
 
 [ComponentsGitYaml]: src/components/git/vagrant.yml
-[ComponentsGitSamples]: src/components/git/cookbooks/gusztavvargadr_workstations_git/.kitchen.yml#L26
+[ComponentsGitSamples]: src/components/git/cookbooks/gusztavvargadr_workstations_git/.kitchen.yml#L33
 [ComponentsGitCookbook]: src/components/git/cookbooks/gusztavvargadr_workstations_git
 
 #### SVN
@@ -565,12 +574,13 @@ See below the list of components with their features supported out of the box.
 - Installs SVN
 - Checks out public or private repositories
 
+[Source][ComponentsSVNYaml]  
 [Samples][ComponentsSVNSamples]
 
 [ComponentsSVN]: #svn
 
 [ComponentsSVNYaml]: src/components/svn/vagrant.yml
-[ComponentsSVNSamples]: src/components/svn/cookbooks/gusztavvargadr_workstations_svn/.kitchen.yml#L26
+[ComponentsSVNSamples]: src/components/svn/cookbooks/gusztavvargadr_workstations_svn/.kitchen.yml#L30
 [ComponentsSVNCookbook]: src/components/svn/cookbooks/gusztavvargadr_workstations_svn
 
 #### NuGet
@@ -578,27 +588,31 @@ See below the list of components with their features supported out of the box.
 - Installs NuGet
 - Adds sources
 
-[Samples][ComponentsNuGetSamples]
+[Source][ComponentsNuGetYaml]  
+[Samples][ComponentsNuGetSamples]  
 
 [ComponentsNuGet]: #nuget
 
 [ComponentsNuGetYaml]: src/components/nuget/vagrant.yml
-[ComponentsNuGetSamples]: src/components/nuget/cookbooks/gusztavvargadr_workstations_nuget/.kitchen.yml#L26
+[ComponentsNuGetSamples]: src/components/nuget/cookbooks/gusztavvargadr_workstations_nuget/.kitchen.yml#L30
 [ComponentsNuGetCookbook]: src/components/nuget/cookbooks/gusztavvargadr_workstations_nuget
 
 ### Stacks
 
 **In this section** [.NET][StacksDotnet] | [SQL][StacksSQL] | [Infrastructure][StacksInfrastructure]  
 
+See below the list of stacks with their components configured out of the box.
+
 [Stacks]: #stacks
 
 #### .NET
 
-- Defines the base box for Visual Studio version
+- Defines the base box for Visual Studio
 - Configures tools and settings for .NET class libraries
 - Configures tools and settings for .NET web applications
 
-[Samples][StacksDotnetSamples]
+[Source][StacksDotnetYaml]  
+[Samples][StacksDotnetSamples]  
 
 [StacksDotnet]: #net
 
@@ -610,7 +624,8 @@ See below the list of components with their features supported out of the box.
 - Configures tools and settings for .NET Core class libraries including Docker
 - Configures tools and settings for .NET Core web applications including Docker
 
-[Samples][StacksDotnetCoreSamples]
+[Source][StacksDotnetCoreYaml]  
+[Samples][StacksDotnetCoreSamples]  
 
 [StacksDotnetCore]: #net-core
 
@@ -622,7 +637,8 @@ See below the list of components with their features supported out of the box.
 - Configures tools and settings for .NET Framework class libraries
 - Configures tools and settings for .NET Framework web applications
 
-[Samples][StacksDotnetFrameworkSamples]
+[Source][StacksDotnetFrameworkYaml]  
+[Samples][StacksDotnetFrameworkSamples]  
 
 [StacksDotnetFramework]: #net-framework
 
@@ -634,11 +650,12 @@ See below the list of components with their features supported out of the box.
 - Defines the base box for SQL Server versions
 - Installs SQL Server Management Studio 17
 
-[Samples][StacksSQLSamples]
+[Source][StacksSQLYaml]  
+[Samples][StacksSQLSamples]  
 
 [StacksSQL]: #sql
 
-[StacksSQLYaml]: src/stacks/dotnetcore/vagrant.yml
+[StacksSQLYaml]: src/stacks/sql/vagrant.yml
 [StacksSQLSamples]: src/projects/identityserver/vagrant.yml#L18
 
 #### Infrastructure
@@ -650,7 +667,8 @@ See below the list of components with their features supported out of the box.
   - VirtualBox
   - AWS command-line tools
 
-[Samples][StacksInfrastructureSamples]
+[Source][StacksInfrastructureYaml]  
+[Samples][StacksInfrastructureSamples]  
 
 [StacksInfrastructure]: #infrastructure
 
@@ -678,8 +696,8 @@ Using [SVN][ComponentsSVN]:
 
 [ProjectsGitHubYaml]: src/projects/github/vagrant.yml
 [ProjectsAspNetCoreYaml]: src/projects/aspnet/vagrant.yml
-[IdentityServer]: https://identityserver.io/
 [ProjectsIdentityServerYaml]: src/projects/identityserver/vagrant.yml
+[IdentityServer]: https://identityserver.io/
 
 [ProjectsApacheYaml]: src/projects/apache/vagrant.yml
 
