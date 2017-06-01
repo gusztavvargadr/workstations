@@ -681,7 +681,7 @@ Below is a list of a few sample projects to demonstrate the grouping of source c
 
 Using [Git][ComponentsGit]:
 - [GitHub][ProjectsGitHubYaml]
-  - `projects/github/gitignore`
+  - `projects/github/git`
 - [ASP.NET Core][ProjectsAspNetCoreYaml] Logging
   - `projects/aspnet/logging`
 - [IdentityServer][ProjectsIdentityServerYaml]

@@ -26,7 +26,7 @@ suites:
         requirements:
           features:
             Containers:
-      gusztavvargadr_workstations_dockerc:
+      gusztavvargadr_workstations_dockere:
         profiles:
           images:
             hello-world:nanoserver:
