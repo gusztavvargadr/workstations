@@ -11,3 +11,10 @@ library:
 web:
   includes:
     - stacks/dotnet/core
+  chef:
+    json:
+      gusztavvargadr_workstations_core:
+        tools:
+          chocolatey:
+            postman:
+            fiddler4:

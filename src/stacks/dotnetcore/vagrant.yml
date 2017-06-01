@@ -1,13 +1,13 @@
 core:
   includes:
     - stacks/dotnet/core
-    - stacks/infrastructure/dockere
+    - stacks/infrastructure/dockerc
   chef:
     json:
-      gusztavvargadr_workstations_dockere:
+      gusztavvargadr_workstations_dockerc:
         profiles:
           images:
-            microsoft/dotnet:sdk-nanoserver:
+            microsoft/dotnet:sdk:
 
 library:
   includes:
@@ -20,7 +20,7 @@ web:
     - stacks/dotnet/web
   chef:
     json:
-      gusztavvargadr_workstations_dockere:
+      gusztavvargadr_workstations_dockerc:
         profiles:
           images:
-            microsoft/aspnetcore-build:nanoserver:
+            microsoft/aspnetcore-build:

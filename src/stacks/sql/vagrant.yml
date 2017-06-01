@@ -4,6 +4,9 @@ core:
   chef:
     json:
       gusztavvargadr_workstations_core:
+        requirements:
+          features:
+            TelnetClient:
         tools:
           windows:
             SQL Server Management Studio 17:
@@ -13,6 +16,12 @@ core:
                 - /quiet
                 - /norestart
               directory: /Program Files (x86)/Microsoft SQL Server/140/Tools/Binn/ManagementStudio
+            Redgate SQL Toolbelt:
+              source: https://download.red-gate.com/SQLToolbelt.exe
+              install:
+                - /IAgreeToTheEULA
+                - /q
+              directory: /Program Files (x86)/Red Gate
 
 management:
   includes:

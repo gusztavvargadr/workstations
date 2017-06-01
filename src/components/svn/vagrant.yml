@@ -9,3 +9,4 @@ core:
         tools:
           chocolatey:
             svn:
+            tortoisesvn:

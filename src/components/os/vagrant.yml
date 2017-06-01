@@ -5,14 +5,25 @@ core:
     cookbooks:
       - gusztavvargadr_workstations_os
     json:
+      gusztavvargadr_workstations_core:
+        tools:
+          chocolatey:
+            conemu:
+            far:
+            visualstudiocode:
+            beyondcompare:
+            googlechrome:
+          files:
+            file:///vagrant-workstations/src/components/os/ConEmu.xml: /Users/vagrant/AppData/Roaming/ConEmu.xml
+            file:///vagrant-workstations/src/components/os/visualstudiocode.settings.json: /Users/vagrant/AppData/Roaming/Code/User/settings.json
       gusztavvargadr_workstations_os:
         requirements:
           locales:
             system: en-US
             ui: en-US
-            user: en-US
+            user: nl-NL
           datetime:
-            timezone: UTC
+            timezone: W. Europe Standard Time
 
 w10e:
   includes:

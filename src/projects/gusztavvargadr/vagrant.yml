@@ -1,0 +1,76 @@
+core:
+  includes:
+    - components/git/core
+  chef:
+    json:
+      gusztavvargadr_workstations_core:
+        requirements:
+          environment:
+            GIT_GUSZTAVVARGADR_USERNAME: <%= ENV['GIT_GUSZTAVVARGADR_USERNAME'] %>
+            GIT_GUSZTAVVARGADR_PASSWORD: <%= ENV['GIT_GUSZTAVVARGADR_PASSWORD'] %>
+      gusztavvargadr_workstations_git:
+        profiles:
+          workspaces:
+            gusztavvargadr:
+              address: https://github.com/gusztavvargadr
+              directory: /Users/vagrant/Repos/gusztavvargadr
+              repositories:
+                home:
+
+katas:
+  includes:
+    - projects/gusztavvargadr/core
+    - stacks/dotnetfx/library
+  chef:
+    json:
+      gusztavvargadr_workstations_git:
+        profiles:
+          workspaces:
+            gusztavvargadr:
+              repositories:
+                katas:
+
+aspnet:
+  includes:
+    - projects/gusztavvargadr/core
+    - projects/aspnet/configuration
+    - stacks/dotnetfx/library
+  chef:
+    json:
+      gusztavvargadr_workstations_git:
+        profiles:
+          workspaces:
+            gusztavvargadr:
+              repositories:
+                aspnet-Configuration.Contrib:
+                aspnet-configuration-octopus:
+
+infrastructure:
+  includes:
+    - projects/gusztavvargadr/core
+    - stacks/infrastructure/dockerc
+    - stacks/infrastructure/virtualbox
+    - stacks/infrastructure/aws
+  chef:
+    json:
+      gusztavvargadr_workstations_core:
+        requirements:
+          environment:
+            AWS_PROFILE: gusztavvargadr
+            AWS_DEFAULT_PROFILE: gusztavvargadr
+            AWS_GUSZTAVVARGADR_ACCESS_KEY_ID: <%= ENV['AWS_GUSZTAVVARGADR_ACCESS_KEY_ID'] %>
+            AWS_GUSZTAVVARGADR_SECRET_ACCESS_KEY: <%= ENV['AWS_GUSZTAVVARGADR_SECRET_ACCESS_KEY'] %>
+      gusztavvargadr_workstations_git:
+        profiles:
+          workspaces:
+            gusztavvargadr:
+              repositories:
+                chef:
+                packer:
+                vagrant:
+                workstations:
+      gusztavvargadr_workstations_aws:
+        profiles:
+          workspaces:
+            gusztavvargadr:
+              region: eu-west-1

@@ -1,0 +1,19 @@
+{
+  "name": "gusztavvargadr/w16s-vs10p",
+  "versions": [
+    {
+      "version": "0.6.0",
+      "status": "active",
+      "providers": [
+        {
+          "name": "hyperv",
+          "url": "file:////192.168.11.100/Data/vagrant/boxes/gusztavvargadr/w16s-vs10p/0.6.0/hyperv.box"
+        },
+        {
+          "name": "virtualbox",
+          "url": "file:////192.168.11.100/Data/vagrant/boxes/gusztavvargadr/w16s-vs10p/0.6.0/virtualbox.box"
+        }
+      ]
+    }
+  ]
+}

@@ -1,6 +1,17 @@
 core:
   includes:
     - components/core/core
+  chef:
+    json:
+      gusztavvargadr_workstations_core:
+        tools:
+          chocolatey:
+            resharper:
+            dotcover:
+            dottrace:
+            dotmemory:
+            dotpeek:
+            resharper-clt:
 
 v10p:
   includes:

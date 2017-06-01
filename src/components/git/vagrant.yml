@@ -12,5 +12,7 @@ core:
               version: 2.11.1
               install:
                 params: "'/GitAndUnixToolsOnPath /NoShellIntegration'"
+            poshgit:
           files:
             file:///vagrant-workstations/src/components/git/.gitconfig: /Users/vagrant/.gitconfig
+            file:///vagrant-workstations/src/components/git/Microsoft.PowerShell_profile.ps1: /Users/vagrant/Documents/WindowsPowerShell/Microsoft.PowerShell_profile.ps1

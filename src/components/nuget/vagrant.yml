@@ -9,5 +9,6 @@ core:
         tools:
           chocolatey:
             nuget.commandline:
+            nugetpackageexplorer:
           files:
             file:///vagrant-workstations/src/components/nuget/NuGet.Config: /Users/vagrant/AppData/Roaming/NuGet/NuGet.Config

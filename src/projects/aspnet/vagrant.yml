@@ -23,3 +23,17 @@ logging:
               repositories:
                 Logging:
                   directory: logging
+
+configuration:
+  includes:
+    - projects/aspnet/core
+    - stacks/dotnetcore/library
+  chef:
+    json:
+      gusztavvargadr_workstations_git:
+        profiles:
+          workspaces:
+            aspnet:
+              repositories:
+                Configuration:
+                  directory: configuration

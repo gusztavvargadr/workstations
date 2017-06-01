@@ -1,0 +1,8 @@
+{
+  "extensions.autoUpdate": true,
+  "explorer.openEditors.visible": 0,
+  "explorer.autoReveal": false,
+  "editor.tabSize": 2,
+  "editor.renderWhitespace": "all",
+  "git.confirmSync": false
+}

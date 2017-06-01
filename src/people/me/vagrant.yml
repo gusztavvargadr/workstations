@@ -6,7 +6,13 @@ work:
     - projects/identityserver/v4
     - projects/apache/log4net
     - projects/identityserver/v3
+    - projects/gusztavvargadr/katas
+    - projects/gusztavvargadr/aspnet
+    - projects/gusztavvargadr/infrastructure
   default: true
+  provider:
+    memory: 8192
+    cpus: 4
 
 playground:
   includes:
@@ -21,12 +27,15 @@ playground:
     - stacks/infrastructure/aws
     - components/git/core
     - components/svn/core
+  provider:
+    memory: 8192
+    cpus: 4
   chef:
     json:
-      gusztavvargadr_workstations_dockere:
+      gusztavvargadr_workstations_dockerc:
         profiles:
           images:
-            hello-world:nanoserver:
+            hello-world:
       gusztavvargadr_workstations_vagrant:
         profiles:
           boxes:
