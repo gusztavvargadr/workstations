@@ -5,4 +5,4 @@ core:
 v17c:
   includes:
     - components/vs/core
-  box: w10e-vs17c
+  box: w10e-dc-vs17c
