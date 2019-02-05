@@ -9,5 +9,5 @@ core:
         tools:
           chocolatey:
             awscli:
-            duck:
-            cyberduck:
+            aws-vault:
+

@@ -48,8 +48,6 @@ aspnet:
 infrastructure:
   includes:
     - projects/gusztavvargadr/core
-    - stacks/infrastructure/dockerc
-    - stacks/infrastructure/virtualbox
     - stacks/infrastructure/aws
   chef:
     json:
@@ -57,9 +55,6 @@ infrastructure:
         requirements:
           environment:
             AWS_PROFILE: gusztavvargadr
-            AWS_DEFAULT_PROFILE: gusztavvargadr
-            AWS_GUSZTAVVARGADR_ACCESS_KEY_ID: <%= ENV['AWS_GUSZTAVVARGADR_ACCESS_KEY_ID'] %>
-            AWS_GUSZTAVVARGADR_SECRET_ACCESS_KEY: <%= ENV['AWS_GUSZTAVVARGADR_SECRET_ACCESS_KEY'] %>
       gusztavvargadr_workstations_git:
         profiles:
           workspaces:

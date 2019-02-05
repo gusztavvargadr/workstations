@@ -1,6 +1,6 @@
 ﻿[user]
 	name = Gusztáv Varga
-	email = me@gusztavvargadr.me
+	email = mail@gusztavvargadr.me
 [diff]
 	tool = bc4
 [difftool "bc4"]
