@@ -1,10 +1,9 @@
 # Workstations
 
-**Quick links** [Vagrant resources] | [Virtual workstations] | [Vagrant boxes] | [Packer templates]  
+**Quick links** [Vagrant boxes] | [Vagrant resources] | [Packer templates]  
 
-[This repository][Virtual workstations] contains Windows-based virtual workstations for .NET, SQL and infrastructure development using Vagrant with Hyper-V and VirtualBox.
+This repository contains Windows-based virtual workstations for .NET, SQL and infrastructure development using Vagrant with Hyper-V and VirtualBox.
 
-[Vagrant resources]: https://github.com/gusztavvargadr/vagrant
 [Virtual workstations]: https://github.com/gusztavvargadr/workstations
 
 **Contents** [Overview] | [Getting started] | [Usage] | [Contributing] | [Resources]  
