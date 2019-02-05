@@ -15,7 +15,6 @@ v3:
     - projects/identityserver/core
     - stacks/dotnetfx/library
     - stacks/dotnetfx/web
-    - stacks/sql/management
   chef:
     json:
       gusztavvargadr_workstations_git:
@@ -35,7 +34,6 @@ v4:
     - projects/identityserver/core
     - stacks/dotnetcore/library
     - stacks/dotnetcore/web
-    - stacks/sql/management
   chef:
     json:
       gusztavvargadr_workstations_git:

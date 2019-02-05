@@ -2,8 +2,8 @@ core:
   includes: []
   default: false
   provider:
-    memory: 4096
-    cpus: 2
+    memory: 8192
+    cpus: 4
     linked_clone: <%= !ENV['VAGRANT_LINKED_CLONE'].to_s.empty? %>
   chef:
     install: false

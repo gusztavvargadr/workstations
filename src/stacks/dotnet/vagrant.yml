@@ -2,7 +2,6 @@ core:
   includes:
     - components/vs/v17c
     - components/nuget/core
-    - stacks/infrastructure/core
 
 library:
   includes:

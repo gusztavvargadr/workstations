@@ -9,8 +9,7 @@ core:
         tools:
           chocolatey:
             git:
-              version: 2.11.1
               install:
-                params: "'/GitAndUnixToolsOnPath /NoShellIntegration'"
+                params: "'/GitAndUnixToolsOnPath /NoAutoCrlf /NoShellIntegration'"
           files:
             file:///vagrant-workstations/src/components/git/.gitconfig: /Users/vagrant/.gitconfig
