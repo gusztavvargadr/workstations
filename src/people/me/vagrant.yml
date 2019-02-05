@@ -11,22 +11,15 @@ work:
 playground:
   includes:
     - components/os/w16s
+    - components/git/core
+    - components/svn/core
     - stacks/dotnetcore/library
     - stacks/dotnetcore/web
     - stacks/dotnetfx/library
     - stacks/dotnetfx/web
-    - stacks/sql/management
-    - stacks/infrastructure/dockere
-    - stacks/infrastructure/virtualbox
     - stacks/infrastructure/aws
-    - components/git/core
-    - components/svn/core
   chef:
     json:
-      gusztavvargadr_workstations_dockere:
-        profiles:
-          images:
-            hello-world:nanoserver:
       gusztavvargadr_workstations_vagrant:
         profiles:
           boxes:

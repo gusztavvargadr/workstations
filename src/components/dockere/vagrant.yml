@@ -1,11 +1,11 @@
 core:
   includes:
     - components/core/core
-  chef:
-    cookbooks:
-      - gusztavvargadr_workstations_dockere
-    json:
-      gusztavvargadr_workstations_core:
-        requirements:
-          features:
-            Containers:
+  # chef:
+  #   cookbooks:
+  #     - gusztavvargadr_workstations_dockere
+  #   json:
+  #     gusztavvargadr_workstations_core:
+  #       requirements:
+  #         features:
+  #           Containers:

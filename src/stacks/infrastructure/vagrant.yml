@@ -7,32 +7,11 @@ core:
         tools:
           chocolatey:
             chefdk:
-            packer:
       gusztavvargadr_workstations_vagrant:
         profiles:
           plugins:
             vagrant-reload:
             vagrant-berkshelf:
-
-dockerc:
-  includes:
-    - stacks/infrastructure/core
-    - components/dockerc/core
-
-dockere:
-  includes:
-    - stacks/infrastructure/core
-    - components/dockere/core
-
-virtualbox:
-  includes:
-    - stacks/infrastructure/core
-  chef:
-    json:
-      gusztavvargadr_workstations_core:
-        tools:
-          chocolatey:
-            virtualbox:
 
 aws:
   includes:
@@ -44,10 +23,11 @@ aws:
         tools:
           chocolatey:
             terraform:
+            packer:
       gusztavvargadr_workstations_vagrant:
         profiles:
           plugins:
-            vagrant-aws:
+            # vagrant-aws:
           boxes:
             dummy:
               address: file:///vagrant-workstations/src/boxes/dummy.json
