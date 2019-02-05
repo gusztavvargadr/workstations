@@ -19,7 +19,7 @@ def gusztavvargadr_workstations_vm(config, vm_directory, vm)
       h.memory = options['provider']['memory']
       h.cpus = options['provider']['cpus']
       h.enable_virtualization_extensions = true
-      h.differencing_disk = true if options['provider']['linked_clone']
+      h.linked_clone = true if options['provider']['linked_clone']
       override.vm.network 'private_network', bridge: ENV['VAGRANT_NETWORK_BRIDGE']
       override.vm.synced_folder '.', '/vagrant', smb_username: ENV['VAGRANT_SMB_USERNAME'], smb_password: ENV['VAGRANT_SMB_PASSWORD']
     end

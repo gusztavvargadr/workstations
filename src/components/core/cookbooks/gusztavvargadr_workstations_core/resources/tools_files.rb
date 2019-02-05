@@ -3,9 +3,9 @@ property :tools_files_options, Hash
 default_action :create
 
 action :create do
-  return if tools_files_options.nil?
+  return if new_resource.tools_files_options.nil?
 
-  tools_files_options.each do |source_file, target_file|
+  new_resource.tools_files_options.each do |source_file, target_file|
     target_directory = ::File.dirname(target_file)
 
     directory target_directory do

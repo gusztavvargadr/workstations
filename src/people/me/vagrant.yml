@@ -17,25 +17,15 @@ work:
 playground:
   includes:
     - components/os/w16s
+    - components/git/core
+    - components/svn/core
     - stacks/dotnetcore/library
     - stacks/dotnetcore/web
     - stacks/dotnetfx/library
     - stacks/dotnetfx/web
-    - stacks/sql/management
-    - stacks/infrastructure/dockere
-    - stacks/infrastructure/virtualbox
     - stacks/infrastructure/aws
-    - components/git/core
-    - components/svn/core
-  provider:
-    memory: 8192
-    cpus: 4
   chef:
     json:
-      gusztavvargadr_workstations_dockerc:
-        profiles:
-          images:
-            hello-world:
       gusztavvargadr_workstations_vagrant:
         profiles:
           boxes:

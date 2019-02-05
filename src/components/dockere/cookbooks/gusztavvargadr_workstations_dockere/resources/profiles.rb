@@ -3,10 +3,10 @@ property :profiles_options, Hash
 default_action :create
 
 action :create do
-  return if profiles_options.nil?
+  return if new_resource.profiles_options.nil?
 
   gusztavvargadr_workstations_dockere_profiles_images '' do
-    profiles_images_options profiles_options['images']
+    profiles_images_options new_resource.profiles_options['images']
     action :pull
   end
 end

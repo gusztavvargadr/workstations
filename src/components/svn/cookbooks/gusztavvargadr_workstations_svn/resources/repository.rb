@@ -8,21 +8,21 @@ property :repository_options, Hash
 default_action :checkout
 
 action :checkout do
-  svn_directory = repository_options.nil? ? nil : repository_options['directory']
-  svn_directory = repository_name if svn_directory.nil?
-  svn_directory = "#{repository_base_directory}/#{svn_directory}"
+  svn_directory = new_resource.repository_options.nil? ? nil : new_resource.repository_options['directory']
+  svn_directory = new_resource.repository_name if svn_directory.nil?
+  svn_directory = "#{new_resource.repository_base_directory}/#{svn_directory}"
 
   directory svn_directory do
     recursive true
     action :create
   end
 
-  svn_repository = "#{repository_base_address}/#{repository_name}"
+  svn_repository = "#{new_resource.repository_base_address}/#{new_resource.repository_name}"
 
   subversion svn_directory do
     repository svn_repository
-    svn_username repository_username
-    svn_password repository_password
+    svn_username new_resource.repository_username
+    svn_password new_resource.repository_password
     action :checkout
   end
 end

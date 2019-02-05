@@ -1,6 +1,10 @@
 core:
   includes:
     - components/sql/core
+
+management:
+  includes:
+    - stacks/sql/core
   chef:
     json:
       gusztavvargadr_workstations_core:
@@ -23,11 +27,7 @@ core:
                 - /q
               directory: /Program Files (x86)/Red Gate
 
-management:
-  includes:
-    - stacks/sql/core
-
 engine:
   includes:
     - stacks/sql/core
-    - components/sql/v14d
+    - components/sql/v17d

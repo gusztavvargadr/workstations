@@ -1,13 +1,6 @@
 core:
   includes:
     - stacks/dotnet/core
-    - stacks/infrastructure/dockerc
-  chef:
-    json:
-      gusztavvargadr_workstations_dockerc:
-        profiles:
-          images:
-            microsoft/dotnet:sdk:
 
 library:
   includes:
@@ -18,9 +11,3 @@ web:
   includes:
     - stacks/dotnetcore/core
     - stacks/dotnet/web
-  chef:
-    json:
-      gusztavvargadr_workstations_dockerc:
-        profiles:
-          images:
-            microsoft/aspnetcore-build:
