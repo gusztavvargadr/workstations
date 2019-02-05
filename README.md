@@ -4,7 +4,7 @@
 
 This repository contains Windows-based virtual workstations for .NET, SQL and infrastructure development using Vagrant with Hyper-V and VirtualBox.
 
-[Virtual workstations]: https://github.com/gusztavvargadr/workstations
+[Vagrant resources]: https://github.com/gusztavvargadr/vagrant
 
 **Contents** [Overview] | [Getting started] | [Usage] | [Contributing] | [Resources]  
 
