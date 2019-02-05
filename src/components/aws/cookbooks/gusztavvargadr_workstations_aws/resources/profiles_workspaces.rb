@@ -3,7 +3,7 @@ property :profiles_workspaces_options, Hash
 default_action :create
 
 action :create do
-  return if profiles_workspaces_options.nil?
+  return if new_resource.profiles_workspaces_options.nil?
 
   directory "#{ENV['USERPROFILE']}/.aws" do
     recursive true
@@ -11,7 +11,7 @@ action :create do
   end
 
   config_profiles = {}
-  profiles_workspaces_options.each do |workspace_name, workspace_options|
+  new_resource.profiles_workspaces_options.each do |workspace_name, workspace_options|
     config_profiles[workspace_name] = {
       'region' => workspace_options['region'],
     }
@@ -25,7 +25,7 @@ action :create do
   end
 
   credentials_profiles = {}
-  profiles_workspaces_options.each do |workspace_name, workspace_options|
+  new_resource.profiles_workspaces_options.each do |workspace_name, workspace_options|
     credentials_profiles[workspace_name] = {
       'access_key_id' => workspace_options['access_key_id'].to_s.empty? ? ENV["AWS_#{workspace_name}_ACCESS_KEY_ID"] : workspace_options['access_key_id'],
       'secret_access_key' => workspace_options['secret_access_key'].to_s.empty? ? ENV["AWS_#{workspace_name}_SECRET_ACCESS_KEY"] : workspace_options['secret_access_key'],

@@ -7,16 +7,16 @@ property :source_options, Hash
 default_action :create
 
 action :create do
-  return if source_options.nil?
+  return if new_resource.source_options.nil?
 
-  source_address = "#{source_base_address}/#{source_options['address']}"
-  source_script = "NuGet sources Add -Name #{source_name} -Source #{source_address}"
+  source_address = "#{new_resource.source_base_address}/#{new_resource.source_options['address']}"
+  source_script = "NuGet sources Add -Name #{new_resource.source_name} -Source #{source_address}"
 
-  unless source_username.to_s.empty? || source_password.to_s.empty?
-    source_script = "#{source_script} -UserName #{source_username} -Password #{source_password} -StorePasswordInClearText"
+  unless new_resource.source_username.to_s.empty? || new_resource.source_password.to_s.empty?
+    source_script = "#{source_script} -UserName #{new_resource.source_username} -Password #{new_resource.source_password} -StorePasswordInClearText"
   end
 
-  powershell_script "Create NuGet source #{source_name}" do
+  powershell_script "Create NuGet source #{new_resource.source_name}" do
     code source_script
     action :run
     guard_interpreter :powershell_script

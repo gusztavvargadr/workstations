@@ -3,9 +3,9 @@ property :tools_chocolatey_options, Hash
 default_action :install
 
 action :install do
-  return if tools_chocolatey_options.nil?
+  return if new_resource.tools_chocolatey_options.nil?
 
-  tools_chocolatey_options.each do |package_name, package_options|
+  new_resource.tools_chocolatey_options.each do |package_name, package_options|
     package_options = {} if package_options.nil?
 
     package_version = package_options['version']
@@ -13,7 +13,7 @@ action :install do
     package_elevated = package_options['elevated']
 
     package_script_name = "Install Chocolatey package '#{package_name}'"
-    package_script_code = "choco install #{package_name} --confirm"
+    package_script_code = "choco install #{package_name} --confirm --no-progress"
     package_script_code = "#{package_script_code} --version #{package_version}" unless package_version.nil?
     package_install.each do |package_install_name, package_install_value|
       package_script_code = "#{package_script_code} --#{package_install_name}"

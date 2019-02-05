@@ -4,10 +4,10 @@ property :image_options, Hash
 default_action :pull
 
 action :pull do
-  image_script_name = "docker pull #{image_name}"
+  image_script_name = "docker pull #{new_resource.image_name}"
   image_script_code = <<-EOH
     timeout /t 120 > nul
-    docker pull #{image_name}
+    docker pull #{new_resource.image_name}
   EOH
   image_script_directory_path = "#{Chef::Config[:file_cache_path]}/gusztavvargadr_workstations_dockere"
   directory image_script_directory_path do

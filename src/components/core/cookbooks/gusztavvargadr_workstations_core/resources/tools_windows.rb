@@ -3,9 +3,9 @@ property :tools_windows_options, Hash
 default_action :install
 
 action :install do
-  return if tools_windows_options.nil?
+  return if new_resource.tools_windows_options.nil?
 
-  tools_windows_options.each do |package_name, package_options|
+  new_resource.tools_windows_options.each do |package_name, package_options|
     package_options = {} if package_options.nil?
 
     package_source = package_options['source']
