@@ -91,7 +91,7 @@ Follow the steps below to install the required tools:
 
 #### Using VirtualBox
 
-1. Install [VirtualBox][VirtualBoxInstallation]. It is recommended to have VirtualBox version 5.1.22 or later on the host.
+1. Install [VirtualBox][VirtualBoxInstallation]. It is recommended to have VirtualBox version 5.2.22 or later on the host.
     - Optionally, if you plan to use VirtualBox by default, add the [environment variable][VagrantEnvDefaultProvider] `VAGRANT_DEFAULT_PROVIDER` with the value of `virtualbox` to prevent specifying it every time a machine is [booted][VagrantCliUpProvider].
     - Optionally, add the [environment variable][VagrantCoreVirtualBoxLinkedClone] `VAGRANT_LINKED_CLONE` to save some disk space using [linked clones][VagrantVirtualBoxLinkedClone].
 
@@ -136,13 +136,13 @@ The list shows the three default workstations, `work` intended to support the pr
 clone/src/people/me$ vagrant up playground
 ```
 
-Now, it's time to be patient. The box - in this case, by default with [Visual Studio 2017 Community][w16s-vs17c] including [Windows Server 2016 Standard][w16s] - will be downloaded and the machine will be provisioned before the first use to include all the components this repository supports. If this is not the configuration that you want, you can terminate the process anytime.
+Now, it's time to be patient. The box - in this case, by default with [Visual Studio 2017 Community][w16s-dc-vs17c] including [Windows Server 2016 Standard][w16s] - will be downloaded and the machine will be provisioned before the first use to include all the components this repository supports. If this is not the configuration that you want, you can terminate the process anytime.
 
-Once the machine is ready, you can connect to it with RDP or open a remote PowerShell shell using the default credentials, `vagrant` for both the user name and password:
+Once the machine is ready, you can connect to it with RDP or open a remote shell using the default credentials, `vagrant` for both the user name and password:
 
 ```sh
 clone/src/people/me$ vagrant rdp playground
-clone/src/people/me$ vagrant powershell playground
+clone/src/people/me$ vagrant ssh playground
 ``` 
 
 Later, you can check the status of your machines by typing `vagrant status` again in the same directory or `vagrant global-status` anywhere to list all the machines on your host.
@@ -175,7 +175,7 @@ The box will remain on your system after destroying the machine as `vagrant box 
 
 [Creating your first workstation]: #creating-your-first-workstation
 
-[Vagrant boxes]: https://atlas.hashicorp.com/gusztavvargadr
+[Vagrant boxes]: https://app.vagrantup.com/gusztavvargadr
 [Packer templates]: https://github.com/gusztavvargadr/packer
 
 ## Usage
@@ -217,12 +217,12 @@ For example, you can define some [reasonable defaults][ComponentsCore] to be app
 # src/components/core/vagrant.yml
 core:
   provider:
-    memory: 4096
-    cpus: 2
+    memory: 8192
+    cpus: 4
 ```
 [Source][ComponentsCoreYaml]
 
-This means that by default the machines will allocate 4 GB RAM and 2 virtual CPUs.
+This means that by default the machines will allocate 8 GB RAM and 4 virtual CPUs.
 
 Also, you can define how [components][Components], like the [core OS][ComponentsOS] is being provisioned:
 
@@ -265,11 +265,11 @@ core:
 17c:
   includes:
     - components/vs/core
-  box: w16s-vs17c
+  box: w16s-dc-vs17c
 ```
 [Source][ComponentsVisualStudioYaml]
 
-In this case the configuration named `components/vs/17c` will use the [Visual Studio 2017 Community][w16s-vs17c] box including [Windows Server 2016 Standard][w16s]. This options is very useful for tools which take significant time to install, so instead of applying them on the first boot, they can be already included in the [Vagrant boxes].
+In this case the configuration named `components/vs/17c` will use the [Visual Studio 2017 Community][w16s-dc-vs17c] box including [Windows Server 2016 Standard][w16s]. This options is very useful for tools which take significant time to install, so instead of applying them on the first boot, they can be already included in the [Vagrant boxes].
 
 You can also see how the existing configuration is being reused. `components/vs/17c` includes `components/vs/core`, which in turn includes the above `components/core/core` (specifying the memory and the CPU settings). As the list notation suggests, you can include any number or other configurations. If you specify a single value (like the `box`) defined earlier, it will be overridden. Collections (for example, the list of `cookbooks`) will be merged, the new values being added after the existing ones.
 
@@ -314,7 +314,6 @@ core:
   includes:
     - components/vs/v17c
     - components/nuget/core
-    - stacks/infrastructure/core
 
 library:
   includes:
@@ -454,8 +453,8 @@ See below the list of components with their features supported out of the box.
 
 [ComponentsOS]: #os
 
-[w10e]: https://atlas.hashicorp.com/gusztavvargadr/boxes/w10e
-[w16s]: https://atlas.hashicorp.com/gusztavvargadr/boxes/w16s
+[w10e]: https://app.vagrantup.com/gusztavvargadr/boxes/w10e
+[w16s]: https://app.vagrantup.com/gusztavvargadr/boxes/w16s
 
 [ComponentsOSYaml]: src/components/os/vagrant.yml
 [ComponentsOSSamples]: src/components/os/cookbooks/gusztavvargadr_workstations_os/.kitchen.yml#L26
@@ -464,22 +463,16 @@ See below the list of components with their features supported out of the box.
 #### Visual Studio
 
 - Selects a box with Visual Studio preinstalled
-  - v10p - [Visual Studio 2010 Professional][w16s-vs10p]
-  - v15c - [Visual Studio 2015 Community][w16s-vs15c]
-  - v15p - [Visual Studio 2015 Professional][w16s-vs15p]
-  - v17c - [Visual Studio 2017 Community][w16s-vs17c]
-  - v17p - [Visual Studio 2017 Professional][w16s-vs17p]
+  - v17c - [Visual Studio 2017 Community][w16s-dc-vs17c]
+  - v17p - [Visual Studio 2017 Professional][w16s-dc-vs17p]
 
 [Source][ComponentsVisualStudioYaml]  
 [Samples][ComponentsVisualStudioSamples]  
 
 [ComponentsVisualStudio]: #visual-studio
 
-[w16s-vs10p]: https://atlas.hashicorp.com/gusztavvargadr/boxes/w16s-vs10p
-[w16s-vs15c]: https://atlas.hashicorp.com/gusztavvargadr/boxes/w16s-vs15c
-[w16s-vs15p]: https://atlas.hashicorp.com/gusztavvargadr/boxes/w16s-vs15p
-[w16s-vs17c]: https://atlas.hashicorp.com/gusztavvargadr/boxes/w16s-vs17c
-[w16s-vs17p]: https://atlas.hashicorp.com/gusztavvargadr/boxes/w16s-vs17p
+[w16s-dc-vs17c]: https://app.vagrantup.com/gusztavvargadr/boxes/w16s-dc-vs17c
+[w16s-dc-vs17p]: https://app.vagrantup.com/gusztavvargadr/boxes/w16s-dc-vs17p
 
 [ComponentsVisualStudioYaml]: src/components/vs/vagrant.yml
 [ComponentsVisualStudioSamples]: src/stacks/dotnet/vagrant.yml#L3
@@ -488,13 +481,15 @@ See below the list of components with their features supported out of the box.
 
 - Selects a box with SQL Server preinstalled
   - v14d - [SQL Server 2014 Developer][w16s-sql14d]
+  - v17d - [SQL Server 2017 Developer][w16s-sql17d]
 
 [Source][ComponentsSQLServerYaml]  
 [Samples][ComponentsSQLServerSamples]  
 
 [ComponentsSQLServer]: #sql-server
 
-[w16s-sql14d]: https://atlas.hashicorp.com/gusztavvargadr/boxes/w16s-sql14d
+[w16s-sql14d]: https://app.vagrantup.com/gusztavvargadr/boxes/w16s-sql14d
+[w16s-sql17d]: https://app.vagrantup.com/gusztavvargadr/boxes/w16s-sql17d
 
 [ComponentsSQLServerYaml]: src/components/sql/vagrant.yml
 [ComponentsSQLServerSamples]: src/projects/identityserver/vagrant.yml#L18
