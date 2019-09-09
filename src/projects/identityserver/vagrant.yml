@@ -45,5 +45,5 @@ v4:
                   directory: v4/core
                 IdentityServer4.AccessTokenValidation:
                   directory: v4/accesstokenvalidation
-                IdentityServer4.Samples:
-                  directory: v4/samples
+                IdentityServer4.Quickstart.UI:
+                  directory: v4/quickstart

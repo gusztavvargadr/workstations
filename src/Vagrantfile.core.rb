@@ -9,8 +9,14 @@ def gusztavvargadr_workstations_vm(config, vm_directory, vm)
   config.vm.define vm, primary: options['default'], autostart: options['default'] do |config_vm|
     box = options['box']
     box = vm if box.to_s.empty?
+
+    box_parts = box.split(':')
+    box = box_parts[0]
+
     box = "gusztavvargadr/#{box}" unless box.include?('/')
     config_vm.vm.box = box
+
+    config_vm.vm.box_version = box_parts[1] unless box_parts.length == 1
 
     box_url = "#{src_directory}/boxes/#{box}.json"
     config_vm.vm.box_url = "file://#{box_url}" if File.exist?(box_url)
@@ -34,9 +40,9 @@ def gusztavvargadr_workstations_vm(config, vm_directory, vm)
 
     options_chef = options['chef']
     gusztavvargadr_workstations_vm_chef config_vm, options_chef, 'requirements'
-    config_vm.vm.provision :reload
+    # config_vm.vm.provision :reload
     gusztavvargadr_workstations_vm_chef config_vm, options_chef, 'tools'
-    config_vm.vm.provision :reload
+    # config_vm.vm.provision :reload
     gusztavvargadr_workstations_vm_chef config_vm, options_chef, 'profiles'
   end
 end
