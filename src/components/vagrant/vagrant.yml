@@ -10,4 +10,4 @@ core:
           chocolatey:
             vagrant:
               install:
-                ignorepackagecodes:
+                ignore-package-exit-codes:
