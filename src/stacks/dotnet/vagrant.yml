@@ -1,6 +1,6 @@
 core:
   includes:
-    - components/vs/v17c
+    - components/vs/v19c
     - components/nuget/core
 
 library:

@@ -27,12 +27,12 @@ core:
           datetime:
             timezone: W. Europe Standard Time
 
-w10e:
+windows-10:
   includes:
     - components/os/core
-  box: w10e
+  box: windows-10:1903-enterprise
 
-w16s:
+windows-server:
   includes:
     - components/os/core
-  box: w16s
+  box: windows-server:1809-standard

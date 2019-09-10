@@ -13,9 +13,9 @@ core:
 v17c:
   includes:
     - components/vs/core
-  box: w16s-dc-vs17c
+  box: visual-studio:2017-community
 
-v17p:
+v19c:
   includes:
     - components/vs/core
-  box: w16s-dc-vs17p
+  box: visual-studio:2019-community

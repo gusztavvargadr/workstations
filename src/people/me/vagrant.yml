@@ -1,6 +1,6 @@
 work:
   includes:
-    - components/os/w16s
+    - components/os/windows-server
     - projects/github/git
     - projects/aspnet/logging
     - projects/identityserver/v4
@@ -13,7 +13,7 @@ work:
 
 playground:
   includes:
-    - components/os/w16s
+    - components/os/windows-server
     - components/git/core
     - components/svn/core
     - stacks/dotnetcore/library
@@ -30,4 +30,4 @@ playground:
 
 private:
   includes:
-    - components/os/w10e
+    - components/os/windows-10

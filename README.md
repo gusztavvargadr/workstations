@@ -135,7 +135,7 @@ The list shows the three default workstations, `work` intended to support the pr
 clone/src/people/me$ vagrant up playground
 ```
 
-Now, it's time to be patient. The box - in this case, by default with [Visual Studio 2017 Community][w16s-dc-vs17c] including [Windows Server 2016 Standard][w16s] - will be downloaded and the machine will be provisioned before the first use to include all the components this repository supports. If this is not the configuration that you want, you can terminate the process anytime.
+Now, it's time to be patient. The box - in this case, by default with [Visual Studio 2019 Community][visual-studio-2019-box] including [Windows Server 2019 Standard][windows-server-box] - will be downloaded and the machine will be provisioned before the first use to include all the components this repository supports. If this is not the configuration that you want, you can terminate the process anytime.
 
 Once the machine is ready, you can connect to it with RDP or open a remote shell using the default credentials, `vagrant` for both the user name and password:
 
@@ -261,16 +261,16 @@ core:
   includes:
     - components/core/core
 
-17c:
+v19c:
   includes:
     - components/vs/core
-  box: w16s-dc-vs17c
+  box: visual-studio:2019-community
 ```
 [Source][ComponentsVisualStudioYaml]
 
-In this case the configuration named `components/vs/17c` will use the [Visual Studio 2017 Community][w16s-dc-vs17c] box including [Windows Server 2016 Standard][w16s]. This options is very useful for tools which take significant time to install, so instead of applying them on the first boot, they can be already included in the [Vagrant boxes].
+In this case the configuration named `components/vs/v19c` will use the [Visual Studio 2019 Community][visual-studio-2019-box] box including [Windows Server 2019 Standard][windows-server-box]. This options is very useful for tools which take significant time to install, so instead of applying them on the first boot, they can be already included in the [Vagrant boxes].
 
-You can also see how the existing configuration is being reused. `components/vs/17c` includes `components/vs/core`, which in turn includes the above `components/core/core` (specifying the memory and the CPU settings). As the list notation suggests, you can include any number or other configurations. If you specify a single value (like the `box`) defined earlier, it will be overridden. Collections (for example, the list of `cookbooks`) will be merged, the new values being added after the existing ones.
+You can also see how the existing configuration is being reused. `components/vs/v19c` includes `components/vs/core`, which in turn includes the above `components/core/core` (specifying the memory and the CPU settings). As the list notation suggests, you can include any number or other configurations. If you specify a single value (like the `box`) defined earlier, it will be overridden. Collections (for example, the list of `cookbooks`) will be merged, the new values being added after the existing ones.
 
 Components like to appear in groups to form [stacks], like using a dedicated .NET version and the related hosting options for local development. For example, for [.NET Core][StacksDotnetCore] you can define to use [Docker][ComponentsDocker] with the usual images:
 
@@ -356,8 +356,8 @@ v4:
                   directory: v4/core
                 IdentityServer4.AccessTokenValidation:
                   directory: v4/accesstokenvalidation
-                IdentityServer4.Samples:
-                  directory: v4/samples
+                IdentityServer4.Quickstart.UI:
+                  directory: v4/quickstart
 ```
 [Source][ProjectsIdentityServerYaml]
 
@@ -369,7 +369,7 @@ Finally, you can define [your workstation][People] to include projects like this
 # src/people/me/vagrant.yml
 work:
   includes:
-    - components/os/w16s
+    - components/os/windows-server
     - projects/identityserver/v4
   default: true
 ```
@@ -442,8 +442,8 @@ See below the list of components with their features supported out of the box.
 #### OS
 
 - Selects a box with the core OS preinstalled
-  - w10e - [Windows 10 Enterprise][w10e]
-  - w16s - [Windows Server 2016 Standard][w16s]
+  - windows-10 - [Windows 10 Enterprise][windows-10-box]
+  - windows-server - [Windows Server 2019 Standard][windows-server-box]
 - Configures locales
 - Configures timezone
 
@@ -452,8 +452,8 @@ See below the list of components with their features supported out of the box.
 
 [ComponentsOS]: #os
 
-[w10e]: https://app.vagrantup.com/gusztavvargadr/boxes/w10e
-[w16s]: https://app.vagrantup.com/gusztavvargadr/boxes/w16s
+[windows-10-box]: https://app.vagrantup.com/gusztavvargadr/boxes/windows-10
+[windows-server-box]: https://app.vagrantup.com/gusztavvargadr/boxes/windows-server
 
 [ComponentsOSYaml]: src/components/os/vagrant.yml
 [ComponentsOSSamples]: src/components/os/cookbooks/gusztavvargadr_workstations_os/.kitchen.yml#L26
@@ -462,16 +462,16 @@ See below the list of components with their features supported out of the box.
 #### Visual Studio
 
 - Selects a box with Visual Studio preinstalled
-  - v17c - [Visual Studio 2017 Community][w16s-dc-vs17c]
-  - v17p - [Visual Studio 2017 Professional][w16s-dc-vs17p]
+  - v17c - [Visual Studio 2017 Community][visual-studio-2017-box]
+  - v19c - [Visual Studio 2019 Community][visual-studio-2019-box]
 
 [Source][ComponentsVisualStudioYaml]  
 [Samples][ComponentsVisualStudioSamples]  
 
 [ComponentsVisualStudio]: #visual-studio
 
-[w16s-dc-vs17c]: https://app.vagrantup.com/gusztavvargadr/boxes/w16s-dc-vs17c
-[w16s-dc-vs17p]: https://app.vagrantup.com/gusztavvargadr/boxes/w16s-dc-vs17p
+[visual-studio-2017-box]: https://app.vagrantup.com/gusztavvargadr/boxes/visual-studio/versions/2017-community
+[visual-studio-2019-box]: https://app.vagrantup.com/gusztavvargadr/boxes/visual-studio/versions/2019-community
 
 [ComponentsVisualStudioYaml]: src/components/vs/vagrant.yml
 [ComponentsVisualStudioSamples]: src/stacks/dotnet/vagrant.yml#L3
@@ -479,16 +479,14 @@ See below the list of components with their features supported out of the box.
 #### SQL Server
 
 - Selects a box with SQL Server preinstalled
-  - v14d - [SQL Server 2014 Developer][w16s-sql14d]
-  - v17d - [SQL Server 2017 Developer][w16s-sql17d]
+  - v17d - [SQL Server 2017 Developer][sql-server-2017-box]
 
 [Source][ComponentsSQLServerYaml]  
 [Samples][ComponentsSQLServerSamples]  
 
 [ComponentsSQLServer]: #sql-server
 
-[w16s-sql14d]: https://app.vagrantup.com/gusztavvargadr/boxes/w16s-sql14d
-[w16s-sql17d]: https://app.vagrantup.com/gusztavvargadr/boxes/w16s-sql17d
+[sql-server-2017-box]: https://app.vagrantup.com/gusztavvargadr/boxes/sql-server/versions/2017-developer
 
 [ComponentsSQLServerYaml]: src/components/sql/vagrant.yml
 [ComponentsSQLServerSamples]: src/projects/identityserver/vagrant.yml#L18

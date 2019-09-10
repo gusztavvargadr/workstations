@@ -2,12 +2,7 @@ core:
   includes:
     - components/core/core
 
-v14d:
-  includes:
-    - components/sql/core
-  box: w16s-sql14d
-
 v17d:
   includes:
     - components/sql/core
-  box: w16s-sql17d
+  box: sql-server:2017-developer
